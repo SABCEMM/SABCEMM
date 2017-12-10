@@ -6,7 +6,7 @@
 
 This tutorial guides you through the first steps to use the SABCEMM framework on a linux.
 If you are trying to use the framework on Windows or Mac, please have a look at 
-[HowTo: working on Windows or Mac](https://github.com/SABCEMM/SABCEMM/wiki/SABCEMM-on-Windows-or-Mac) for further information.
+[SABCEMM on Windows or Mac](https://github.com/SABCEMM/SABCEMM/wiki/SABCEMM-on-Windows-or-Mac) for further information.
 
 
 Open a terminal and enter the following commands.
@@ -30,7 +30,7 @@ make`
 
 SABCEMM and its test will be put in `build/src` and `build/test`, respectively.
 
-Now, create an input file (see [How-To: Input File](https://github.com/SABCEMM/SABCEMM/wiki/Create-an-Input-File)) 
+Now, create an input file (see [Creating an Input File](https://github.com/SABCEMM/SABCEMM/wiki/Create-an-Input-File)) 
 or use one of the existing files in src/input.
  
 Then, SABCEMM is run like:
