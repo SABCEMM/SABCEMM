@@ -1,0 +1,19 @@
+<case>
+    <RNGSettings>
+        <RNG>RandomGeneratorVOID1</RNG>
+        <seed>123</seed>
+        <poolSize>
+            <normal>688</normal>
+            <uniform>445</uniform>
+        </poolSize>
+        <fileName>testfile</fileName>
+    </RNGSettings>
+    <RNGSettings>
+        <RNG>RandomGeneratorVOID2</RNG>
+        <poolSize>500</poolSize>
+    </RNGSettings>
+    <RNGSettings>
+        <RNG>RandomGeneratorVOID3</RNG>
+        <fileName>AwesomeFilename</fileName>
+    </RNGSettings>
+</case>

@@ -1,0 +1,129 @@
+<!--
+       /* Copyright 2017 - BSD-3-Clause
+        *
+        * Copyright Holder (alphabetical):
+        *
+        * Beikirch, Maximilian
+        * Cramer, Simon
+        * Frank, Martin
+        * Otte, Philipp
+        * Pabich, Emma
+        * Trimborn, Torsten
+        *
+        *
+        * Redistribution and use in source and binary forms, with or without modification, are permitted provided that the
+        * following conditions are met:
+        *
+        * 1. Redistributions of source code must retain the above copyright notice, this list of conditions and the following
+        *    disclaimer.
+        *
+        * 2. Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the
+        *    following disclaimer in the documentation and/or other materials provided with the distribution.
+        *
+        * 3. Neither the name of the copyright holder nor the names of its contributors may be used to endorse or promote
+        *    products derived from this software without specific prior written permission.
+        *
+        * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES,
+        * INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+        * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+        * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+        * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+        * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE
+        * USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+        */
+
+        /*
+        * @author Beikirch, Cramer, Pabich
+        * @date 08 Nov 2017
+        * @brief This file belongs to the SABCEMM projekt. See github.com/SABCEMM/SABCEMM
+        */
+-->
+<settings>
+    <case>
+        <RNGSettings>
+            <RNG>RandomGeneratorVOID</RNG>
+            <seed>1887470</seed>
+            <poolSize>
+                <normal>300</normal>
+                <uniform>200</uniform>
+            </poolSize>
+            <fileName>AwesomeFilename</fileName>
+        </RNGSettings>
+        <agents>
+            <AgentVOID>
+                <count>2500</count>
+                <cash>5.5</cash>
+                <stock>6</stock>
+
+                <Group>
+                    <g>2</g>
+                    <g>3</g>
+                </Group>
+
+                <C1>1.1</C1>
+                <C2>2.2</C2>
+                <C3>3.3</C3>
+                <threshold>4.4</threshold>
+                <g>5.5</g>
+                <alpha>6.6</alpha>
+                <neighbourhoodGeneratorClass>NeighbourhoodGeneratorVOID</neighbourhoodGeneratorClass>
+
+                <A1>7.7</A1>
+                <A2>8.8</A2>
+                <b1>9.9</b1>
+                <b2>1.1</b2>
+                <gamma>1.5</gamma>
+
+                <stdNoiseSigma>2.2</stdNoiseSigma>
+                <riskTolerance>3.3</riskTolerance>
+                <memorySpan>4</memorySpan>
+                <k>5.5</k>
+                <historyMean>7.7</historyMean>
+                <historySigma>8.8</historySigma>
+                <initialGamma>9.9</initialGamma>
+
+            </AgentVOID>
+        </agents>
+        <dataItemCollectorClasses>
+            <DataCollectorVOID>
+                <collectInterval>6</collectInterval>
+                <writeInterval>7</writeInterval>
+                <groupToTrack>5</groupToTrack>
+            </DataCollectorVOID>
+        </dataItemCollectorClasses>
+        <numsteps>8</numsteps>
+        <outputname>outVOID</outputname>
+        <deltaT>9.9</deltaT>
+        <writerClass>WriterVOID</writerClass>
+        <excessDemandCalculatorSettings>
+            <excessDemandCalculatorClass>ExcessDemandCalculatorVOID</excessDemandCalculatorClass>
+        </excessDemandCalculatorSettings>
+        <priceCalculatorSettings>
+            <priceCalculatorClass>PriceCalculatorVOID</priceCalculatorClass>
+            <epsilon>1.1</epsilon>
+            <maxIterations>2</maxIterations>
+            <lowerBound>3.3</lowerBound>
+            <upperBound>4.4</upperBound>
+            <theta>5.5</theta>
+            <fFunction>
+                <kind>fVOID</kind>
+                <constant>6.6</constant>
+            </fFunction>
+            <gFunction>
+                <kind>gVOID</kind>
+                <constant>7.7</constant>
+            </gFunction>
+            <marketDepth>8.8</marketDepth>
+        </priceCalculatorSettings>
+        <stockExchangeClass>StockExchangeVOID</stockExchangeClass>
+        <startPrice>20</startPrice>
+        <repetitions>1</repetitions>
+        <dividendSettings>
+            <Z1>9.9</Z1>
+            <Z2>1.1</Z2>
+            <interestRate>2.2</interestRate>
+            <initialDividend>3.3</initialDividend>
+        </dividendSettings>
+    </case>
+
+</settings>

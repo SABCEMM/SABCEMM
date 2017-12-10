@@ -1,0 +1,10 @@
+add_library(DataCollectorTest
+	DataCollectorTest.cpp 
+	DataItemCollectorExcessDemandTest.cpp
+	DataItemCollectorTest.cpp
+	DataItemCollectorAmountOfCashTest.cpp
+	DataItemCollectorHarrasKTest.cpp
+	DataItemCollectorWealthTest.cpp
+	DataItemCollectorAmountOfStockTest.cpp
+	DataItemCollectorPriceTest.cpp
+)

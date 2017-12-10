@@ -1,0 +1,126 @@
+/* Copyright 2017 - BSD-3-Clause
+ *
+ * Copyright Holder (alphabetical):
+ *
+ * Beikirch, Maximilian
+ * Cramer, Simon
+ * Frank, Martin
+ * Otte, Philipp
+ * Pabich, Emma
+ * Trimborn, Torsten
+ *
+ *
+ * Redistribution and use in source and binary forms, with or without modification, are permitted provided that the
+ * following conditions are met:
+ *
+ * 1. Redistributions of source code must retain the above copyright notice, this list of conditions and the following
+ *    disclaimer.
+ *
+ * 2. Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the
+ *    following disclaimer in the documentation and/or other materials provided with the distribution.
+ *
+ * 3. Neither the name of the copyright holder nor the names of its contributors may be used to endorse or promote
+ *    products derived from this software without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES,
+ * INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+ * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+ * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+ * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE
+ * USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
+
+/*
+ * @author Beikirch, Cramer, Pabich
+ * @date 08 Nov 2017
+ * @brief This file belongs to the SABCEMM projekt. See github.com/SABCEMM/SABCEMM
+ */
+
+#include <string>
+
+#include "gtest/gtest.h"
+#include "gmock/gmock.h"
+
+#include "../../src/DataCollector/DataItemCollector.h"
+#include "../MockClasses/MockDataItemCollector.h"
+#include "../MockClasses/MockWriter.h"
+
+TEST(DataItemCollector, setWriter){
+    MockWriter mockWriter;
+    MockDataItemCollector mockDataItemCollector;
+
+    mockDataItemCollector.setWriter(&mockWriter);
+    EXPECT_EQ(&mockWriter, mockDataItemCollector.writer);
+
+}
+
+TEST(DataItemCollector, collect){
+
+	MockDataItemCollector mockCollector;
+
+	mockCollector.setCollectInterval(5);
+	mockCollector.setWriteInterval(5);
+
+	EXPECT_CALL(mockCollector, collectData()).Times(2);
+	EXPECT_CALL(mockCollector, write()).Times(2);
+    EXPECT_CALL(mockCollector, clearData()).Times(2);
+	
+	for(int i=0; i<10; i++){
+		mockCollector.collect();
+	}
+
+}
+
+TEST(DataItemCollector, collect1){
+
+	MockDataItemCollector mockCollector;
+
+	mockCollector.setCollectInterval(1);
+	mockCollector.setWriteInterval(1);
+
+	EXPECT_CALL(mockCollector, collectData()).Times(10);
+	EXPECT_CALL(mockCollector, write()).Times(10);
+    EXPECT_CALL(mockCollector, clearData()).Times(10);
+
+	for(int i=0; i<10; i++){
+		mockCollector.collect();
+	}
+
+}
+
+TEST(DataItemCollector, setName){
+    MockDataItemCollector mockCollector;
+
+    std::string testName = "TestName";
+    mockCollector.setName(testName);
+    EXPECT_EQ(mockCollector.name, testName);
+}
+
+TEST(DataItemCollector, getName){
+    MockDataItemCollector mockCollector;
+
+    std::string testName = "TestName";
+    mockCollector.setName(testName);
+    EXPECT_EQ(mockCollector.getName(), testName);
+}
+
+TEST(DataItemCollector, setWriteInterval){
+    MockDataItemCollector mockCollector;
+
+    int writeInterval = 2345;
+    mockCollector.setWriteInterval(writeInterval);
+    EXPECT_EQ(writeInterval, mockCollector.writeInterval);
+}
+TEST(DataItemCollector, setCollectInterval){
+    MockDataItemCollector mockCollector;
+    int collectInterval = 123;
+    mockCollector.setCollectInterval(collectInterval);
+    EXPECT_EQ(collectInterval, mockCollector.collectInterval);
+}
+TEST(DataItemCollector, setGroupToTrack){
+    MockDataItemCollector mockCollector;
+    int groupToTrack = 3;
+    mockCollector.setGroupToTrack(groupToTrack);
+    EXPECT_EQ(groupToTrack, mockCollector.groupToTrack_);
+}

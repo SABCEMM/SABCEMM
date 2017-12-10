@@ -1,0 +1,4 @@
+add_library(PriceCalculatorTest
+	PriceCalculatorBisectionTest.cpp
+	PriceCalculatorHarrasTest.cpp
+)

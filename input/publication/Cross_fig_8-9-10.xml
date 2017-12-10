@@ -1,0 +1,633 @@
+<!--
+       /* Copyright 2017 - BSD-3-Clause
+        *
+        * Copyright Holder (alphabetical):
+        *
+        * Beikirch, Maximilian
+        * Cramer, Simon
+        * Frank, Martin
+        * Otte, Philipp
+        * Pabich, Emma
+        * Trimborn, Torsten
+        *
+        *
+        * Redistribution and use in source and binary forms, with or without modification, are permitted provided that the
+        * following conditions are met:
+        *
+        * 1. Redistributions of source code must retain the above copyright notice, this list of conditions and the following
+        *    disclaimer.
+        *
+        * 2. Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the
+        *    following disclaimer in the documentation and/or other materials provided with the distribution.
+        *
+        * 3. Neither the name of the copyright holder nor the names of its contributors may be used to endorse or promote
+        *    products derived from this software without specific prior written permission.
+        *
+        * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES,
+        * INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+        * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+        * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+        * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+        * WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE
+        * USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+        */
+
+        /*
+        * @author Beikirch, Cramer, Pabich
+        * @date 08 Nov 2017
+        * @brief This file belongs to the SABCEMM projekt. See github.com/SABCEMM/SABCEMM
+        */
+-->
+
+
+<!-- Cross Model: Figure 8,9,10 -->
+<settings>
+    <case>
+        <RNGSettings>
+            <RNG>RandomGeneratorIntelMKL</RNG>
+            <poolSize>5000000</poolSize>
+
+        </RNGSettings>
+        <agents>
+            <AgentCrossWealth>
+                <count>1000</count>
+                <!-- initial herding threshold and initial herding pressure are drawn
+                     from the uniform distribution [b1*deltaT, b2*deltaT] (cf. eq. 3.1, p.8)
+                     ==> here, they are drawn from [0.001, 0.004] -->
+                <b1>25</b1>
+                <b2>100</b2>
+                <!-- initial inaction threshold is drawn from the uniform distribution [A1, A2] (cf. eq. 3.1, p.8) -->
+                <A1>0.1</A1>
+                <A2>0.3</A2>
+                <cash>1</cash>
+                <stock>1</stock>
+                <gamma>0</gamma>
+            </AgentCrossWealth>
+        </agents>
+        <dataItemCollectorClasses>
+            <DataCollectorPrice />
+            <DataCollectorExcessDemand />
+            <DataCollectorAmountOfCash>
+                    <method>detail</method>
+                <collectInterval>100</collectInterval>
+            </DataCollectorAmountOfCash>
+        </dataItemCollectorClasses>
+        <dividendSettings>
+            <interestRate>0.01</interestRate>
+        </dividendSettings>
+        <numsteps>13000</numsteps>
+        <outputname>Cross_base_WE0_1000</outputname>
+        <deltaT>0.00004</deltaT>
+        <writerClass>WriterHDF5</writerClass>
+        <excessDemandCalculatorSettings>
+            <!-- see the term for sigma(n) on p.5 for the calculation of market sentiment / excess demand.-->
+            <excessDemandCalculatorClass>ExcessDemandCalculatorHarras</excessDemandCalculatorClass>
+        </excessDemandCalculatorSettings>
+        <priceCalculatorSettings>
+            <priceCalculatorClass>PriceCalculatorCross</priceCalculatorClass>
+            <!-- corresponds to alpha in the paper, used in eq. 3.2, p. 11) -->
+            <!-- theta = 0 gives the base model, theta = 2 adds heteroskedacity -->
+            <theta>0</theta>
+            <!-- corresponds to lambda in the Harras-paper (cf. p.10) -->
+            <marketDepth>0.2</marketDepth>
+        </priceCalculatorSettings>
+
+        <repetitions>100</repetitions>
+        <startPrice>1</startPrice>
+        <dividendSettings>
+            <interestRate>0.01</interestRate>
+        </dividendSettings>
+    </case>
+
+    <case>
+        <RNGSettings>
+            <RNG>RandomGeneratorIntelMKL</RNG>
+            <poolSize>5000000</poolSize>
+
+        </RNGSettings>
+        <agents>
+            <AgentCrossWealth>
+                <count>1000</count>
+                <!-- initial herding threshold and initial herding pressure are drawn
+                     from the uniform distribution [b1*deltaT, b2*deltaT] (cf. eq. 3.1, p.8)
+                     ==> here, they are drawn from [0.001, 0.004] -->
+                <b1>25</b1>
+                <b2>100</b2>
+                <!-- initial inaction threshold is drawn from the uniform distribution [A1, A2] (cf. eq. 3.1, p.8) -->
+                <A1>0.1</A1>
+                <A2>0.3</A2>
+                <cash>1</cash>
+                <stock>1</stock>
+                <gamma>0.1</gamma>
+            </AgentCrossWealth>
+        </agents>
+        <dataItemCollectorClasses>
+            <DataCollectorPrice />
+            <DataCollectorExcessDemand />
+            <DataCollectorAmountOfCash>
+                <method>detail</method>
+                <collectInterval>100</collectInterval>
+            </DataCollectorAmountOfCash>
+        </dataItemCollectorClasses>
+        <numsteps>13000</numsteps>
+        <outputname>Cross_base_WE0-1_1000</outputname>
+        <deltaT>0.00004</deltaT>
+        <writerClass>WriterHDF5</writerClass>
+        <excessDemandCalculatorSettings>
+            <!-- see the term for sigma(n) on p.5 for the calculation of market sentiment / excess demand.-->
+            <excessDemandCalculatorClass>ExcessDemandCalculatorHarras</excessDemandCalculatorClass>
+        </excessDemandCalculatorSettings>
+        <priceCalculatorSettings>
+            <priceCalculatorClass>PriceCalculatorCross</priceCalculatorClass>
+            <!-- corresponds to alpha in the paper, used in eq. 3.2, p. 11) -->
+            <!-- theta = 0 gives the base model, theta = 2 adds heteroskedacity -->
+            <theta>0</theta>
+            <!-- corresponds to lambda in the Harras-paper (cf. p.10) -->
+            <marketDepth>0.2</marketDepth>
+        </priceCalculatorSettings>
+
+        <repetitions>100</repetitions>
+        <startPrice>1</startPrice>
+        <dividendSettings>
+            <interestRate>0.01</interestRate>
+        </dividendSettings>
+    </case>
+
+    <case>
+        <RNGSettings>
+            <RNG>RandomGeneratorIntelMKL</RNG>
+            <poolSize>5000000</poolSize>
+
+        </RNGSettings>
+        <agents>
+            <AgentCrossWealth>
+                <count>1000</count>
+                <!-- initial herding threshold and initial herding pressure are drawn
+                     from the uniform distribution [b1*deltaT, b2*deltaT] (cf. eq. 3.1, p.8)
+                     ==> here, they are drawn from [0.001, 0.004] -->
+                <b1>25</b1>
+                <b2>100</b2>
+                <!-- initial inaction threshold is drawn from the uniform distribution [A1, A2] (cf. eq. 3.1, p.8) -->
+                <A1>0.1</A1>
+                <A2>0.3</A2>
+                <cash>1</cash>
+                <stock>1</stock>
+                <gamma>0.2</gamma>
+            </AgentCrossWealth>
+        </agents>
+        <dataItemCollectorClasses>
+            <DataCollectorPrice />
+            <DataCollectorExcessDemand />
+                    <DataCollectorAmountOfCash>
+                    <method>detail</method>
+                <collectInterval>100</collectInterval>
+            </DataCollectorAmountOfCash></dataItemCollectorClasses>
+        <numsteps>13000</numsteps>
+        <outputname>Cross_base_WE0-2_1000</outputname>
+        <deltaT>0.00004</deltaT>
+        <writerClass>WriterHDF5</writerClass>
+        <excessDemandCalculatorSettings>
+            <!-- see the term for sigma(n) on p.5 for the calculation of market sentiment / excess demand.-->
+            <excessDemandCalculatorClass>ExcessDemandCalculatorHarras</excessDemandCalculatorClass>
+        </excessDemandCalculatorSettings>
+        <priceCalculatorSettings>
+            <priceCalculatorClass>PriceCalculatorCross</priceCalculatorClass>
+            <!-- corresponds to alpha in the paper, used in eq. 3.2, p. 11) -->
+            <!-- theta = 0 gives the base model, theta = 2 adds heteroskedacity -->
+            <theta>0</theta>
+            <!-- corresponds to lambda in the Harras-paper (cf. p.10) -->
+            <marketDepth>0.2</marketDepth>
+        </priceCalculatorSettings>
+
+        <repetitions>100</repetitions>
+        <startPrice>1</startPrice>
+        <dividendSettings>
+            <interestRate>0.01</interestRate>
+        </dividendSettings>
+    </case>
+
+    <case>
+        <RNGSettings>
+            <RNG>RandomGeneratorIntelMKL</RNG>
+            <poolSize>5000000</poolSize>
+
+        </RNGSettings>
+        <agents>
+            <AgentCrossWealth>
+                <count>1000</count>
+                <!-- initial herding threshold and initial herding pressure are drawn
+                     from the uniform distribution [b1*deltaT, b2*deltaT] (cf. eq. 3.1, p.8)
+                     ==> here, they are drawn from [0.001, 0.004] -->
+                <b1>25</b1>
+                <b2>100</b2>
+                <!-- initial inaction threshold is drawn from the uniform distribution [A1, A2] (cf. eq. 3.1, p.8) -->
+                <A1>0.1</A1>
+                <A2>0.3</A2>
+                <cash>1</cash>
+                <stock>1</stock>
+                <gamma>0.3</gamma>
+            </AgentCrossWealth>
+        </agents>
+        <dataItemCollectorClasses>
+            <DataCollectorPrice />
+            <DataCollectorExcessDemand />
+                        <DataCollectorAmountOfCash>
+                    <method>detail</method>
+                <collectInterval>100</collectInterval>
+            </DataCollectorAmountOfCash>
+        </dataItemCollectorClasses>
+        <numsteps>13000</numsteps>
+        <outputname>Cross_base_WE0-3_1000</outputname>
+        <deltaT>0.00004</deltaT>
+        <writerClass>WriterHDF5</writerClass>
+        <excessDemandCalculatorSettings>
+            <!-- see the term for sigma(n) on p.5 for the calculation of market sentiment / excess demand.-->
+            <excessDemandCalculatorClass>ExcessDemandCalculatorHarras</excessDemandCalculatorClass>
+        </excessDemandCalculatorSettings>
+        <priceCalculatorSettings>
+            <priceCalculatorClass>PriceCalculatorCross</priceCalculatorClass>
+            <!-- corresponds to alpha in the paper, used in eq. 3.2, p. 11) -->
+            <!-- theta = 0 gives the base model, theta = 2 adds heteroskedacity -->
+            <theta>0</theta>
+            <!-- corresponds to lambda in the Harras-paper (cf. p.10) -->
+            <marketDepth>0.2</marketDepth>
+        </priceCalculatorSettings>
+
+        <repetitions>100</repetitions>
+        <startPrice>1</startPrice>
+        <dividendSettings>
+            <interestRate>0.01</interestRate>
+        </dividendSettings>
+    </case>
+
+    <case>
+        <RNGSettings>
+            <RNG>RandomGeneratorIntelMKL</RNG>
+            <poolSize>5000000</poolSize>
+
+        </RNGSettings>
+        <agents>
+            <AgentCrossWealth>
+                <count>1000</count>
+                <!-- initial herding threshold and initial herding pressure are drawn
+                     from the uniform distribution [b1*deltaT, b2*deltaT] (cf. eq. 3.1, p.8)
+                     ==> here, they are drawn from [0.001, 0.004] -->
+                <b1>25</b1>
+                <b2>100</b2>
+                <!-- initial inaction threshold is drawn from the uniform distribution [A1, A2] (cf. eq. 3.1, p.8) -->
+                <A1>0.1</A1>
+                <A2>0.3</A2>
+                <cash>1</cash>
+                <stock>1</stock>
+                <gamma>0.4</gamma>
+            </AgentCrossWealth>
+        </agents>
+        <dataItemCollectorClasses>
+            <DataCollectorPrice />
+            <DataCollectorExcessDemand />
+                    <DataCollectorAmountOfCash>
+                    <method>detail</method>
+                <collectInterval>100</collectInterval>
+            </DataCollectorAmountOfCash></dataItemCollectorClasses>
+        <numsteps>13000</numsteps>
+        <outputname>Cross_base_WE0-4_1000</outputname>
+        <deltaT>0.00004</deltaT>
+        <writerClass>WriterHDF5</writerClass>
+        <excessDemandCalculatorSettings>
+            <!-- see the term for sigma(n) on p.5 for the calculation of market sentiment / excess demand.-->
+            <excessDemandCalculatorClass>ExcessDemandCalculatorHarras</excessDemandCalculatorClass>
+        </excessDemandCalculatorSettings>
+        <priceCalculatorSettings>
+            <priceCalculatorClass>PriceCalculatorCross</priceCalculatorClass>
+            <!-- corresponds to alpha in the paper, used in eq. 3.2, p. 11) -->
+            <!-- theta = 0 gives the base model, theta = 2 adds heteroskedacity -->
+            <theta>0</theta>
+            <!-- corresponds to lambda in the Harras-paper (cf. p.10) -->
+            <marketDepth>0.2</marketDepth>
+        </priceCalculatorSettings>
+
+        <repetitions>100</repetitions>
+        <startPrice>1</startPrice>
+        <dividendSettings>
+            <interestRate>0.01</interestRate>
+        </dividendSettings>
+    </case>
+
+    <case>
+        <RNGSettings>
+            <RNG>RandomGeneratorIntelMKL</RNG>
+            <poolSize>5000000</poolSize>
+
+        </RNGSettings>
+        <agents>
+            <AgentCrossWealth>
+                <count>1000</count>
+                <!-- initial herding threshold and initial herding pressure are drawn
+                     from the uniform distribution [b1*deltaT, b2*deltaT] (cf. eq. 3.1, p.8)
+                     ==> here, they are drawn from [0.001, 0.004] -->
+                <b1>25</b1>
+                <b2>100</b2>
+                <!-- initial inaction threshold is drawn from the uniform distribution [A1, A2] (cf. eq. 3.1, p.8) -->
+                <A1>0.1</A1>
+                <A2>0.3</A2>
+                <cash>1</cash>
+                <stock>1</stock>
+                <gamma>0.5</gamma>
+            </AgentCrossWealth>
+        </agents>
+        <dataItemCollectorClasses>
+            <DataCollectorPrice />
+            <DataCollectorExcessDemand />
+                    <DataCollectorAmountOfCash>
+                    <method>detail</method>
+                <collectInterval>100</collectInterval>
+            </DataCollectorAmountOfCash></dataItemCollectorClasses>
+        <numsteps>13000</numsteps>
+        <outputname>Cross_base_WE0-5_1000</outputname>
+        <deltaT>0.00004</deltaT>
+        <writerClass>WriterHDF5</writerClass>
+        <excessDemandCalculatorSettings>
+            <!-- see the term for sigma(n) on p.5 for the calculation of market sentiment / excess demand.-->
+            <excessDemandCalculatorClass>ExcessDemandCalculatorHarras</excessDemandCalculatorClass>
+        </excessDemandCalculatorSettings>
+        <priceCalculatorSettings>
+            <priceCalculatorClass>PriceCalculatorCross</priceCalculatorClass>
+            <!-- corresponds to alpha in the paper, used in eq. 3.2, p. 11) -->
+            <!-- theta = 0 gives the base model, theta = 2 adds heteroskedacity -->
+            <theta>0</theta>
+            <!-- corresponds to lambda in the Harras-paper (cf. p.10) -->
+            <marketDepth>0.2</marketDepth>
+        </priceCalculatorSettings>
+
+        <repetitions>100</repetitions>
+        <startPrice>1</startPrice>
+        <dividendSettings>
+            <interestRate>0.01</interestRate>
+        </dividendSettings>
+    </case>
+
+    <case>
+        <RNGSettings>
+            <RNG>RandomGeneratorIntelMKL</RNG>
+            <poolSize>5000000</poolSize>
+
+        </RNGSettings>
+        <agents>
+            <AgentCrossWealth>
+                <count>1000</count>
+                <!-- initial herding threshold and initial herding pressure are drawn
+                     from the uniform distribution [b1*deltaT, b2*deltaT] (cf. eq. 3.1, p.8)
+                     ==> here, they are drawn from [0.001, 0.004] -->
+                <b1>25</b1>
+                <b2>100</b2>
+                <!-- initial inaction threshold is drawn from the uniform distribution [A1, A2] (cf. eq. 3.1, p.8) -->
+                <A1>0.1</A1>
+                <A2>0.3</A2>
+                <cash>1</cash>
+                <stock>1</stock>
+                <gamma>0.6</gamma>
+            </AgentCrossWealth>
+        </agents>
+        <dataItemCollectorClasses>
+            <DataCollectorPrice />
+            <DataCollectorExcessDemand />
+                    <DataCollectorAmountOfCash>
+                    <method>detail</method>
+                <collectInterval>100</collectInterval>
+            </DataCollectorAmountOfCash></dataItemCollectorClasses>
+        <numsteps>13000</numsteps>
+        <outputname>Cross_base_WE0-6_1000</outputname>
+        <deltaT>0.00004</deltaT>
+        <writerClass>WriterHDF5</writerClass>
+        <excessDemandCalculatorSettings>
+            <!-- see the term for sigma(n) on p.5 for the calculation of market sentiment / excess demand.-->
+            <excessDemandCalculatorClass>ExcessDemandCalculatorHarras</excessDemandCalculatorClass>
+        </excessDemandCalculatorSettings>
+        <priceCalculatorSettings>
+            <priceCalculatorClass>PriceCalculatorCross</priceCalculatorClass>
+            <!-- corresponds to alpha in the paper, used in eq. 3.2, p. 11) -->
+            <!-- theta = 0 gives the base model, theta = 2 adds heteroskedacity -->
+            <theta>0</theta>
+            <!-- corresponds to lambda in the Harras-paper (cf. p.10) -->
+            <marketDepth>0.2</marketDepth>
+        </priceCalculatorSettings>
+
+        <repetitions>100</repetitions>
+        <startPrice>1</startPrice>
+        <dividendSettings>
+            <interestRate>0.01</interestRate>
+        </dividendSettings>
+    </case>
+
+    <case>
+        <RNGSettings>
+            <RNG>RandomGeneratorIntelMKL</RNG>
+            <poolSize>5000000</poolSize>
+
+        </RNGSettings>
+        <agents>
+            <AgentCrossWealth>
+                <count>1000</count>
+                <!-- initial herding threshold and initial herding pressure are drawn
+                     from the uniform distribution [b1*deltaT, b2*deltaT] (cf. eq. 3.1, p.8)
+                     ==> here, they are drawn from [0.001, 0.004] -->
+                <b1>25</b1>
+                <b2>100</b2>
+                <!-- initial inaction threshold is drawn from the uniform distribution [A1, A2] (cf. eq. 3.1, p.8) -->
+                <A1>0.1</A1>
+                <A2>0.3</A2>
+                <cash>1</cash>
+                <stock>1</stock>
+                <gamma>0.7</gamma>
+            </AgentCrossWealth>
+        </agents>
+        <dataItemCollectorClasses>
+            <DataCollectorPrice />
+            <DataCollectorExcessDemand />
+                    <DataCollectorAmountOfCash>
+                    <method>detail</method>
+                <collectInterval>100</collectInterval>
+            </DataCollectorAmountOfCash></dataItemCollectorClasses>
+        <numsteps>13000</numsteps>
+        <outputname>Cross_base_WE0-7_1000</outputname>
+        <deltaT>0.00004</deltaT>
+        <writerClass>WriterHDF5</writerClass>
+        <excessDemandCalculatorSettings>
+            <!-- see the term for sigma(n) on p.5 for the calculation of market sentiment / excess demand.-->
+            <excessDemandCalculatorClass>ExcessDemandCalculatorHarras</excessDemandCalculatorClass>
+        </excessDemandCalculatorSettings>
+        <priceCalculatorSettings>
+            <priceCalculatorClass>PriceCalculatorCross</priceCalculatorClass>
+            <!-- corresponds to alpha in the paper, used in eq. 3.2, p. 11) -->
+            <!-- theta = 0 gives the base model, theta = 2 adds heteroskedacity -->
+            <theta>0</theta>
+            <!-- corresponds to lambda in the Harras-paper (cf. p.10) -->
+            <marketDepth>0.2</marketDepth>
+        </priceCalculatorSettings>
+
+        <repetitions>100</repetitions>
+        <startPrice>1</startPrice>
+        <dividendSettings>
+            <interestRate>0.01</interestRate>
+        </dividendSettings>
+    </case>
+
+    <case>
+        <RNGSettings>
+            <RNG>RandomGeneratorIntelMKL</RNG>
+            <poolSize>5000000</poolSize>
+
+        </RNGSettings>
+        <agents>
+            <AgentCrossWealth>
+                <count>1000</count>
+                <!-- initial herding threshold and initial herding pressure are drawn
+                     from the uniform distribution [b1*deltaT, b2*deltaT] (cf. eq. 3.1, p.8)
+                     ==> here, they are drawn from [0.001, 0.004] -->
+                <b1>25</b1>
+                <b2>100</b2>
+                <!-- initial inaction threshold is drawn from the uniform distribution [A1, A2] (cf. eq. 3.1, p.8) -->
+                <A1>0.1</A1>
+                <A2>0.3</A2>
+                <cash>1</cash>
+                <stock>1</stock>
+                <gamma>0.8</gamma>
+            </AgentCrossWealth>
+        </agents>
+        <dataItemCollectorClasses>
+            <DataCollectorPrice />
+            <DataCollectorExcessDemand />
+                    <DataCollectorAmountOfCash>
+                    <method>detail</method>
+                <collectInterval>100</collectInterval>
+            </DataCollectorAmountOfCash></dataItemCollectorClasses>
+        <numsteps>13000</numsteps>
+        <outputname>Cross_base_WE0-8_1000</outputname>
+        <deltaT>0.00004</deltaT>
+        <writerClass>WriterHDF5</writerClass>
+        <excessDemandCalculatorSettings>
+            <!-- see the term for sigma(n) on p.5 for the calculation of market sentiment / excess demand.-->
+            <excessDemandCalculatorClass>ExcessDemandCalculatorHarras</excessDemandCalculatorClass>
+        </excessDemandCalculatorSettings>
+        <priceCalculatorSettings>
+            <priceCalculatorClass>PriceCalculatorCross</priceCalculatorClass>
+            <!-- corresponds to alpha in the paper, used in eq. 3.2, p. 11) -->
+            <!-- theta = 0 gives the base model, theta = 2 adds heteroskedacity -->
+            <theta>0</theta>
+            <!-- corresponds to lambda in the Harras-paper (cf. p.10) -->
+            <marketDepth>0.2</marketDepth>
+        </priceCalculatorSettings>
+
+        <repetitions>100</repetitions>
+        <startPrice>1</startPrice>
+        <dividendSettings>
+            <interestRate>0.01</interestRate>
+        </dividendSettings>
+    </case>
+
+    <case>
+        <RNGSettings>
+            <RNG>RandomGeneratorIntelMKL</RNG>
+            <poolSize>5000000</poolSize>
+
+        </RNGSettings>
+        <agents>
+            <AgentCrossWealth>
+                <count>1000</count>
+                <!-- initial herding threshold and initial herding pressure are drawn
+                     from the uniform distribution [b1*deltaT, b2*deltaT] (cf. eq. 3.1, p.8)
+                     ==> here, they are drawn from [0.001, 0.004] -->
+                <b1>25</b1>
+                <b2>100</b2>
+                <!-- initial inaction threshold is drawn from the uniform distribution [A1, A2] (cf. eq. 3.1, p.8) -->
+                <A1>0.1</A1>
+                <A2>0.3</A2>
+                <cash>1</cash>
+                <stock>1</stock>
+                <gamma>0.9</gamma>
+            </AgentCrossWealth>
+        </agents>
+        <dataItemCollectorClasses>
+            <DataCollectorPrice />
+            <DataCollectorExcessDemand />
+                    <DataCollectorAmountOfCash>
+                    <method>detail</method>
+                <collectInterval>100</collectInterval>
+            </DataCollectorAmountOfCash></dataItemCollectorClasses>
+        <numsteps>13000</numsteps>
+        <outputname>Cross_base_WE0-9_1000</outputname>
+        <deltaT>0.00004</deltaT>
+        <writerClass>WriterHDF5</writerClass>
+        <excessDemandCalculatorSettings>
+            <!-- see the term for sigma(n) on p.5 for the calculation of market sentiment / excess demand.-->
+            <excessDemandCalculatorClass>ExcessDemandCalculatorHarras</excessDemandCalculatorClass>
+        </excessDemandCalculatorSettings>
+        <priceCalculatorSettings>
+            <priceCalculatorClass>PriceCalculatorCross</priceCalculatorClass>
+            <!-- corresponds to alpha in the paper, used in eq. 3.2, p. 11) -->
+            <!-- theta = 0 gives the base model, theta = 2 adds heteroskedacity -->
+            <theta>0</theta>
+            <!-- corresponds to lambda in the Harras-paper (cf. p.10) -->
+            <marketDepth>0.2</marketDepth>
+        </priceCalculatorSettings>
+
+        <repetitions>100</repetitions>
+        <startPrice>1</startPrice>
+        <dividendSettings>
+            <interestRate>0.01</interestRate>
+        </dividendSettings>
+    </case>
+
+    <case>
+        <RNGSettings>
+            <RNG>RandomGeneratorIntelMKL</RNG>
+            <poolSize>5000000</poolSize>
+
+        </RNGSettings>
+        <agents>
+            <AgentCrossWealth>
+                <count>1000</count>
+                <!-- initial herding threshold and initial herding pressure are drawn
+                     from the uniform distribution [b1*deltaT, b2*deltaT] (cf. eq. 3.1, p.8)
+                     ==> here, they are drawn from [0.001, 0.004] -->
+                <b1>25</b1>
+                <b2>100</b2>
+                <!-- initial inaction threshold is drawn from the uniform distribution [A1, A2] (cf. eq. 3.1, p.8) -->
+                <A1>0.1</A1>
+                <A2>0.3</A2>
+                <cash>1</cash>
+                <stock>1</stock>
+                <gamma>1</gamma>
+            </AgentCrossWealth>
+        </agents>
+        <dataItemCollectorClasses>
+            <DataCollectorPrice />
+            <DataCollectorExcessDemand />
+                    <DataCollectorAmountOfCash>
+                    <method>detail</method>
+                <collectInterval>100</collectInterval>
+            </DataCollectorAmountOfCash></dataItemCollectorClasses>
+        <numsteps>13000</numsteps>
+        <outputname>Cross_base_WE1_1000</outputname>
+        <deltaT>0.00004</deltaT>
+        <writerClass>WriterHDF5</writerClass>
+        <excessDemandCalculatorSettings>
+            <!-- see the term for sigma(n) on p.5 for the calculation of market sentiment / excess demand.-->
+            <excessDemandCalculatorClass>ExcessDemandCalculatorHarras</excessDemandCalculatorClass>
+        </excessDemandCalculatorSettings>
+        <priceCalculatorSettings>
+            <priceCalculatorClass>PriceCalculatorCross</priceCalculatorClass>
+            <!-- corresponds to alpha in the paper, used in eq. 3.2, p. 11) -->
+            <!-- theta = 0 gives the base model, theta = 2 adds heteroskedacity -->
+            <theta>0</theta>
+            <!-- corresponds to lambda in the Harras-paper (cf. p.10) -->
+            <marketDepth>0.2</marketDepth>
+        </priceCalculatorSettings>
+
+        <repetitions>100</repetitions>
+        <startPrice>1</startPrice>
+        <dividendSettings>
+            <interestRate>0.01</interestRate>
+        </dividendSettings>
+    </case>
+</settings>

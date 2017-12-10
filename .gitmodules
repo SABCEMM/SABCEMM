@@ -1,0 +1,60 @@
+[submodule "libs/boost/optional"]
+	path = libs/boost/optional
+	url = https://github.com/boostorg/optional.git
+[submodule "libs/boost/assert"]
+	path = libs/boost/assert
+	url = https://github.com/boostorg/assert.git
+[submodule "libs/boost/config"]
+	path = libs/boost/config
+	url = https://github.com/boostorg/config.git
+[submodule "libs/boost/core"]
+	path = libs/boost/core
+	url = https://github.com/boostorg/core.git
+[submodule "libs/boost/detail"]
+	path = libs/boost/detail
+	url = https://github.com/boostorg/detail.git
+[submodule "libs/boost/mpl"]
+	path = libs/boost/mpl
+	url = https://github.com/boostorg/mpl.git
+[submodule "libs/boost/static_assert"]
+	path = libs/boost/static_assert
+	url = https://github.com/boostorg/static_assert.git
+[submodule "libs/boost/throw_exception"]
+	path = libs/boost/throw_exception
+	url = https://github.com/boostorg/throw_exception.git
+[submodule "libs/boost/type_traits"]
+	path = libs/boost/type_traits
+	url = https://github.com/boostorg/type_traits.git
+[submodule "libs/boost/utility"]
+	path = libs/boost/utility
+	url = https://github.com/boostorg/utility.git
+[submodule "libs/googletest"]
+	path = libs/googletest
+	url = https://github.com/google/googletest.git
+[submodule "cmake/modules/rpavlik"]
+	path = cmake/modules/rpavlik
+	url = https://github.com/rpavlik/cmake-modules
+[submodule "libs/progressbar"]
+	path = libs/progressbar
+	url = https://github.com/doches/progressbar.git
+[submodule "cmake/modules/RWTH-HPC"]
+	path = cmake/modules/RWTH-HPC
+	url = https://github.com/RWTH-HPC/CMake-codecov.git
+[submodule "libs/boost/assign"]
+	path = libs/boost/assign
+	url = https://github.com/boostorg/assign.git
+[submodule "libs/boost/preprocessor"]
+	path = libs/boost/preprocessor
+	url = https://github.com/boostorg/preprocessor.git
+[submodule "libs/boost/range"]
+	path = libs/boost/range
+	url = https://github.com/boostorg/range.git
+[submodule "libs/boost/iterator"]
+	path = libs/boost/iterator
+	url = https://github.com/boostorg/iterator.git
+[submodule "libs/boost/concept_check"]
+	path = libs/boost/concept_check
+	url = https://github.com/boostorg/concept_check.git
+[submodule "libs/boost/tuple"]
+	path = libs/boost/tuple
+	url = https://github.com/boostorg/tuple.git

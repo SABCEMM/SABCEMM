@@ -1,0 +1,21 @@
+SET(BOOST_INCLUDES
+	${CMAKE_CURRENT_SOURCE_DIR}/assert/include
+	${CMAKE_CURRENT_SOURCE_DIR}/assign/include
+	${CMAKE_CURRENT_SOURCE_DIR}/concept_check/include
+	${CMAKE_CURRENT_SOURCE_DIR}/config/include
+	${CMAKE_CURRENT_SOURCE_DIR}/core/include
+	${CMAKE_CURRENT_SOURCE_DIR}/detail/include
+	${CMAKE_CURRENT_SOURCE_DIR}/iterator/include
+	${CMAKE_CURRENT_SOURCE_DIR}/move/include
+	${CMAKE_CURRENT_SOURCE_DIR}/mpl/include
+	${CMAKE_CURRENT_SOURCE_DIR}/optional/include
+	${CMAKE_CURRENT_SOURCE_DIR}/preprocessor/include
+	${CMAKE_CURRENT_SOURCE_DIR}/range/include
+	${CMAKE_CURRENT_SOURCE_DIR}/static_assert/include
+	${CMAKE_CURRENT_SOURCE_DIR}/throw_exception/include
+	${CMAKE_CURRENT_SOURCE_DIR}/tuple/include
+	${CMAKE_CURRENT_SOURCE_DIR}/type_traits/include
+	${CMAKE_CURRENT_SOURCE_DIR}/utility/include
+	PARENT_SCOPE
+)
+
