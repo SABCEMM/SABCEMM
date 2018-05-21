@@ -1,5 +1,0 @@
-<map id="NeighbourhoodGenerator" name="NeighbourhoodGenerator">
-<area shape="rect" id="node2" href="$class_lattice_neighbourhood_generator.html" title="Class that generates a neighbourhood of agents living on a square lattice. " alt="" coords="5,187,245,287"/>
-<area shape="rect" id="node3" href="$class_lattice_neighbourhood_generator_matlab.html" title="Class that generates a neighbourhood of agents living on a square lattice. " alt="" coords="270,167,501,307"/>
-<area shape="rect" id="node4" href="$class_linear_neigbourhood_generator.html" title="Yet to Implement. " alt="" coords="525,193,747,280"/>
-</map>

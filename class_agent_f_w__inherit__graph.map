@@ -1,6 +1,0 @@
-<map id="AgentFW" name="AgentFW">
-<area shape="rect" id="node4" href="$class_agent_f_w_chartist.html" title="{AgentFWChartist\n|&#45; chi\l|+ stepUpdate()\l+ calculateContributedAttractiveness()\l+ AgentFWChartist()\l+ calculateDemand()\l}" alt="" coords="5,936,252,1049"/>
-<area shape="rect" id="node5" href="$class_agent_f_w_fundamentalist.html" title="{AgentFWFundamentalist\n|&#45; phi\l&#45; fundamentalPrice\l|+ stepUpdate()\l+ calculateContributedAttractiveness()\l+ AgentFWFundamentalist()\l+ calculateDemand()\l}" alt="" coords="276,929,523,1056"/>
-<area shape="rect" id="node2" href="$class_agent.html" title="Virtual parent class for all Agent. " alt="" coords="179,207,348,507"/>
-<area shape="rect" id="node3" href="$class_group.html" title="{Group\n|&#45; groups_\l|+ Group()\l+ hasGroup()\l+ addGroup()\l+ setGroups()\l+ removeGroup()\l+ resetGroups()\l+ getGroups()\l}" alt="" coords="202,5,325,159"/>
-</map>

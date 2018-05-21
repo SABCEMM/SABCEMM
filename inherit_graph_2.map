@@ -1,11 +1,11 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node1" href="$class_data_item_collector.html" title="Pure&#45;Virtual Base class for all implementations of a data collector. " alt="" coords="5,192,133,217"/>
-<area shape="rect" id="node2" href="$class_data_item_collector_amount_of_cash.html" title="DataItemCollectorAmountOfCash" alt="" coords="182,5,402,31"/>
-<area shape="rect" id="node3" href="$class_data_item_collector_amount_of_stock.html" title="DataItemCollectorAmountOf\lStock" alt="" coords="198,55,386,93"/>
-<area shape="rect" id="node4" href="$class_data_item_collector_e_m_b_gamma.html" title="DataCollector for the average gamma of EMB agents. " alt="" coords="190,117,394,143"/>
-<area shape="rect" id="node5" href="$class_data_item_collector_excess_demand.html" title="DataItemCollector for the ExcessDemand. " alt="" coords="181,167,403,192"/>
-<area shape="rect" id="node6" href="$class_data_item_collector_f_w_shares.html" title="DataItemCollectorFWShares" alt="" coords="197,216,388,241"/>
-<area shape="rect" id="node7" href="$class_data_item_collector_harras_k.html" title="DataCollector for the average trust in the neihgbours (K). " alt="" coords="204,265,381,291"/>
-<area shape="rect" id="node8" href="$class_data_item_collector_price.html" title="DataItemCollector for the Price. " alt="" coords="213,315,371,340"/>
-<area shape="rect" id="node9" href="$class_data_item_collector_wealth.html" title="DataItemCollectorWealth" alt="" coords="207,364,377,389"/>
+<area shape="rect" id="node1" href="$a01018.html" title="Pure&#45;Virtual Base class for all implementations of a data collector. " alt="" coords="5,192,133,217"/>
+<area shape="rect" id="node2" href="$a01022.html" title="DataItemCollectorAmountOfCash" alt="" coords="182,5,402,31"/>
+<area shape="rect" id="node3" href="$a01026.html" title="DataItemCollectorAmountOf\lStock" alt="" coords="198,55,386,93"/>
+<area shape="rect" id="node4" href="$a01030.html" title="DataCollector for the average gamma of EMB agents. " alt="" coords="190,117,394,143"/>
+<area shape="rect" id="node5" href="$a01034.html" title="DataItemCollector for the ExcessDemand. " alt="" coords="181,167,403,192"/>
+<area shape="rect" id="node6" href="$a01038.html" title="DataItemCollectorFWShares" alt="" coords="197,216,388,241"/>
+<area shape="rect" id="node7" href="$a01042.html" title="DataCollector for the average trust in the neihgbours (K). " alt="" coords="204,265,381,291"/>
+<area shape="rect" id="node8" href="$a01046.html" title="DataItemCollector for the Price. " alt="" coords="213,315,371,340"/>
+<area shape="rect" id="node9" href="$a01050.html" title="DataItemCollectorWealth" alt="" coords="207,364,377,389"/>
 </map>

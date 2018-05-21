@@ -1,9 +1,0 @@
-<map id="AgentFW" name="AgentFW">
-<area shape="rect" id="node2" href="$class_agent.html" title="Virtual parent class for all Agent. " alt="" coords="250,704,420,964"/>
-<area shape="rect" id="node3" href="$class_group.html" title="{Group\n||+ Group()\l+ hasGroup()\l+ addGroup()\l+ setGroups()\l+ removeGroup()\l+ resetGroups()\l+ getGroups()\l}" alt="" coords="5,449,129,603"/>
-<area shape="rect" id="node5" title="STL class. " alt="" coords="10,140,124,213"/>
-<area shape="rect" id="node7" href="$class_price.html" title="Container Class for the Price. " alt="" coords="153,409,347,643"/>
-<area shape="rect" id="node8" href="$class_delta_t.html" title="Container Class for the DeltaT. " alt="" coords="371,456,470,596"/>
-<area shape="rect" id="node9" href="$class_random_generator.html" title="Pure&#45;Virutal Class to generate random numbers. " alt="" coords="494,409,693,643"/>
-<area shape="rect" id="node10" title="STL class. " alt="" coords="444,797,567,871"/>
-</map>

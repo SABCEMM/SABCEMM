@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['globalnews',['GlobalNews',['../class_global_news.html',1,'']]],
-  ['group',['Group',['../class_group.html',1,'']]]
+  ['globalnews',['GlobalNews',['../a01222.html',1,'']]],
+  ['group',['Group',['../a01082.html',1,'']]]
 ];

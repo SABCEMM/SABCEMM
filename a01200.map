@@ -1,0 +1,18 @@
+<map id="StockExchange" name="StockExchange">
+<area shape="rect" id="node3" title="STL class. " alt="" coords="282,140,396,213"/>
+<area shape="rect" id="node5" href="$a01014.html" title="Composite of DataCollectors. " alt="" coords="303,1828,495,2008"/>
+<area shape="rect" id="node7" href="$a01018.html" title="Pure&#45;Virtual Base class for all implementations of a data collector. " alt="" coords="302,1239,458,1525"/>
+<area shape="rect" id="node8" href="$a01234.html" title="Pure&#45;Virtual class that defines the default interface for a writer. " alt="" coords="304,784,432,1031"/>
+<area shape="rect" id="node9" title="STL class. " alt="" coords="389,563,468,636"/>
+<area shape="rect" id="node10" title="STL class. " alt="" coords="366,275,491,361"/>
+<area shape="rect" id="node11" href="$a01222.html" title="Container for the GlobalNews required for the StockExchangeHarras. " alt="" coords="592,1061,782,1215"/>
+<area shape="rect" id="node12" href="$a01166.html" title="Pure&#45;Virutal Class to generate random numbers. " alt="" coords="600,483,800,716"/>
+<area shape="rect" id="node14" href="$a00962.html" title="Virtual parent class for all Agent. " alt="" coords="1065,777,1235,1037"/>
+<area shape="rect" id="node22" href="$a01214.html" title="Container Class for the Dividend. " alt="" coords="751,777,900,1037"/>
+<area shape="rect" id="node21" href="$a01066.html" title="Virtual parent class for all ExcessDemandCalculator. " alt="" coords="1047,1587,1250,1753"/>
+<area shape="rect" id="node15" href="$a01082.html" title="{Group\n||+ Group()\l+ hasGroup()\l+ addGroup()\l+ setGroups()\l+ removeGroup()\l+ resetGroups()\l+ getGroups()\l}" alt="" coords="1017,523,1141,676"/>
+<area shape="rect" id="node17" href="$a01226.html" title="Container Class for the Price. " alt="" coords="1165,483,1359,716"/>
+<area shape="rect" id="node19" href="$a01130.html" title="Virtual parent class for all PriceCalculator. " alt="" coords="1134,1815,1347,2021"/>
+<area shape="rect" id="node18" href="$a01210.html" title="Container Class for the DeltaT. " alt="" coords="893,529,993,669"/>
+<area shape="rect" id="node20" href="$a01218.html" title="Container Class for the ExcessDemand. " alt="" coords="1217,1299,1370,1465"/>
+</map>

@@ -1,8 +1,8 @@
 var searchData=
 [
-  ['excessdemand',['ExcessDemand',['../class_excess_demand.html',1,'']]],
-  ['excessdemandcalculator',['ExcessDemandCalculator',['../class_excess_demand_calculator.html',1,'']]],
-  ['excessdemandcalculatorfw',['ExcessDemandCalculatorFW',['../class_excess_demand_calculator_f_w.html',1,'']]],
-  ['excessdemandcalculatorharras',['ExcessDemandCalculatorHarras',['../class_excess_demand_calculator_harras.html',1,'']]],
-  ['excessdemandcalculatorlls',['ExcessDemandCalculatorLLS',['../class_excess_demand_calculator_l_l_s.html',1,'']]]
+  ['excessdemand',['ExcessDemand',['../a01218.html',1,'']]],
+  ['excessdemandcalculator',['ExcessDemandCalculator',['../a01066.html',1,'']]],
+  ['excessdemandcalculatorfw',['ExcessDemandCalculatorFW',['../a01070.html',1,'']]],
+  ['excessdemandcalculatorharras',['ExcessDemandCalculatorHarras',['../a01074.html',1,'']]],
+  ['excessdemandcalculatorlls',['ExcessDemandCalculatorLLS',['../a01078.html',1,'']]]
 ];

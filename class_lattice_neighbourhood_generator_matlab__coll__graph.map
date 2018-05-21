@@ -1,9 +1,0 @@
-<map id="LatticeNeighbourhoodGeneratorMatlab" name="LatticeNeighbourhoodGeneratorMatlab">
-<area shape="rect" id="node2" href="$class_neighbourhood_generator.html" title="Pure&#45;Virtual parent class for all NeighbourhoodGenerator. " alt="" coords="21,1160,221,1260"/>
-<area shape="rect" id="node4" href="$class_agent.html" title="Virtual parent class for all Agent. " alt="" coords="349,704,519,964"/>
-<area shape="rect" id="node5" href="$class_group.html" title="{Group\n||+ Group()\l+ hasGroup()\l+ addGroup()\l+ setGroups()\l+ removeGroup()\l+ resetGroups()\l+ getGroups()\l}" alt="" coords="190,449,313,603"/>
-<area shape="rect" id="node7" title="STL class. " alt="" coords="64,140,178,213"/>
-<area shape="rect" id="node9" href="$class_price.html" title="Container Class for the Price. " alt="" coords="337,409,531,643"/>
-<area shape="rect" id="node10" href="$class_delta_t.html" title="Container Class for the DeltaT. " alt="" coords="555,456,655,596"/>
-<area shape="rect" id="node11" href="$class_random_generator.html" title="Pure&#45;Virutal Class to generate random numbers. " alt="" coords="678,409,878,643"/>
-</map>

@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['matherror',['MathError',['../class_math_error.html',1,'']]],
-  ['monicpoly',['monicPoly',['../classbrent_1_1monic_poly.html',1,'brent']]]
+  ['matherror',['MathError',['../a01058.html',1,'']]],
+  ['monicpoly',['monicPoly',['../a01006.html',1,'brent']]]
 ];

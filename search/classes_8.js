@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['neighbourhoodgenerator',['NeighbourhoodGenerator',['../class_neighbourhood_generator.html',1,'']]],
-  ['noconvergenceexception',['NoConvergenceException',['../class_no_convergence_exception.html',1,'']]]
+  ['neighbourhoodgenerator',['NeighbourhoodGenerator',['../a01098.html',1,'']]],
+  ['noconvergenceexception',['NoConvergenceException',['../a01062.html',1,'']]]
 ];

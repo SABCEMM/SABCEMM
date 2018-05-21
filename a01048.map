@@ -1,0 +1,12 @@
+<map id="DataItemCollectorWealth" name="DataItemCollectorWealth">
+<area shape="rect" id="node2" href="$a01018.html" title="Pure&#45;Virtual Base class for all implementations of a data collector. " alt="" coords="109,1039,265,1325"/>
+<area shape="rect" id="node3" href="$a01234.html" title="Pure&#45;Virtual class that defines the default interface for a writer. " alt="" coords="8,724,136,971"/>
+<area shape="rect" id="node4" title="STL class. " alt="" coords="28,503,108,576"/>
+<area shape="rect" id="node5" title="STL class. " alt="" coords="5,275,131,361"/>
+<area shape="rect" id="node6" href="$a01226.html" title="Container Class for the Price. " alt="" coords="131,423,325,656"/>
+<area shape="rect" id="node8" href="$a00962.html" title="Virtual parent class for all Agent. " alt="" coords="462,717,632,977"/>
+<area shape="rect" id="node9" href="$a01082.html" title="{Group\n||+ Group()\l+ hasGroup()\l+ addGroup()\l+ setGroups()\l+ removeGroup()\l+ resetGroups()\l+ getGroups()\l}" alt="" coords="349,463,472,616"/>
+<area shape="rect" id="node11" title="STL class. " alt="" coords="842,140,955,213"/>
+<area shape="rect" id="node13" href="$a01210.html" title="Container Class for the DeltaT. " alt="" coords="497,469,596,609"/>
+<area shape="rect" id="node14" href="$a01166.html" title="Pure&#45;Virutal Class to generate random numbers. " alt="" coords="620,423,820,656"/>
+</map>

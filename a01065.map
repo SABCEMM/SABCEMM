@@ -1,0 +1,5 @@
+<map id="ExcessDemandCalculator" name="ExcessDemandCalculator">
+<area shape="rect" id="node2" href="$a01070.html" title="{ExcessDemandCalculatorFW\n||+ ExcessDemandCalculatorFW()\l+ preStepCalculate()\l+ stepCalculate()\l+ postStepCalculate()\l}" alt="" coords="5,280,221,393"/>
+<area shape="rect" id="node3" href="$a01074.html" title="Calculates the excess demand with eq.2 from &quot;How to grow a bubble: A model of myopic adapting agents&quot;..." alt="" coords="245,267,488,407"/>
+<area shape="rect" id="node4" href="$a01078.html" title="Calculates the excess demand with the formula from &quot;How to grow a bubble: A model of myopic adapting ..." alt="" coords="512,233,739,440"/>
+</map>

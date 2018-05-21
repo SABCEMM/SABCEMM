@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['baddomainerror',['BadDomainError',['../class_bad_domain_error.html',1,'']]]
+  ['baddomainerror',['BadDomainError',['../a01054.html',1,'']]]
 ];

@@ -1,6 +1,6 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node1" href="$class_excess_demand_calculator.html" title="Virtual parent class for all ExcessDemandCalculator. " alt="" coords="5,55,180,80"/>
-<area shape="rect" id="node2" href="$class_excess_demand_calculator_f_w.html" title="ExcessDemandCalculatorFW" alt="" coords="238,5,433,31"/>
-<area shape="rect" id="node3" href="$class_excess_demand_calculator_harras.html" title="Calculates the excess demand with eq.2 from &quot;How to grow a bubble: A model of myopic adapting agents&quot;..." alt="" coords="228,55,443,80"/>
-<area shape="rect" id="node4" href="$class_excess_demand_calculator_l_l_s.html" title="Calculates the excess demand with the formula from &quot;How to grow a bubble: A model of myopic adapting ..." alt="" coords="236,104,435,129"/>
+<area shape="rect" id="node1" href="$a01066.html" title="Virtual parent class for all ExcessDemandCalculator. " alt="" coords="5,55,180,80"/>
+<area shape="rect" id="node2" href="$a01070.html" title="ExcessDemandCalculatorFW" alt="" coords="238,5,433,31"/>
+<area shape="rect" id="node3" href="$a01074.html" title="Calculates the excess demand with eq.2 from &quot;How to grow a bubble: A model of myopic adapting agents&quot;..." alt="" coords="228,55,443,80"/>
+<area shape="rect" id="node4" href="$a01078.html" title="Calculates the excess demand with the formula from &quot;How to grow a bubble: A model of myopic adapting ..." alt="" coords="236,104,435,129"/>
 </map>

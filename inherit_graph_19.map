@@ -1,10 +1,10 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node1" href="$class_price_calculator.html" title="Virtual parent class for all PriceCalculator. " alt="" coords="5,129,117,155"/>
-<area shape="rect" id="node2" href="$class_price_calculator_bisection.html" title="Using a bisection, the price is chosen such that the excess demand at that price approaches zero..." alt="" coords="175,5,341,31"/>
-<area shape="rect" id="node4" href="$class_price_calculator_cross.html" title="Calculates the price as presented in the Cross model. " alt="" coords="185,55,331,80"/>
-<area shape="rect" id="node5" href="$class_price_calculator_f_w.html" title="PriceCalculatorFW" alt="" coords="192,104,324,129"/>
-<area shape="rect" id="node6" href="$class_price_calculator_general.html" title="PriceCalculatorGeneral" alt="" coords="178,153,338,179"/>
-<area shape="rect" id="node7" href="$class_price_calculator_harras.html" title="Calculates the new price with the formula from &quot;How to grow a bubble: A model of myopic adapting agen..." alt="" coords="182,203,334,228"/>
-<area shape="rect" id="node8" href="$class_price_calculator_harras_noise.html" title="PriceCalculatorHarrasNoise" alt="" coords="165,252,351,277"/>
-<area shape="rect" id="node3" href="$class_price_calculator_l_l_s.html" title="PriceCalculatorLLS" alt="" coords="399,5,534,31"/>
+<area shape="rect" id="node1" href="$a01130.html" title="Virtual parent class for all PriceCalculator. " alt="" coords="5,129,117,155"/>
+<area shape="rect" id="node2" href="$a01134.html" title="Using a bisection, the price is chosen such that the excess demand at that price approaches zero..." alt="" coords="175,5,341,31"/>
+<area shape="rect" id="node4" href="$a01138.html" title="Calculates the price as presented in the Cross model. " alt="" coords="185,55,331,80"/>
+<area shape="rect" id="node5" href="$a01142.html" title="PriceCalculatorFW" alt="" coords="192,104,324,129"/>
+<area shape="rect" id="node6" href="$a01146.html" title="PriceCalculatorGeneral" alt="" coords="178,153,338,179"/>
+<area shape="rect" id="node7" href="$a01150.html" title="Calculates the new price with the formula from &quot;How to grow a bubble: A model of myopic adapting agen..." alt="" coords="182,203,334,228"/>
+<area shape="rect" id="node8" href="$a01154.html" title="PriceCalculatorHarrasNoise" alt="" coords="165,252,351,277"/>
+<area shape="rect" id="node3" href="$a01158.html" title="PriceCalculatorLLS" alt="" coords="399,5,534,31"/>
 </map>

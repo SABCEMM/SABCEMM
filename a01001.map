@@ -1,0 +1,5 @@
+<map id="brent::func_base" name="brent::func_base">
+<area shape="rect" id="node2" href="$a00998.html" title="{brent::func_wrapper\n|&#45; func\l|+ func_wrapper()\l+ operator()()\l}" alt="" coords="5,140,145,227"/>
+<area shape="rect" id="node3" href="$a01006.html" title="{brent::monicPoly\n|+ coeff\l|+ operator()()\l+ monicPoly()\l+ monicPoly()\l+ monicPoly()\l}" alt="" coords="170,127,290,240"/>
+<area shape="rect" id="node4" href="$a01010.html" title="{brent::Poly\n|+ coeff\l|+ operator()()\l+ Poly()\l+ Poly()\l+ Poly()\l}" alt="" coords="315,127,415,240"/>
+</map>

@@ -1,0 +1,15 @@
+<map id="DataItemCollectorHarrasK" name="DataItemCollectorHarrasK">
+<area shape="rect" id="node2" href="$a01018.html" title="Pure&#45;Virtual Base class for all implementations of a data collector. " alt="" coords="373,1901,529,2188"/>
+<area shape="rect" id="node3" href="$a01234.html" title="Pure&#45;Virtual class that defines the default interface for a writer. " alt="" coords="271,1500,399,1747"/>
+<area shape="rect" id="node4" title="STL class. " alt="" coords="293,1212,372,1285"/>
+<area shape="rect" id="node5" title="STL class. " alt="" coords="218,791,343,877"/>
+<area shape="rect" id="node7" href="$a00990.html" title="Agent from the paper &quot;How to grow a bubble: A model of myopic adapting agents&quot; by Georges Harras and ..." alt="" coords="703,1407,943,1840"/>
+<area shape="rect" id="node8" href="$a00962.html" title="Virtual parent class for all Agent. " alt="" coords="367,704,537,964"/>
+<area shape="rect" id="node9" href="$a01082.html" title="{Group\n||+ Group()\l+ hasGroup()\l+ addGroup()\l+ setGroups()\l+ removeGroup()\l+ resetGroups()\l+ getGroups()\l}" alt="" coords="5,449,129,603"/>
+<area shape="rect" id="node11" title="STL class. " alt="" coords="1113,140,1226,213"/>
+<area shape="rect" id="node13" href="$a01226.html" title="Container Class for the Price. " alt="" coords="153,409,347,643"/>
+<area shape="rect" id="node14" href="$a01210.html" title="Container Class for the DeltaT. " alt="" coords="371,456,470,596"/>
+<area shape="rect" id="node15" href="$a01166.html" title="Pure&#45;Virutal Class to generate random numbers. " alt="" coords="494,409,693,643"/>
+<area shape="rect" id="node16" href="$a01222.html" title="Container for the GlobalNews required for the StockExchangeHarras. " alt="" coords="606,988,795,1141"/>
+<area shape="rect" id="node18" href="$a01218.html" title="Container Class for the ExcessDemand. " alt="" coords="919,1165,1073,1332"/>
+</map>
