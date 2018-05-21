@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.14"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>SABCEMM: Parameter/ParameterSetDividend.cpp File Reference</title>
+<title>SABCEMM: Parameter/ParameterSetDataItemCollector.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -67,51 +67,93 @@ $(function() {
 </div><!-- top -->
 <div class="header">
   <div class="summary">
-<a href="#define-members">Macros</a>  </div>
+<a href="#nested-classes">Classes</a>  </div>
   <div class="headertitle">
-<div class="title">ParameterSetDividend.cpp File Reference</div>  </div>
+<div class="title">ParameterSetDataItemCollector.h File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><code>#include &lt;iostream&gt;</code><br />
+<div class="textblock"><code>#include &lt;string&gt;</code><br />
+<code>#include &lt;vector&gt;</code><br />
+<code>#include &lt;boost/optional.hpp&gt;</code><br />
+<code>#include &quot;<a class="el" href="a00344_source.html">../Util/Util.h</a>&quot;</code><br />
 <code>#include &quot;tinyxml2/tinyxml2.h&quot;</code><br />
-<code>#include &quot;<a class="el" href="a00209_source.html">ParameterSetDividend.h</a>&quot;</code><br />
 </div><div class="textblock"><div class="dynheader">
-Include dependency graph for ParameterSetDividend.cpp:</div>
+Include dependency graph for ParameterSetDataItemCollector.h:</div>
 <div class="dyncontent">
-<div class="center"><img src="a00207.png" border="0" usemap="#_parameter_2_parameter_set_dividend_8cpp" alt=""/></div>
-<map name="_parameter_2_parameter_set_dividend_8cpp" id="_parameter_2_parameter_set_dividend_8cpp">
-<area shape="rect" id="node4" href="a00209.html" title="ParameterSetDividend.h" alt="" coords="165,79,332,104"/>
+<div class="center"><img src="a00207.png" border="0" usemap="#_parameter_2_parameter_set_data_item_collector_8h" alt=""/></div>
+<map name="_parameter_2_parameter_set_data_item_collector_8h" id="_parameter_2_parameter_set_data_item_collector_8h">
+<area shape="rect" id="node5" href="a00344.html" title="../Util/Util.h" alt="" coords="199,92,285,117"/>
 </map>
 </div>
-</div><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
-Macros</h2></td></tr>
-<tr class="memitem:ab54000d48c50364e1ddc5a4f4ec81b97"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00206.html#ab54000d48c50364e1ddc5a4f4ec81b97">REQUIRED</a>(variable)&#160;&#160;&#160;if(!(variable)){cerr &lt;&lt; &quot;%%% &quot; &lt;&lt; #variable &lt;&lt; &quot; not specified. %%%&quot; &lt;&lt; endl; return false;}</td></tr>
-<tr class="separator:ab54000d48c50364e1ddc5a4f4ec81b97"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</div><div class="textblock"><div class="dynheader">
+This graph shows which files directly or indirectly include this file:</div>
+<div class="dyncontent">
+<div class="center"><img src="a00208.png" border="0" usemap="#_parameter_2_parameter_set_data_item_collector_8hdep" alt=""/></div>
+<map name="_parameter_2_parameter_set_data_item_collector_8hdep" id="_parameter_2_parameter_set_data_item_collector_8hdep">
+<area shape="rect" id="node2" href="a00194.html" title="Parameter/Parameter.h" alt="" coords="3284,99,3444,124"/>
+<area shape="rect" id="node12" href="a00062.html" title="DataCollector/DataCollector.cpp" alt="" coords="4161,679,4372,704"/>
+<area shape="rect" id="node50" href="a00203.html" title="Parameter/ParameterSetData\lItemCollector.cpp" alt="" coords="5037,92,5235,131"/>
+<area shape="rect" id="node3" href="a00287.html" title="RandomGenerator/RandomGenerator.h" alt="" coords="1930,252,2187,277"/>
+<area shape="rect" id="node4" href="a00005.html" title="Agent/Agent.h" alt="" coords="2378,419,2484,444"/>
+<area shape="rect" id="node5" href="a00002.html" title="Agent/Agent.cpp" alt="" coords="2196,679,2316,704"/>
+<area shape="rect" id="node16" href="a00188.html" title="NeighbourhoodGenerator\l/NeighbourhoodGenerator.h" alt="" coords="2820,499,3007,537"/>
+<area shape="rect" id="node19" href="a00065.html" title="DataCollector/DataCollector.h" alt="" coords="3631,592,3828,617"/>
+<area shape="rect" id="node20" href="a00341.html" title="StockExchange/StockExchange.h" alt="" coords="928,679,1149,704"/>
+<area shape="rect" id="node21" href="a00335.html" title="Simulation.h" alt="" coords="2223,759,2318,784"/>
+<area shape="rect" id="node25" href="a00137.html" title="ExcessDemandCalculator\l/ExcessDemandCalculator.h" alt="" coords="960,499,1149,537"/>
+<area shape="rect" id="node26" href="a00236.html" title="PriceCalculator/PriceCalculator.h" alt="" coords="406,592,623,617"/>
+<area shape="rect" id="node27" href="a00233.html" title="PriceCalculator/PriceCalculator.cpp" alt="" coords="331,759,562,784"/>
+<area shape="rect" id="node28" href="a00248.html" title="PriceCalculator/PriceCalculator\lCross.h" alt="" coords="605,672,811,711"/>
+<area shape="rect" id="node32" href="a00377.html" title="VariableContainer/Variable\lContainer.cpp" alt="" coords="1220,412,1399,451"/>
+<area shape="rect" id="node34" href="a00380.html" title="VariableContainer/Variable\lContainer.h" alt="" coords="960,325,1139,364"/>
+<area shape="rect" id="node43" href="a00389.html" title="Writer/Writer.h" alt="" coords="4267,179,4373,204"/>
+<area shape="rect" id="node48" href="a00401.html" title="Writer/WriterNone.h" alt="" coords="4723,252,4861,277"/>
+<area shape="rect" id="node49" href="a00191.html" title="Parameter/Parameter.cpp" alt="" coords="3962,179,4136,204"/>
+<area shape="rect" id="node6" href="a00011.html" title="Agent/AgentCross.h" alt="" coords="1930,505,2070,531"/>
+<area shape="rect" id="node7" href="a00017.html" title="Agent/AgentCrossWealth.h" alt="" coords="1757,592,1939,617"/>
+<area shape="rect" id="node9" href="a00047.html" title="Agent/AgentHarras.h" alt="" coords="2196,505,2342,531"/>
+<area shape="rect" id="node13" href="a00023.html" title="Agent/AgentEMB.h" alt="" coords="3082,505,3217,531"/>
+<area shape="rect" id="node18" href="a00053.html" title="Agent/AgentRII.h" alt="" coords="1578,505,1701,531"/>
+<area shape="rect" id="node22" href="a00332.html" title="Simulation.cpp" alt="" coords="2216,832,2325,857"/>
+<area shape="rect" id="node29" href="a00260.html" title="PriceCalculator/PriceCalculator\lGeneral.h" alt="" coords="45,672,251,711"/>
+<area shape="rect" id="node30" href="a00272.html" title="PriceCalculator/PriceCalculator\lHarrasNoise.h" alt="" coords="274,672,480,711"/>
+<area shape="rect" id="node31" href="a00368.html" title="VariableContainer/Global\lNews.h" alt="" coords="1751,325,1921,364"/>
+<area shape="rect" id="node33" href="a00356.html" title="VariableContainer/Dividend.h" alt="" coords="1483,332,1677,357"/>
+<area shape="rect" id="node35" href="a00284.html" title="RandomGenerator/RandomGenerator.cpp" alt="" coords="3094,419,3364,444"/>
+<area shape="rect" id="node36" href="a00317.html" title="RandomGenerator/RandomGenerator\lStdLib.h" alt="" coords="3106,325,3352,364"/>
+<area shape="rect" id="node37" href="a00323.html" title="RandomGenerator/RandomGenerator\lStdLibOld.h" alt="" coords="3426,325,3672,364"/>
+<area shape="rect" id="node38" href="a00311.html" title="RandomGenerator/RandomGenerator\lRANDU.h" alt="" coords="2248,325,2494,364"/>
+<area shape="rect" id="node39" href="a00293.html" title="RandomGenerator/RandomGenerator\lFromFile.h" alt="" coords="2517,325,2763,364"/>
+<area shape="rect" id="node40" href="a00329.html" title="RandomGenerator/RandomNumber\lPool.h" alt="" coords="3746,325,3979,364"/>
+<area shape="rect" id="node41" href="a00299.html" title="RandomGenerator/RandomGenerator\lIntelMKL.h" alt="" coords="2786,325,3032,364"/>
+<area shape="rect" id="node42" href="a00305.html" title="RandomGenerator/RandomGenerator\lNAG.h" alt="" coords="1213,325,1459,364"/>
+<area shape="rect" id="node8" href="a00008.html" title="Agent/AgentCross.cpp" alt="" coords="2013,592,2168,617"/>
+<area shape="rect" id="node10" href="a00044.html" title="Agent/AgentHarras.cpp" alt="" coords="2293,592,2453,617"/>
+<area shape="rect" id="node11" href="a00107.html" title="DataCollector/DataItemCollector\lHarrasK.h" alt="" coords="3394,585,3606,624"/>
+<area shape="rect" id="node14" href="a00089.html" title="DataCollector/DataItemCollector\lEMBGamma.h" alt="" coords="3852,585,4065,624"/>
+<area shape="rect" id="node15" href="a00029.html" title="Agent/AgentFW.h" alt="" coords="2468,505,2594,531"/>
+<area shape="rect" id="node17" href="a00170.html" title="NeighbourhoodGenerator\l/LatticeNeighbourhoodGenerator.h" alt="" coords="2579,585,2805,624"/>
+<area shape="rect" id="node23" href="a00077.html" title="DataCollector/DataItemCollector\lAmountOfCash.h" alt="" coords="4088,585,4301,624"/>
+<area shape="rect" id="node24" href="a00083.html" title="DataCollector/DataItemCollector\lAmountOfStock.h" alt="" coords="4376,585,4589,624"/>
+<area shape="rect" id="node44" href="a00071.html" title="DataCollector/DataItemCollector.h" alt="" coords="4227,505,4450,531"/>
+<area shape="rect" id="node45" href="a00386.html" title="Writer/Writer.cpp" alt="" coords="4572,332,4692,357"/>
+<area shape="rect" id="node46" href="a00407.html" title="Writer/WriterTxt.h" alt="" coords="4357,252,4483,277"/>
+<area shape="rect" id="node47" href="a00395.html" title="Writer/WriterHDF5.h" alt="" coords="4506,252,4648,277"/>
+</map>
+</div>
+</div>
+<p><a href="a00206_source.html">Go to the source code of this file.</a></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
+Classes</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01113.html">ParameterSetDataItemCollector</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Definition/ParameterSet for the DataItemCollectors.  <a href="a01113.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Macro Definition Documentation</h2>
-<a id="ab54000d48c50364e1ddc5a4f4ec81b97"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab54000d48c50364e1ddc5a4f4ec81b97">&#9670;&nbsp;</a></span>REQUIRED</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define REQUIRED</td>
-          <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname">variable</td><td>)</td>
-          <td>&#160;&#160;&#160;if(!(variable)){cerr &lt;&lt; &quot;%%% &quot; &lt;&lt; #variable &lt;&lt; &quot; not specified. %%%&quot; &lt;&lt; endl; return false;}</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon May 21 2018 12:53:26 for SABCEMM by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon May 21 2018 13:42:34 for SABCEMM by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.14
 </small></address>

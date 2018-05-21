@@ -1,5 +1,5 @@
-<map id="WriterHDF5" name="WriterHDF5">
-<area shape="rect" id="node2" href="$a01234.html" title="Pure&#45;Virtual class that defines the default interface for a writer. " alt="" coords="17,276,145,523"/>
-<area shape="rect" id="node3" title="STL class. " alt="" coords="41,141,120,215"/>
-<area shape="rect" id="node4" title="STL class. " alt="" coords="18,5,143,92"/>
+<map id="Writer" name="Writer">
+<area shape="rect" id="node2" href="$a01241.html" title="Writes results to a txt file. " alt="" coords="5,300,156,613"/>
+<area shape="rect" id="node3" href="$a01245.html" title="Dummy class whose functions are noops. " alt="" coords="180,353,307,560"/>
+<area shape="rect" id="node4" href="$a01249.html" title="Writes results to a txt file. " alt="" coords="332,333,459,580"/>
 </map>

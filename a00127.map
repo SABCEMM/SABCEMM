@@ -1,10 +1,7 @@
-<map id="Exceptions/MathError.h" name="Exceptions/MathError.h">
-<area shape="rect" id="node2" href="$a00122.html" title="Exceptions/BadDomainError.h" alt="" coords="53,85,252,111"/>
-<area shape="rect" id="node8" href="$a00128.html" title="Exceptions/NoConvergence\lException.h" alt="" coords="277,79,463,117"/>
-<area shape="rect" id="node9" href="$a00329.html" title="Simulation.cpp" alt="" coords="487,85,596,111"/>
-<area shape="rect" id="node3" href="$a00239.html" title="PriceCalculator/PriceCalculator\lBisection.h" alt="" coords="158,165,363,204"/>
-<area shape="rect" id="node4" href="$a00230.html" title="PriceCalculator/PriceCalculator.cpp" alt="" coords="5,345,236,371"/>
-<area shape="rect" id="node5" href="$a00275.html" title="PriceCalculator/PriceCalculator\lLLS.h" alt="" coords="158,252,363,291"/>
-<area shape="rect" id="node7" href="$a00236.html" title="PriceCalculator/PriceCalculator\lBisection.cpp" alt="" coords="387,252,593,291"/>
-<area shape="rect" id="node6" href="$a00272.html" title="PriceCalculator/PriceCalculator\lLLS.cpp" alt="" coords="260,339,466,377"/>
+<map id="Exceptions/BadDomainError.h" name="Exceptions/BadDomainError.h">
+<area shape="rect" id="node2" href="$a00242.html" title="PriceCalculator/PriceCalculator\lBisection.h" alt="" coords="158,79,363,117"/>
+<area shape="rect" id="node3" href="$a00233.html" title="PriceCalculator/PriceCalculator.cpp" alt="" coords="5,259,236,284"/>
+<area shape="rect" id="node4" href="$a00278.html" title="PriceCalculator/PriceCalculator\lLLS.h" alt="" coords="158,165,363,204"/>
+<area shape="rect" id="node6" href="$a00239.html" title="PriceCalculator/PriceCalculator\lBisection.cpp" alt="" coords="387,165,593,204"/>
+<area shape="rect" id="node5" href="$a00275.html" title="PriceCalculator/PriceCalculator\lLLS.cpp" alt="" coords="260,252,466,291"/>
 </map>

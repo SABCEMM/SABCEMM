@@ -1,0 +1,9 @@
+<map id="Parameter" name="Parameter">
+<area shape="rect" id="node2" href="$a01121.html" title="{ParameterSetExcessDemand\lCalculator\n|+ excessDemandCalculatorClass\l|+ validate()\l+ ParameterSetExcessDemand\lCalculator()\l+ readFromXML()\l}" alt="" coords="5,481,223,608"/>
+<area shape="rect" id="node3" href="$a01117.html" title="Config for the Dividend Generator as needed for the LLS Model. " alt="" coords="253,481,408,608"/>
+<area shape="rect" id="node4" href="$a01129.html" title="Parameters defining the Random Number Generator (RNG) " alt="" coords="432,468,565,621"/>
+<area shape="rect" id="node6" href="$a01109.html" title="Parameters for the Agent from the paper &quot;How to grow a bubble: A model of myopic adapting agents&quot; by ..." alt="" coords="524,140,662,360"/>
+<area shape="rect" id="node7" title="STL class. " alt="" coords="747,213,860,287"/>
+<area shape="rect" id="node10" href="$a01113.html" title="Definition/ParameterSet for the DataItemCollectors. " alt="" coords="1005,180,1216,320"/>
+<area shape="rect" id="node11" href="$a01125.html" title="Parameters defining the PriceCalculator. " alt="" coords="989,421,1183,668"/>
+</map>

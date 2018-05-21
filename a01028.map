@@ -1,14 +1,3 @@
-<map id="DataItemCollectorEMBGamma" name="DataItemCollectorEMBGamma">
-<area shape="rect" id="node2" href="$a01018.html" title="Pure&#45;Virtual Base class for all implementations of a data collector. " alt="" coords="82,1493,238,1780"/>
-<area shape="rect" id="node3" href="$a01234.html" title="Pure&#45;Virtual class that defines the default interface for a writer. " alt="" coords="96,1105,224,1352"/>
-<area shape="rect" id="node4" title="STL class. " alt="" coords="28,797,108,871"/>
-<area shape="rect" id="node5" title="STL class. " alt="" coords="5,483,131,569"/>
-<area shape="rect" id="node7" href="$a00974.html" title="Agent from the paper CrossAgents. " alt="" coords="432,1025,603,1432"/>
-<area shape="rect" id="node8" href="$a00962.html" title="Virtual parent class for all Agent. " alt="" coords="643,704,813,964"/>
-<area shape="rect" id="node9" href="$a01082.html" title="{Group\n||+ Group()\l+ hasGroup()\l+ addGroup()\l+ setGroups()\l+ removeGroup()\l+ resetGroups()\l+ getGroups()\l}" alt="" coords="760,449,883,603"/>
-<area shape="rect" id="node11" title="STL class. " alt="" coords="319,140,433,213"/>
-<area shape="rect" id="node13" href="$a01226.html" title="Container Class for the Price. " alt="" coords="907,409,1101,643"/>
-<area shape="rect" id="node14" href="$a01210.html" title="Container Class for the DeltaT. " alt="" coords="413,456,512,596"/>
-<area shape="rect" id="node16" href="$a01214.html" title="Container Class for the Dividend. " alt="" coords="470,704,619,964"/>
-<area shape="rect" id="node15" href="$a01166.html" title="Pure&#45;Virutal Class to generate random numbers. " alt="" coords="536,409,736,643"/>
+<map id="DataItemCollectorAmountOfStock" name="DataItemCollectorAmountOfStock">
+<area shape="rect" id="node2" href="$a01021.html" title="Pure&#45;Virtual Base class for all implementations of a data collector. " alt="" coords="27,5,183,319"/>
 </map>

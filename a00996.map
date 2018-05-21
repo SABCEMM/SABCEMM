@@ -1,3 +1,4 @@
-<map id="brent::func_wrapper" name="brent::func_wrapper">
-<area shape="rect" id="node2" href="$a01002.html" title="{brent::func_base\n||+ operator()()\l}" alt="" coords="15,5,136,79"/>
+<map id="AgentRII" name="AgentRII">
+<area shape="rect" id="node2" href="$a00965.html" title="Virtual parent class for all Agent. " alt="" coords="16,207,186,507"/>
+<area shape="rect" id="node3" href="$a01085.html" title="{Group\n|&#45; groups_\l|+ Group()\l+ hasGroup()\l+ addGroup()\l+ setGroups()\l+ removeGroup()\l+ resetGroups()\l+ getGroups()\l}" alt="" coords="40,5,163,159"/>
 </map>

@@ -1,11 +1,9 @@
-<map id="PriceCalculatorBisection" name="PriceCalculatorBisection">
-<area shape="rect" id="node2" href="$a01130.html" title="Virtual parent class for all PriceCalculator. " alt="" coords="204,1481,417,1688"/>
-<area shape="rect" id="node3" href="$a01226.html" title="Container Class for the Price. " alt="" coords="5,409,199,643"/>
-<area shape="rect" id="node8" href="$a00962.html" title="Virtual parent class for all Agent. " alt="" coords="324,704,494,964"/>
-<area shape="rect" id="node4" href="$a01210.html" title="Container Class for the DeltaT. " alt="" coords="223,456,323,596"/>
-<area shape="rect" id="node5" href="$a01218.html" title="Container Class for the ExcessDemand. " alt="" coords="331,1025,484,1192"/>
-<area shape="rect" id="node6" href="$a01066.html" title="Virtual parent class for all ExcessDemandCalculator. " alt="" coords="437,1253,640,1420"/>
-<area shape="rect" id="node9" href="$a01082.html" title="{Group\n||+ Group()\l+ hasGroup()\l+ addGroup()\l+ setGroups()\l+ removeGroup()\l+ resetGroups()\l+ getGroups()\l}" alt="" coords="347,449,471,603"/>
-<area shape="rect" id="node11" title="STL class. " alt="" coords="608,140,722,213"/>
-<area shape="rect" id="node13" href="$a01166.html" title="Pure&#45;Virutal Class to generate random numbers. " alt="" coords="495,409,694,643"/>
+<map id="PriceCalculator" name="PriceCalculator">
+<area shape="rect" id="node2" href="$a01137.html" title="Using a bisection, the price is chosen such that the excess demand at that price approaches zero..." alt="" coords="5,387,199,647"/>
+<area shape="rect" id="node4" href="$a01141.html" title="Calculates the price as presented in the Cross model. " alt="" coords="223,420,398,613"/>
+<area shape="rect" id="node5" href="$a01145.html" title="{PriceCalculatorFW\n|&#45; mu\l|+ PriceCalculatorFW()\l+ preStepCalculate()\l+ stepCalculate()\l+ postStepCalculate()\l}" alt="" coords="422,460,575,573"/>
+<area shape="rect" id="node6" href="$a01149.html" title="{PriceCalculatorGeneral\n|&#45; randomGenerator\l&#45; fFunction\l&#45; fConstant\l&#45; gFunction\l&#45; gConstant\l&#45; prevExcessDemand\l|+ PriceCalculatorGeneral()\l+ ~PriceCalculatorGeneral()\l+ PriceCalculatorGeneral()\l+ PriceCalculatorGeneral()\l+ preStepCalculate()\l+ stepCalculate()\l+ postStepCalculate()\l+ setFFunction()\l+ setFConstant()\l+ setGFunction()\l+ setGConstant()\l&#45; F()\l&#45; G()\l&#45; FConstant()\l&#45; FLinear()\l&#45; FHarras()\l&#45; FCross()\l&#45; FCross2()\l&#45; GConstant()\l&#45; GLinear()\l&#45; GCross()\l}" alt="" coords="599,313,787,720"/>
+<area shape="rect" id="node7" href="$a01153.html" title="Calculates the new price with the formula from &quot;How to grow a bubble: A model of myopic adapting agen..." alt="" coords="811,447,991,587"/>
+<area shape="rect" id="node8" href="$a01157.html" title="{PriceCalculatorHarrasNoise\n|&#45; mode\l&#45; constant\l&#45; theta\l&#45; randomGenerator\l|+ PriceCalculatorHarrasNoise()\l+ PriceCalculatorHarrasNoise()\l+ ~PriceCalculatorHarrasNoise()\l+ preStepCalculate()\l+ stepCalculate()\l+ postStepCalculate()\l}" alt="" coords="1015,427,1229,607"/>
+<area shape="rect" id="node3" href="$a01161.html" title="{PriceCalculatorLLS\n||+ PriceCalculatorLLS()\l+ PriceCalculatorLLS()\l+ ~PriceCalculatorLLS()\l+ postStepCalculate()\l}" alt="" coords="21,768,184,881"/>
 </map>

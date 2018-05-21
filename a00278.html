@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.14"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>SABCEMM: RandomGenerator/Algorithms/sabcemm_rand.cc File Reference</title>
+<title>SABCEMM: PriceCalculator/PriceCalculatorLLS.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -62,413 +62,69 @@ $(function() {
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="dir_b1ac62a6c9d5044710ceb7bd9487c7ec.html">RandomGenerator</a></li><li class="navelem"><a class="el" href="dir_8fe86ace25f86bbbb4d0d353bcdc6ea2.html">Algorithms</a></li>  </ul>
+<li class="navelem"><a class="el" href="dir_6a355db0bb667742bd19cd321e0d095c.html">PriceCalculator</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
   <div class="summary">
-<a href="#nested-classes">Classes</a> &#124;
-<a href="#namespaces">Namespaces</a> &#124;
-<a href="#define-members">Macros</a> &#124;
-<a href="#func-members">Functions</a>  </div>
+<a href="#nested-classes">Classes</a>  </div>
   <div class="headertitle">
-<div class="title">sabcemm_rand.cc File Reference</div>  </div>
+<div class="title">PriceCalculatorLLS.h File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><code>#include &lt;cstdint&gt;</code><br />
+<div class="textblock"><code>#include &quot;<a class="el" href="a00242_source.html">PriceCalculatorBisection.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a00236_source.html">PriceCalculator.h</a>&quot;</code><br />
 </div><div class="textblock"><div class="dynheader">
-Include dependency graph for sabcemm_rand.cc:</div>
+Include dependency graph for PriceCalculatorLLS.h:</div>
 <div class="dyncontent">
-<div class="center"><img src="a00279.png" border="0" usemap="#_random_generator_2_algorithms_2sabcemm__rand_8cc" alt=""/></div>
-<map name="_random_generator_2_algorithms_2sabcemm__rand_8cc" id="_random_generator_2_algorithms_2sabcemm__rand_8cc">
+<div class="center"><img src="a00279.png" border="0" usemap="#_price_calculator_2_price_calculator_l_l_s_8h" alt=""/></div>
+<map name="_price_calculator_2_price_calculator_l_l_s_8h" id="_price_calculator_2_price_calculator_l_l_s_8h">
+<area shape="rect" id="node2" href="a00242.html" title="PriceCalculatorBisection.h" alt="" coords="853,92,1030,117"/>
+<area shape="rect" id="node3" href="a00236.html" title="PriceCalculator.h" alt="" coords="623,172,745,197"/>
+<area shape="rect" id="node24" href="a00005.html" title="../Agent/Agent.h" alt="" coords="526,339,642,364"/>
+<area shape="rect" id="node33" href="a00131.html" title="../Exceptions/NoConvergence\lException.h" alt="" coords="1384,165,1582,204"/>
+<area shape="rect" id="node36" href="a00125.html" title="../Exceptions/BadDomainError.h" alt="" coords="1149,172,1360,197"/>
+<area shape="rect" id="node4" href="a00194.html" title="../Parameter/Parameter.h" alt="" coords="1117,659,1288,684"/>
+<area shape="rect" id="node23" href="a00137.html" title="../ExcessDemandCalculator\l/ExcessDemandCalculator.h" alt="" coords="540,252,729,291"/>
+<area shape="rect" id="node25" href="a00287.html" title="../RandomGenerator\l/RandomGenerator.h" alt="" coords="780,499,926,537"/>
+<area shape="rect" id="node27" href="a00374.html" title="../VariableContainer\l/Price.h" alt="" coords="256,412,394,451"/>
+<area shape="rect" id="node28" href="a00350.html" title="../VariableContainer\l/DeltaT.h" alt="" coords="386,499,524,537"/>
+<area shape="rect" id="node30" href="a00362.html" title="../VariableContainer\l/ExcessDemand.h" alt="" coords="94,412,232,451"/>
+<area shape="rect" id="node8" href="a00200.html" title="ParameterSetAgent.h" alt="" coords="1851,812,2000,837"/>
+<area shape="rect" id="node12" href="a00218.html" title="ParameterSetExcessDemand\lCalculator.h" alt="" coords="1360,805,1557,844"/>
+<area shape="rect" id="node13" href="a00224.html" title="ParameterSetPriceCalculator.h" alt="" coords="891,812,1096,837"/>
+<area shape="rect" id="node14" href="a00206.html" title="ParameterSetDataItemCollector.h" alt="" coords="1600,732,1821,757"/>
+<area shape="rect" id="node21" href="a00230.html" title="ParameterSetRNG.h" alt="" coords="1581,812,1726,837"/>
+<area shape="rect" id="node22" href="a00212.html" title="ParameterSetDividend.h" alt="" coords="1119,812,1286,837"/>
+<area shape="rect" id="node15" href="a00344.html" title="../Util/Util.h" alt="" coords="2226,812,2312,837"/>
+<area shape="rect" id="node32" href="a00356.html" title="../VariableContainer\l/Dividend.h" alt="" coords="622,412,760,451"/>
+<area shape="rect" id="node29" href="a00164.html" title="../Group/Group.h" alt="" coords="345,585,466,611"/>
+<area shape="rect" id="node31" href="a00368.html" title="../VariableContainer\l/GlobalNews.h" alt="" coords="784,412,922,451"/>
+<area shape="rect" id="node26" href="a00389.html" title="../Writer/Writer.h" alt="" coords="1648,585,1765,611"/>
+<area shape="rect" id="node35" href="a00128.html" title="MathError.h" alt="" coords="1331,259,1421,284"/>
 </map>
 </div>
 </div><div class="textblock"><div class="dynheader">
 This graph shows which files directly or indirectly include this file:</div>
 <div class="dyncontent">
-<div class="center"><img src="a00280.png" border="0" usemap="#_random_generator_2_algorithms_2sabcemm__rand_8ccdep" alt=""/></div>
-<map name="_random_generator_2_algorithms_2sabcemm__rand_8ccdep" id="_random_generator_2_algorithms_2sabcemm__rand_8ccdep">
-<area shape="rect" id="node2" href="a00317.html" title="RandomGenerator/RandomGenerator\lStdLibOld.cpp" alt="" coords="5,92,251,131"/>
+<div class="center"><img src="a00280.png" border="0" usemap="#_price_calculator_2_price_calculator_l_l_s_8hdep" alt=""/></div>
+<map name="_price_calculator_2_price_calculator_l_l_s_8hdep" id="_price_calculator_2_price_calculator_l_l_s_8hdep">
+<area shape="rect" id="node2" href="a00233.html" title="PriceCalculator/PriceCalculator.cpp" alt="" coords="5,99,236,124"/>
+<area shape="rect" id="node3" href="a00275.html" title="PriceCalculator/PriceCalculator\lLLS.cpp" alt="" coords="260,92,466,131"/>
 </map>
 </div>
-</div><table class="memberdecls">
+</div>
+<p><a href="a00278_source.html">Go to the source code of this file.</a></p>
+<table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Classes</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01162.html">SABCEMM_RAND::random_data</a></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01161.html">PriceCalculatorLLS</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="namespaces"></a>
-Namespaces</h2></td></tr>
-<tr class="memitem:a00411"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00411.html">SABCEMM_RAND</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
-Macros</h2></td></tr>
-<tr class="memitem:a5e6c060eb3cf58f430086335d9b49196"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00278.html#a5e6c060eb3cf58f430086335d9b49196">_SABCEMM_RAND_</a></td></tr>
-<tr class="separator:a5e6c060eb3cf58f430086335d9b49196"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7684fdb8b359fbbbcaa5e149704024b3"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00278.html#a7684fdb8b359fbbbcaa5e149704024b3">TYPE_0</a>&#160;&#160;&#160;0</td></tr>
-<tr class="separator:a7684fdb8b359fbbbcaa5e149704024b3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3c1b328e567007cf8b2a488f7da20cd2"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00278.html#a3c1b328e567007cf8b2a488f7da20cd2">BREAK_0</a>&#160;&#160;&#160;8</td></tr>
-<tr class="separator:a3c1b328e567007cf8b2a488f7da20cd2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4b02509c5d048cb2525e0066d7c2f191"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00278.html#a4b02509c5d048cb2525e0066d7c2f191">DEG_0</a>&#160;&#160;&#160;0</td></tr>
-<tr class="separator:a4b02509c5d048cb2525e0066d7c2f191"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae66d150b37bdc4fb534c6cf4fd6927f5"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00278.html#ae66d150b37bdc4fb534c6cf4fd6927f5">SEP_0</a>&#160;&#160;&#160;0</td></tr>
-<tr class="separator:ae66d150b37bdc4fb534c6cf4fd6927f5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:adf00e147e54d287fe67232fc3c03881f"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00278.html#adf00e147e54d287fe67232fc3c03881f">TYPE_1</a>&#160;&#160;&#160;1</td></tr>
-<tr class="separator:adf00e147e54d287fe67232fc3c03881f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2f8ab1a0f7425aaa202c501115ac97ac"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00278.html#a2f8ab1a0f7425aaa202c501115ac97ac">BREAK_1</a>&#160;&#160;&#160;32</td></tr>
-<tr class="separator:a2f8ab1a0f7425aaa202c501115ac97ac"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0be2834c56b0aaa7a6d34986f7921200"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00278.html#a0be2834c56b0aaa7a6d34986f7921200">DEG_1</a>&#160;&#160;&#160;7</td></tr>
-<tr class="separator:a0be2834c56b0aaa7a6d34986f7921200"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a706a88d02086f617d9a4112903e47e41"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00278.html#a706a88d02086f617d9a4112903e47e41">SEP_1</a>&#160;&#160;&#160;3</td></tr>
-<tr class="separator:a706a88d02086f617d9a4112903e47e41"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8fde5bf4966bf8bead39337acde60635"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00278.html#a8fde5bf4966bf8bead39337acde60635">TYPE_2</a>&#160;&#160;&#160;2</td></tr>
-<tr class="separator:a8fde5bf4966bf8bead39337acde60635"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a05b3315f5cfe0296dcd69a52f1655c6d"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00278.html#a05b3315f5cfe0296dcd69a52f1655c6d">BREAK_2</a>&#160;&#160;&#160;64</td></tr>
-<tr class="separator:a05b3315f5cfe0296dcd69a52f1655c6d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3ac87cdf960466ff1225acc151e1b990"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00278.html#a3ac87cdf960466ff1225acc151e1b990">DEG_2</a>&#160;&#160;&#160;15</td></tr>
-<tr class="separator:a3ac87cdf960466ff1225acc151e1b990"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7af722c75c13c22d73bbcca1088b8dfa"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00278.html#a7af722c75c13c22d73bbcca1088b8dfa">SEP_2</a>&#160;&#160;&#160;1</td></tr>
-<tr class="separator:a7af722c75c13c22d73bbcca1088b8dfa"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a625df8982f188845257d31ea0e6c59e3"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00278.html#a625df8982f188845257d31ea0e6c59e3">TYPE_3</a>&#160;&#160;&#160;3</td></tr>
-<tr class="separator:a625df8982f188845257d31ea0e6c59e3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae301c8961d39d5bb4f771779e7f892a5"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00278.html#ae301c8961d39d5bb4f771779e7f892a5">BREAK_3</a>&#160;&#160;&#160;128</td></tr>
-<tr class="separator:ae301c8961d39d5bb4f771779e7f892a5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a551433e25d99861799734a5d64404a75"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00278.html#a551433e25d99861799734a5d64404a75">DEG_3</a>&#160;&#160;&#160;31</td></tr>
-<tr class="separator:a551433e25d99861799734a5d64404a75"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2edba143f3e114a7eb2e12e87cd22168"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00278.html#a2edba143f3e114a7eb2e12e87cd22168">SEP_3</a>&#160;&#160;&#160;3</td></tr>
-<tr class="separator:a2edba143f3e114a7eb2e12e87cd22168"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1eea18b6fa0e026859776264e7b70d06"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00278.html#a1eea18b6fa0e026859776264e7b70d06">TYPE_4</a>&#160;&#160;&#160;4</td></tr>
-<tr class="separator:a1eea18b6fa0e026859776264e7b70d06"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5b20d74b1c51063cf48aac12871c508b"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00278.html#a5b20d74b1c51063cf48aac12871c508b">BREAK_4</a>&#160;&#160;&#160;256</td></tr>
-<tr class="separator:a5b20d74b1c51063cf48aac12871c508b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa5908dcf53ecbe2f7e9ba5c3ffca01c1"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00278.html#aa5908dcf53ecbe2f7e9ba5c3ffca01c1">DEG_4</a>&#160;&#160;&#160;63</td></tr>
-<tr class="separator:aa5908dcf53ecbe2f7e9ba5c3ffca01c1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a579e3bd1ae8bb600f9eab886a82bf075"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00278.html#a579e3bd1ae8bb600f9eab886a82bf075">SEP_4</a>&#160;&#160;&#160;1</td></tr>
-<tr class="separator:a579e3bd1ae8bb600f9eab886a82bf075"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa30dc4b03b37928eb85a5a389728323b"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00278.html#aa30dc4b03b37928eb85a5a389728323b">MAX_TYPES</a>&#160;&#160;&#160;5	/* Max number of types above.  */</td></tr>
-<tr class="separator:aa30dc4b03b37928eb85a5a389728323b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
-Functions</h2></td></tr>
-<tr class="memitem:a55ef47ba76ac622d569f8b1a6a64037e"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00411.html#a55ef47ba76ac622d569f8b1a6a64037e">SABCEMM_RAND::rand</a> (int32_t *result)</td></tr>
-<tr class="separator:a55ef47ba76ac622d569f8b1a6a64037e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac645c304cd70fb61e320f3603e2503be"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a00411.html#ac645c304cd70fb61e320f3603e2503be">SABCEMM_RAND::srand</a> (unsigned int seed)</td></tr>
-<tr class="separator:ac645c304cd70fb61e320f3603e2503be"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Macro Definition Documentation</h2>
-<a id="a5e6c060eb3cf58f430086335d9b49196"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5e6c060eb3cf58f430086335d9b49196">&#9670;&nbsp;</a></span>_SABCEMM_RAND_</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define _SABCEMM_RAND_</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a3c1b328e567007cf8b2a488f7da20cd2"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3c1b328e567007cf8b2a488f7da20cd2">&#9670;&nbsp;</a></span>BREAK_0</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define BREAK_0&#160;&#160;&#160;8</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a2f8ab1a0f7425aaa202c501115ac97ac"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2f8ab1a0f7425aaa202c501115ac97ac">&#9670;&nbsp;</a></span>BREAK_1</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define BREAK_1&#160;&#160;&#160;32</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a05b3315f5cfe0296dcd69a52f1655c6d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a05b3315f5cfe0296dcd69a52f1655c6d">&#9670;&nbsp;</a></span>BREAK_2</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define BREAK_2&#160;&#160;&#160;64</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="ae301c8961d39d5bb4f771779e7f892a5"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae301c8961d39d5bb4f771779e7f892a5">&#9670;&nbsp;</a></span>BREAK_3</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define BREAK_3&#160;&#160;&#160;128</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a5b20d74b1c51063cf48aac12871c508b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5b20d74b1c51063cf48aac12871c508b">&#9670;&nbsp;</a></span>BREAK_4</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define BREAK_4&#160;&#160;&#160;256</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a4b02509c5d048cb2525e0066d7c2f191"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4b02509c5d048cb2525e0066d7c2f191">&#9670;&nbsp;</a></span>DEG_0</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define DEG_0&#160;&#160;&#160;0</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a0be2834c56b0aaa7a6d34986f7921200"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0be2834c56b0aaa7a6d34986f7921200">&#9670;&nbsp;</a></span>DEG_1</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define DEG_1&#160;&#160;&#160;7</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a3ac87cdf960466ff1225acc151e1b990"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3ac87cdf960466ff1225acc151e1b990">&#9670;&nbsp;</a></span>DEG_2</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define DEG_2&#160;&#160;&#160;15</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a551433e25d99861799734a5d64404a75"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a551433e25d99861799734a5d64404a75">&#9670;&nbsp;</a></span>DEG_3</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define DEG_3&#160;&#160;&#160;31</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="aa5908dcf53ecbe2f7e9ba5c3ffca01c1"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa5908dcf53ecbe2f7e9ba5c3ffca01c1">&#9670;&nbsp;</a></span>DEG_4</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define DEG_4&#160;&#160;&#160;63</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="aa30dc4b03b37928eb85a5a389728323b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa30dc4b03b37928eb85a5a389728323b">&#9670;&nbsp;</a></span>MAX_TYPES</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define MAX_TYPES&#160;&#160;&#160;5	/* Max number of types above.  */</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="ae66d150b37bdc4fb534c6cf4fd6927f5"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae66d150b37bdc4fb534c6cf4fd6927f5">&#9670;&nbsp;</a></span>SEP_0</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define SEP_0&#160;&#160;&#160;0</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a706a88d02086f617d9a4112903e47e41"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a706a88d02086f617d9a4112903e47e41">&#9670;&nbsp;</a></span>SEP_1</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define SEP_1&#160;&#160;&#160;3</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a7af722c75c13c22d73bbcca1088b8dfa"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7af722c75c13c22d73bbcca1088b8dfa">&#9670;&nbsp;</a></span>SEP_2</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define SEP_2&#160;&#160;&#160;1</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a2edba143f3e114a7eb2e12e87cd22168"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2edba143f3e114a7eb2e12e87cd22168">&#9670;&nbsp;</a></span>SEP_3</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define SEP_3&#160;&#160;&#160;3</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a579e3bd1ae8bb600f9eab886a82bf075"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a579e3bd1ae8bb600f9eab886a82bf075">&#9670;&nbsp;</a></span>SEP_4</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define SEP_4&#160;&#160;&#160;1</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a7684fdb8b359fbbbcaa5e149704024b3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7684fdb8b359fbbbcaa5e149704024b3">&#9670;&nbsp;</a></span>TYPE_0</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define TYPE_0&#160;&#160;&#160;0</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="adf00e147e54d287fe67232fc3c03881f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#adf00e147e54d287fe67232fc3c03881f">&#9670;&nbsp;</a></span>TYPE_1</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define TYPE_1&#160;&#160;&#160;1</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a8fde5bf4966bf8bead39337acde60635"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8fde5bf4966bf8bead39337acde60635">&#9670;&nbsp;</a></span>TYPE_2</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define TYPE_2&#160;&#160;&#160;2</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a625df8982f188845257d31ea0e6c59e3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a625df8982f188845257d31ea0e6c59e3">&#9670;&nbsp;</a></span>TYPE_3</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define TYPE_3&#160;&#160;&#160;3</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a1eea18b6fa0e026859776264e7b70d06"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1eea18b6fa0e026859776264e7b70d06">&#9670;&nbsp;</a></span>TYPE_4</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define TYPE_4&#160;&#160;&#160;4</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon May 21 2018 12:53:26 for SABCEMM by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon May 21 2018 13:42:34 for SABCEMM by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.14
 </small></address>

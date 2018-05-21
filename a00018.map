@@ -1,20 +1,20 @@
 <map id="Agent/AgentCrossWealth.h" name="Agent/AgentCrossWealth.h">
 <area shape="rect" id="node3" href="$a00011.html" title="AgentCross.h" alt="" coords="1645,79,1747,104"/>
-<area shape="rect" id="node5" href="$a00284.html" title="../RandomGenerator\l/RandomGenerator.h" alt="" coords="1285,312,1431,351"/>
-<area shape="rect" id="node25" href="$a00371.html" title="../VariableContainer\l/Price.h" alt="" coords="1729,225,1867,264"/>
-<area shape="rect" id="node28" href="$a00359.html" title="../VariableContainer\l/ExcessDemand.h" alt="" coords="1891,225,2029,264"/>
-<area shape="rect" id="node29" href="$a00365.html" title="../VariableContainer\l/GlobalNews.h" alt="" coords="1150,225,1288,264"/>
+<area shape="rect" id="node5" href="$a00287.html" title="../RandomGenerator\l/RandomGenerator.h" alt="" coords="1285,312,1431,351"/>
+<area shape="rect" id="node25" href="$a00374.html" title="../VariableContainer\l/Price.h" alt="" coords="1729,225,1867,264"/>
+<area shape="rect" id="node28" href="$a00362.html" title="../VariableContainer\l/ExcessDemand.h" alt="" coords="1891,225,2029,264"/>
+<area shape="rect" id="node29" href="$a00368.html" title="../VariableContainer\l/GlobalNews.h" alt="" coords="1150,225,1288,264"/>
 <area shape="rect" id="node4" href="$a00005.html" title="Agent.h" alt="" coords="1575,152,1642,177"/>
-<area shape="rect" id="node6" href="$a00191.html" title="../Parameter/Parameter.h" alt="" coords="953,472,1124,497"/>
-<area shape="rect" id="node26" href="$a00347.html" title="../VariableContainer\l/DeltaT.h" alt="" coords="1459,312,1597,351"/>
-<area shape="rect" id="node27" href="$a00161.html" title="../Group/Group.h" alt="" coords="1688,399,1809,424"/>
-<area shape="rect" id="node30" href="$a00353.html" title="../VariableContainer\l/Dividend.h" alt="" coords="1414,225,1552,264"/>
-<area shape="rect" id="node24" href="$a00386.html" title="../Writer/Writer.h" alt="" coords="1308,399,1426,424"/>
-<area shape="rect" id="node9" href="$a00197.html" title="ParameterSetAgent.h" alt="" coords="1050,625,1199,651"/>
-<area shape="rect" id="node13" href="$a00215.html" title="ParameterSetExcessDemand\lCalculator.h" alt="" coords="39,619,236,657"/>
-<area shape="rect" id="node14" href="$a00221.html" title="ParameterSetPriceCalculator.h" alt="" coords="261,625,465,651"/>
-<area shape="rect" id="node15" href="$a00203.html" title="ParameterSetDataItemCollector.h" alt="" coords="781,545,1001,571"/>
-<area shape="rect" id="node22" href="$a00227.html" title="ParameterSetRNG.h" alt="" coords="831,625,975,651"/>
-<area shape="rect" id="node23" href="$a00209.html" title="ParameterSetDividend.h" alt="" coords="540,625,706,651"/>
-<area shape="rect" id="node16" href="$a00341.html" title="../Util/Util.h" alt="" coords="1324,625,1410,651"/>
+<area shape="rect" id="node6" href="$a00194.html" title="../Parameter/Parameter.h" alt="" coords="953,472,1124,497"/>
+<area shape="rect" id="node26" href="$a00350.html" title="../VariableContainer\l/DeltaT.h" alt="" coords="1459,312,1597,351"/>
+<area shape="rect" id="node27" href="$a00164.html" title="../Group/Group.h" alt="" coords="1688,399,1809,424"/>
+<area shape="rect" id="node30" href="$a00356.html" title="../VariableContainer\l/Dividend.h" alt="" coords="1414,225,1552,264"/>
+<area shape="rect" id="node24" href="$a00389.html" title="../Writer/Writer.h" alt="" coords="1308,399,1426,424"/>
+<area shape="rect" id="node9" href="$a00200.html" title="ParameterSetAgent.h" alt="" coords="1050,625,1199,651"/>
+<area shape="rect" id="node13" href="$a00218.html" title="ParameterSetExcessDemand\lCalculator.h" alt="" coords="39,619,236,657"/>
+<area shape="rect" id="node14" href="$a00224.html" title="ParameterSetPriceCalculator.h" alt="" coords="261,625,465,651"/>
+<area shape="rect" id="node15" href="$a00206.html" title="ParameterSetDataItemCollector.h" alt="" coords="781,545,1001,571"/>
+<area shape="rect" id="node22" href="$a00230.html" title="ParameterSetRNG.h" alt="" coords="831,625,975,651"/>
+<area shape="rect" id="node23" href="$a00212.html" title="ParameterSetDividend.h" alt="" coords="540,625,706,651"/>
+<area shape="rect" id="node16" href="$a00344.html" title="../Util/Util.h" alt="" coords="1324,625,1410,651"/>
 </map>

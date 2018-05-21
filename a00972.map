@@ -1,9 +1,5 @@
-<map id="AgentEMB" name="AgentEMB">
-<area shape="rect" id="node2" href="$a00962.html" title="Virtual parent class for all Agent. " alt="" coords="235,764,405,1024"/>
-<area shape="rect" id="node3" href="$a01082.html" title="{Group\n||+ Group()\l+ hasGroup()\l+ addGroup()\l+ setGroups()\l+ removeGroup()\l+ resetGroups()\l+ getGroups()\l}" alt="" coords="5,509,129,663"/>
-<area shape="rect" id="node5" title="STL class. " alt="" coords="369,140,482,213"/>
-<area shape="rect" id="node7" href="$a01226.html" title="Container Class for the Price. " alt="" coords="153,469,347,703"/>
-<area shape="rect" id="node8" href="$a01210.html" title="Container Class for the DeltaT. " alt="" coords="612,516,711,656"/>
-<area shape="rect" id="node10" href="$a01214.html" title="Container Class for the Dividend. " alt="" coords="507,764,656,1024"/>
-<area shape="rect" id="node9" href="$a01166.html" title="Pure&#45;Virutal Class to generate random numbers. " alt="" coords="371,469,571,703"/>
+<map id="AgentCrossWealth" name="AgentCrossWealth">
+<area shape="rect" id="node2" href="$a00969.html" title="Agent as defined in &quot;Rod Cross, Michael Grinfeld, Harbir Lamba, Tim Seaman. " alt="" coords="14,555,167,801"/>
+<area shape="rect" id="node3" href="$a00965.html" title="Virtual parent class for all Agent. " alt="" coords="5,207,175,507"/>
+<area shape="rect" id="node4" href="$a01085.html" title="{Group\n|&#45; groups_\l|+ Group()\l+ hasGroup()\l+ addGroup()\l+ setGroups()\l+ removeGroup()\l+ resetGroups()\l+ getGroups()\l}" alt="" coords="29,5,152,159"/>
 </map>

@@ -1,10 +1,6 @@
-<map id="AgentFWChartist" name="AgentFWChartist">
-<area shape="rect" id="node2" href="$a00978.html" title="{AgentFW\n|# oldPrice\l# oldDemand\l# oldoldDemand\l# g\l# w\l# attractiveness\l# oldAttractiveness\l# eta\l# beta\l# alpha_w\land 12 more...\l|+ AgentFW()\l+ preStepUpdate()\l+ stepUpdate()\l+ postStepUpdate()\l+ setPartner()\l+ getShare()\l+ calculateDemand()\l+ calculateContributedAttractiveness()\l+ updateBisection()\l}" alt="" coords="297,1025,544,1339"/>
-<area shape="rect" id="node3" href="$a00962.html" title="Virtual parent class for all Agent. " alt="" coords="250,704,420,964"/>
-<area shape="rect" id="node4" href="$a01082.html" title="{Group\n||+ Group()\l+ hasGroup()\l+ addGroup()\l+ setGroups()\l+ removeGroup()\l+ resetGroups()\l+ getGroups()\l}" alt="" coords="5,449,129,603"/>
-<area shape="rect" id="node6" title="STL class. " alt="" coords="10,140,124,213"/>
-<area shape="rect" id="node8" href="$a01226.html" title="Container Class for the Price. " alt="" coords="153,409,347,643"/>
-<area shape="rect" id="node9" href="$a01210.html" title="Container Class for the DeltaT. " alt="" coords="371,456,470,596"/>
-<area shape="rect" id="node10" href="$a01166.html" title="Pure&#45;Virutal Class to generate random numbers. " alt="" coords="494,409,693,643"/>
-<area shape="rect" id="node11" title="STL class. " alt="" coords="444,797,567,871"/>
+<map id="AgentFW" name="AgentFW">
+<area shape="rect" id="node4" href="$a00985.html" title="{AgentFWChartist\n|&#45; chi\l|+ stepUpdate()\l+ calculateContributedAttractiveness()\l+ AgentFWChartist()\l+ calculateDemand()\l}" alt="" coords="5,936,252,1049"/>
+<area shape="rect" id="node5" href="$a00989.html" title="{AgentFWFundamentalist\n|&#45; phi\l&#45; fundamentalPrice\l|+ stepUpdate()\l+ calculateContributedAttractiveness()\l+ AgentFWFundamentalist()\l+ calculateDemand()\l}" alt="" coords="276,929,523,1056"/>
+<area shape="rect" id="node2" href="$a00965.html" title="Virtual parent class for all Agent. " alt="" coords="179,207,348,507"/>
+<area shape="rect" id="node3" href="$a01085.html" title="{Group\n|&#45; groups_\l|+ Group()\l+ hasGroup()\l+ addGroup()\l+ setGroups()\l+ removeGroup()\l+ resetGroups()\l+ getGroups()\l}" alt="" coords="202,5,325,159"/>
 </map>

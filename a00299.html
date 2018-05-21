@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.14"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>SABCEMM: RandomGenerator/RandomGeneratorNAG.cpp File Reference</title>
+<title>SABCEMM: RandomGenerator/RandomGeneratorIntelMKL.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -66,38 +66,54 @@ $(function() {
 </div>
 </div><!-- top -->
 <div class="header">
+  <div class="summary">
+<a href="#nested-classes">Classes</a>  </div>
   <div class="headertitle">
-<div class="title">RandomGeneratorNAG.cpp File Reference</div>  </div>
+<div class="title">RandomGeneratorIntelMKL.h File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><code>#include &quot;nag.h&quot;</code><br />
-<code>#include &lt;stdio.h&gt;</code><br />
-<code>#include &lt;nag_stdlib.h&gt;</code><br />
-<code>#include &lt;nagg05.h&gt;</code><br />
-<code>#include &lt;cmath&gt;</code><br />
-<code>#include &quot;<a class="el" href="a00302_source.html">RandomGeneratorNAG.h</a>&quot;</code><br />
+<div class="textblock"><code>#include &lt;cstddef&gt;</code><br />
+<code>#include &quot;mkl.h&quot;</code><br />
+<code>#include &quot;mkl_vsl.h&quot;</code><br />
+<code>#include &quot;<a class="el" href="a00287_source.html">RandomGenerator.h</a>&quot;</code><br />
 </div><div class="textblock"><div class="dynheader">
-Include dependency graph for RandomGeneratorNAG.cpp:</div>
+Include dependency graph for RandomGeneratorIntelMKL.h:</div>
 <div class="dyncontent">
-<div class="center"><img src="a00300.png" border="0" usemap="#_random_generator_2_random_generator_n_a_g_8cpp" alt=""/></div>
-<map name="_random_generator_2_random_generator_n_a_g_8cpp" id="_random_generator_2_random_generator_n_a_g_8cpp">
-<area shape="rect" id="node7" href="a00302.html" title="RandomGeneratorNAG.h" alt="" coords="1369,92,1541,117"/>
-<area shape="rect" id="node8" href="a00284.html" title="RandomGenerator.h" alt="" coords="1264,165,1406,191"/>
-<area shape="rect" id="node10" href="a00191.html" title="../Parameter/Parameter.h" alt="" coords="828,312,999,337"/>
-<area shape="rect" id="node27" href="a00386.html" title="../Writer/Writer.h" alt="" coords="1352,239,1470,264"/>
-<area shape="rect" id="node13" href="a00197.html" title="ParameterSetAgent.h" alt="" coords="730,465,879,491"/>
-<area shape="rect" id="node17" href="a00215.html" title="ParameterSetExcessDemand\lCalculator.h" alt="" coords="39,459,236,497"/>
-<area shape="rect" id="node18" href="a00221.html" title="ParameterSetPriceCalculator.h" alt="" coords="450,465,655,491"/>
-<area shape="rect" id="node19" href="a00203.html" title="ParameterSetDataItemCollector.h" alt="" coords="877,385,1097,411"/>
-<area shape="rect" id="node25" href="a00227.html" title="ParameterSetRNG.h" alt="" coords="903,465,1047,491"/>
-<area shape="rect" id="node26" href="a00209.html" title="ParameterSetDividend.h" alt="" coords="260,465,426,491"/>
-<area shape="rect" id="node20" href="a00341.html" title="../Util/Util.h" alt="" coords="1527,465,1613,491"/>
+<div class="center"><img src="a00300.png" border="0" usemap="#_random_generator_2_random_generator_intel_m_k_l_8h" alt=""/></div>
+<map name="_random_generator_2_random_generator_intel_m_k_l_8h" id="_random_generator_2_random_generator_intel_m_k_l_8h">
+<area shape="rect" id="node5" href="a00287.html" title="RandomGenerator.h" alt="" coords="364,92,507,117"/>
+<area shape="rect" id="node7" href="a00194.html" title="../Parameter/Parameter.h" alt="" coords="841,239,1012,264"/>
+<area shape="rect" id="node24" href="a00389.html" title="../Writer/Writer.h" alt="" coords="326,165,443,191"/>
+<area shape="rect" id="node10" href="a00200.html" title="ParameterSetAgent.h" alt="" coords="673,392,822,417"/>
+<area shape="rect" id="node13" href="a00218.html" title="ParameterSetExcessDemand\lCalculator.h" alt="" coords="1586,385,1783,424"/>
+<area shape="rect" id="node14" href="a00224.html" title="ParameterSetPriceCalculator.h" alt="" coords="1357,392,1562,417"/>
+<area shape="rect" id="node15" href="a00206.html" title="ParameterSetDataItemCollector.h" alt="" coords="890,312,1111,337"/>
+<area shape="rect" id="node22" href="a00230.html" title="ParameterSetRNG.h" alt="" coords="947,392,1092,417"/>
+<area shape="rect" id="node23" href="a00212.html" title="ParameterSetDividend.h" alt="" coords="1116,392,1283,417"/>
+<area shape="rect" id="node16" href="a00344.html" title="../Util/Util.h" alt="" coords="158,392,244,417"/>
 </map>
 </div>
-</div></div><!-- contents -->
+</div><div class="textblock"><div class="dynheader">
+This graph shows which files directly or indirectly include this file:</div>
+<div class="dyncontent">
+<div class="center"><img src="a00301.png" border="0" usemap="#_random_generator_2_random_generator_intel_m_k_l_8hdep" alt=""/></div>
+<map name="_random_generator_2_random_generator_intel_m_k_l_8hdep" id="_random_generator_2_random_generator_intel_m_k_l_8hdep">
+<area shape="rect" id="node2" href="a00296.html" title="RandomGenerator/RandomGenerator\lIntelMKL.cpp" alt="" coords="5,92,251,131"/>
+</map>
+</div>
+</div>
+<p><a href="a00299_source.html">Go to the source code of this file.</a></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
+Classes</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01177.html">RandomGeneratorIntelMKL</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Class generates random number with help of Intel MKL VS.  <a href="a01177.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+</div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon May 21 2018 12:53:26 for SABCEMM by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon May 21 2018 13:42:34 for SABCEMM by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.14
 </small></address>

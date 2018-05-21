@@ -1,8 +1,3 @@
-<map id="NeighbourhoodGenerator" name="NeighbourhoodGenerator">
-<area shape="rect" id="node3" href="$a00962.html" title="Virtual parent class for all Agent. " alt="" coords="334,704,504,964"/>
-<area shape="rect" id="node4" href="$a01082.html" title="{Group\n||+ Group()\l+ hasGroup()\l+ addGroup()\l+ setGroups()\l+ removeGroup()\l+ resetGroups()\l+ getGroups()\l}" alt="" coords="175,449,298,603"/>
-<area shape="rect" id="node6" title="STL class. " alt="" coords="49,140,162,213"/>
-<area shape="rect" id="node8" href="$a01226.html" title="Container Class for the Price. " alt="" coords="322,409,516,643"/>
-<area shape="rect" id="node9" href="$a01210.html" title="Container Class for the DeltaT. " alt="" coords="540,456,639,596"/>
-<area shape="rect" id="node10" href="$a01166.html" title="Pure&#45;Virutal Class to generate random numbers. " alt="" coords="663,409,863,643"/>
+<map id="LinearNeigbourhoodGenerator" name="LinearNeigbourhoodGenerator">
+<area shape="rect" id="node2" href="$a01101.html" title="Pure&#45;Virtual parent class for all NeighbourhoodGenerator. " alt="" coords="16,5,217,119"/>
 </map>

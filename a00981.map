@@ -1,5 +1,0 @@
-<map id="AgentFWChartist" name="AgentFWChartist">
-<area shape="rect" id="node2" href="$a00978.html" title="{AgentFW\n|# oldPrice\l# oldDemand\l# oldoldDemand\l# g\l# w\l# attractiveness\l# oldAttractiveness\l# eta\l# beta\l# alpha_w\land 13 more...\l&#45; partner\l|+ AgentFW()\l+ preStepUpdate()\l+ stepUpdate()\l+ postStepUpdate()\l+ setPartner()\l+ getShare()\l+ calculateDemand()\l+ calculateContributedAttractiveness()\l+ updateBisection()\l}" alt="" coords="5,555,252,881"/>
-<area shape="rect" id="node3" href="$a00962.html" title="Virtual parent class for all Agent. " alt="" coords="44,207,214,507"/>
-<area shape="rect" id="node4" href="$a01082.html" title="{Group\n|&#45; groups_\l|+ Group()\l+ hasGroup()\l+ addGroup()\l+ setGroups()\l+ removeGroup()\l+ resetGroups()\l+ getGroups()\l}" alt="" coords="67,5,190,159"/>
-</map>

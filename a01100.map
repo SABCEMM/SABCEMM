@@ -1,9 +1,5 @@
-<map id="Parameter" name="Parameter">
-<area shape="rect" id="node2" href="$a01118.html" title="{ParameterSetExcessDemand\lCalculator\n|+ excessDemandCalculatorClass\l|+ validate()\l+ ParameterSetExcessDemand\lCalculator()\l+ readFromXML()\l}" alt="" coords="5,481,223,608"/>
-<area shape="rect" id="node3" href="$a01114.html" title="Config for the Dividend Generator as needed for the LLS Model. " alt="" coords="253,481,408,608"/>
-<area shape="rect" id="node4" href="$a01126.html" title="Parameters defining the Random Number Generator (RNG) " alt="" coords="432,468,565,621"/>
-<area shape="rect" id="node6" href="$a01106.html" title="Parameters for the Agent from the paper &quot;How to grow a bubble: A model of myopic adapting agents&quot; by ..." alt="" coords="524,140,662,360"/>
-<area shape="rect" id="node7" title="STL class. " alt="" coords="747,213,860,287"/>
-<area shape="rect" id="node10" href="$a01110.html" title="Definition/ParameterSet for the DataItemCollectors. " alt="" coords="1005,180,1216,320"/>
-<area shape="rect" id="node11" href="$a01122.html" title="Parameters defining the PriceCalculator. " alt="" coords="989,421,1183,668"/>
+<map id="NeighbourhoodGenerator" name="NeighbourhoodGenerator">
+<area shape="rect" id="node2" href="$a01089.html" title="Class that generates a neighbourhood of agents living on a square lattice. " alt="" coords="5,187,245,287"/>
+<area shape="rect" id="node3" href="$a01093.html" title="Class that generates a neighbourhood of agents living on a square lattice. " alt="" coords="270,167,501,307"/>
+<area shape="rect" id="node4" href="$a01097.html" title="Yet to Implement. " alt="" coords="525,193,747,280"/>
 </map>

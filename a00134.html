@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.14"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>SABCEMM: ExcessDemandCalculator/ExcessDemandCalculator.h File Reference</title>
+<title>SABCEMM: ExcessDemandCalculator/ExcessDemandCalculator.cpp File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -66,92 +66,47 @@ $(function() {
 </div>
 </div><!-- top -->
 <div class="header">
-  <div class="summary">
-<a href="#nested-classes">Classes</a>  </div>
   <div class="headertitle">
-<div class="title">ExcessDemandCalculator.h File Reference</div>  </div>
+<div class="title">ExcessDemandCalculator.cpp File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><code>#include &lt;vector&gt;</code><br />
-<code>#include &quot;<a class="el" href="a00191_source.html">../Parameter/Parameter.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="a00005_source.html">../Agent/Agent.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="a00359_source.html">../VariableContainer/ExcessDemand.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="a00353_source.html">../VariableContainer/Dividend.h</a>&quot;</code><br />
+<div class="textblock"><code>#include &quot;<a class="el" href="a00137_source.html">ExcessDemandCalculator.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a00149_source.html">ExcessDemandCalculatorHarras.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a00155_source.html">ExcessDemandCalculatorLLS.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a00356_source.html">../VariableContainer/Dividend.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="a00143_source.html">ExcessDemandCalculatorFW.h</a>&quot;</code><br />
 </div><div class="textblock"><div class="dynheader">
-Include dependency graph for ExcessDemandCalculator.h:</div>
+Include dependency graph for ExcessDemandCalculator.cpp:</div>
 <div class="dyncontent">
-<div class="center"><img src="a00135.png" border="0" usemap="#_excess_demand_calculator_2_excess_demand_calculator_8h" alt=""/></div>
-<map name="_excess_demand_calculator_2_excess_demand_calculator_8h" id="_excess_demand_calculator_2_excess_demand_calculator_8h">
-<area shape="rect" id="node3" href="a00191.html" title="../Parameter/Parameter.h" alt="" coords="720,412,891,437"/>
-<area shape="rect" id="node21" href="a00005.html" title="../Agent/Agent.h" alt="" coords="1223,92,1340,117"/>
-<area shape="rect" id="node27" href="a00359.html" title="../VariableContainer\l/ExcessDemand.h" alt="" coords="1527,165,1665,204"/>
-<area shape="rect" id="node29" href="a00353.html" title="../VariableContainer\l/Dividend.h" alt="" coords="999,165,1137,204"/>
-<area shape="rect" id="node6" href="a00197.html" title="ParameterSetAgent.h" alt="" coords="999,565,1148,591"/>
-<area shape="rect" id="node10" href="a00215.html" title="ParameterSetExcessDemand\lCalculator.h" alt="" coords="39,559,236,597"/>
-<area shape="rect" id="node11" href="a00221.html" title="ParameterSetPriceCalculator.h" alt="" coords="261,565,465,591"/>
-<area shape="rect" id="node12" href="a00203.html" title="ParameterSetDataItemCollector.h" alt="" coords="703,485,924,511"/>
-<area shape="rect" id="node19" href="a00227.html" title="ParameterSetRNG.h" alt="" coords="729,565,874,591"/>
-<area shape="rect" id="node20" href="a00209.html" title="ParameterSetDividend.h" alt="" coords="489,565,656,591"/>
-<area shape="rect" id="node13" href="a00341.html" title="../Util/Util.h" alt="" coords="1679,565,1765,591"/>
-<area shape="rect" id="node22" href="a00284.html" title="../RandomGenerator\l/RandomGenerator.h" alt="" coords="1019,252,1165,291"/>
-<area shape="rect" id="node24" href="a00371.html" title="../VariableContainer\l/Price.h" alt="" coords="1213,165,1351,204"/>
-<area shape="rect" id="node25" href="a00347.html" title="../VariableContainer\l/DeltaT.h" alt="" coords="1215,252,1353,291"/>
-<area shape="rect" id="node26" href="a00161.html" title="../Group/Group.h" alt="" coords="1477,339,1598,364"/>
-<area shape="rect" id="node28" href="a00365.html" title="../VariableContainer\l/GlobalNews.h" alt="" coords="837,165,975,204"/>
-<area shape="rect" id="node23" href="a00386.html" title="../Writer/Writer.h" alt="" coords="1231,339,1348,364"/>
+<div class="center"><img src="a00135.png" border="0" usemap="#_excess_demand_calculator_2_excess_demand_calculator_8cpp" alt=""/></div>
+<map name="_excess_demand_calculator_2_excess_demand_calculator_8cpp" id="_excess_demand_calculator_2_excess_demand_calculator_8cpp">
+<area shape="rect" id="node2" href="a00137.html" title="ExcessDemandCalculator.h" alt="" coords="1246,165,1432,191"/>
+<area shape="rect" id="node30" href="a00356.html" title="../VariableContainer\l/Dividend.h" alt="" coords="939,312,1077,351"/>
+<area shape="rect" id="node31" href="a00149.html" title="ExcessDemandCalculatorHarras.h" alt="" coords="1595,92,1821,117"/>
+<area shape="rect" id="node32" href="a00155.html" title="ExcessDemandCalculatorLLS.h" alt="" coords="1081,92,1290,117"/>
+<area shape="rect" id="node33" href="a00143.html" title="ExcessDemandCalculatorFW.h" alt="" coords="1365,92,1571,117"/>
+<area shape="rect" id="node4" href="a00194.html" title="../Parameter/Parameter.h" alt="" coords="759,559,930,584"/>
+<area shape="rect" id="node22" href="a00005.html" title="../Agent/Agent.h" alt="" coords="1321,239,1438,264"/>
+<area shape="rect" id="node28" href="a00362.html" title="../VariableContainer\l/ExcessDemand.h" alt="" coords="1681,312,1819,351"/>
+<area shape="rect" id="node7" href="a00200.html" title="ParameterSetAgent.h" alt="" coords="1051,712,1200,737"/>
+<area shape="rect" id="node11" href="a00218.html" title="ParameterSetExcessDemand\lCalculator.h" alt="" coords="39,705,236,744"/>
+<area shape="rect" id="node12" href="a00224.html" title="ParameterSetPriceCalculator.h" alt="" coords="312,712,516,737"/>
+<area shape="rect" id="node13" href="a00206.html" title="ParameterSetDataItemCollector.h" alt="" coords="709,632,929,657"/>
+<area shape="rect" id="node20" href="a00230.html" title="ParameterSetRNG.h" alt="" coords="731,712,875,737"/>
+<area shape="rect" id="node21" href="a00212.html" title="ParameterSetDividend.h" alt="" coords="540,712,706,737"/>
+<area shape="rect" id="node14" href="a00344.html" title="../Util/Util.h" alt="" coords="1731,712,1817,737"/>
+<area shape="rect" id="node23" href="a00287.html" title="../RandomGenerator\l/RandomGenerator.h" alt="" coords="1314,399,1460,437"/>
+<area shape="rect" id="node25" href="a00374.html" title="../VariableContainer\l/Price.h" alt="" coords="1102,312,1240,351"/>
+<area shape="rect" id="node26" href="a00350.html" title="../VariableContainer\l/DeltaT.h" alt="" coords="1049,399,1187,437"/>
+<area shape="rect" id="node27" href="a00164.html" title="../Group/Group.h" alt="" coords="1632,485,1753,511"/>
+<area shape="rect" id="node29" href="a00368.html" title="../VariableContainer\l/GlobalNews.h" alt="" coords="1417,312,1555,351"/>
+<area shape="rect" id="node24" href="a00389.html" title="../Writer/Writer.h" alt="" coords="1336,485,1454,511"/>
 </map>
 </div>
-</div><div class="textblock"><div class="dynheader">
-This graph shows which files directly or indirectly include this file:</div>
-<div class="dyncontent">
-<div class="center"><img src="a00136.png" border="0" usemap="#_excess_demand_calculator_2_excess_demand_calculator_8hdep" alt=""/></div>
-<map name="_excess_demand_calculator_2_excess_demand_calculator_8hdep" id="_excess_demand_calculator_2_excess_demand_calculator_8hdep">
-<area shape="rect" id="node2" href="a00233.html" title="PriceCalculator/PriceCalculator.h" alt="" coords="1141,99,1357,124"/>
-<area shape="rect" id="node6" href="a00338.html" title="StockExchange/StockExchange.h" alt="" coords="221,185,442,211"/>
-<area shape="rect" id="node7" href="a00332.html" title="Simulation.h" alt="" coords="284,272,379,297"/>
-<area shape="rect" id="node16" href="a00245.html" title="PriceCalculator/PriceCalculator\lCross.h" alt="" coords="2253,179,2459,217"/>
-<area shape="rect" id="node26" href="a00131.html" title="ExcessDemandCalculator\l/ExcessDemandCalculator.cpp" alt="" coords="2750,179,2953,217"/>
-<area shape="rect" id="node27" href="a00146.html" title="ExcessDemandCalculator\l/ExcessDemandCalculatorHarras.h" alt="" coords="2441,92,2670,131"/>
-<area shape="rect" id="node29" href="a00152.html" title="ExcessDemandCalculator\l/ExcessDemandCalculatorLLS.h" alt="" coords="2745,92,2958,131"/>
-<area shape="rect" id="node31" href="a00140.html" title="ExcessDemandCalculator\l/ExcessDemandCalculatorFW.h" alt="" coords="2983,92,3192,131"/>
-<area shape="rect" id="node3" href="a00113.html" title="DataCollector/DataItemCollector\lPrice.h" alt="" coords="2016,179,2229,217"/>
-<area shape="rect" id="node11" href="a00230.html" title="PriceCalculator/PriceCalculator.cpp" alt="" coords="1231,359,1461,384"/>
-<area shape="rect" id="node12" href="a00239.html" title="PriceCalculator/PriceCalculator\lBisection.h" alt="" coords="679,179,885,217"/>
-<area shape="rect" id="node13" href="a00275.html" title="PriceCalculator/PriceCalculator\lLLS.h" alt="" coords="403,265,609,304"/>
-<area shape="rect" id="node18" href="a00257.html" title="PriceCalculator/PriceCalculator\lGeneral.h" alt="" coords="1786,179,1992,217"/>
-<area shape="rect" id="node20" href="a00263.html" title="PriceCalculator/PriceCalculator\lHarras.h" alt="" coords="1031,179,1237,217"/>
-<area shape="rect" id="node22" href="a00269.html" title="PriceCalculator/PriceCalculator\lHarrasNoise.h" alt="" coords="1261,179,1467,217"/>
-<area shape="rect" id="node24" href="a00251.html" title="PriceCalculator/PriceCalculatorFW.h" alt="" coords="1508,185,1745,211"/>
-<area shape="rect" id="node4" href="a00062.html" title="DataCollector/DataCollector.cpp" alt="" coords="2083,272,2294,297"/>
-<area shape="rect" id="node5" href="a00110.html" title="DataCollector/DataItemCollector\lPrice.cpp" alt="" coords="2319,265,2531,304"/>
-<area shape="rect" id="node9" href="a00329.html" title="Simulation.cpp" alt="" coords="27,359,135,384"/>
-<area shape="rect" id="node10" href="a00335.html" title="StockExchange/StockExchange.cpp" alt="" coords="24,272,260,297"/>
-<area shape="rect" id="node8" href="a00155.html" title="FinanceSimulation.cpp" alt="" coords="237,359,394,384"/>
-<area shape="rect" id="node15" href="a00236.html" title="PriceCalculator/PriceCalculator\lBisection.cpp" alt="" coords="633,265,839,304"/>
-<area shape="rect" id="node14" href="a00272.html" title="PriceCalculator/PriceCalculator\lLLS.cpp" alt="" coords="418,352,624,391"/>
-<area shape="rect" id="node17" href="a00242.html" title="PriceCalculator/PriceCalculator\lCross.cpp" alt="" coords="2606,265,2812,304"/>
-<area shape="rect" id="node19" href="a00254.html" title="PriceCalculator/PriceCalculator\lGeneral.cpp" alt="" coords="1803,265,2009,304"/>
-<area shape="rect" id="node21" href="a00260.html" title="PriceCalculator/PriceCalculator\lHarras.cpp" alt="" coords="963,265,1169,304"/>
-<area shape="rect" id="node23" href="a00266.html" title="PriceCalculator/PriceCalculator\lHarrasNoise.cpp" alt="" coords="1243,265,1449,304"/>
-<area shape="rect" id="node25" href="a00248.html" title="PriceCalculator/PriceCalculator\lFW.cpp" alt="" coords="1523,265,1729,304"/>
-<area shape="rect" id="node28" href="a00143.html" title="ExcessDemandCalculator\l/ExcessDemandCalculatorHarras.cpp" alt="" coords="2483,179,2727,217"/>
-<area shape="rect" id="node30" href="a00149.html" title="ExcessDemandCalculator\l/ExcessDemandCalculatorLLS.cpp" alt="" coords="2977,179,3204,217"/>
-<area shape="rect" id="node32" href="a00137.html" title="ExcessDemandCalculator\l/ExcessDemandCalculatorFW.cpp" alt="" coords="3228,179,3451,217"/>
-</map>
-</div>
-</div>
-<p><a href="a00134_source.html">Go to the source code of this file.</a></p>
-<table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
-Classes</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="a01066.html">ExcessDemandCalculator</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Virtual parent class for all <a class="el" href="a01066.html" title="Virtual parent class for all ExcessDemandCalculator. ">ExcessDemandCalculator</a>.  <a href="a01066.html#details">More...</a><br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table>
-</div><!-- contents -->
+</div></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon May 21 2018 12:53:26 for SABCEMM by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon May 21 2018 13:42:34 for SABCEMM by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.14
 </small></address>

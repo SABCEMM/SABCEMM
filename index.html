@@ -66,10 +66,47 @@ $(function() {
 <div class="title">SABCEMM Documentation</div>  </div>
 </div><!--header-->
 <div class="contents">
-</div><!-- contents -->
+<div class="textblock"><p>This is the doxygen documentation for the <a href="https://github.com/SABCEMM/SABCEMM">SABCEMM</a>project.</p>
+<h1>First steps</h1>
+<p>This tutorial guides you through the first steps to use the SABCEMM framework on a linux. If you are trying to use the framework on Windows or Mac, please have a look at <a href="https://github.com/SABCEMM/SABCEMM/wiki/SABCEMM-on-Windows-or-Mac">SABCEMM on Windows or Mac</a> for further information.</p>
+<p>Open a terminal and enter the following commands.</p>
+<p>Get the source code:</p>
+<p><code>git clone <a href="https://github.com/SABCEMM/SABCEMM.git">https://github.com/SABCEMM/SABCEMM.git</a></code></p>
+<p>Update the submodules:</p>
+<p><code>git submodule init git submodule update</code></p>
+<p>Build the program:</p>
+<p>`mkdir build cd build cmake .. make`</p>
+<p>SABCEMM and its test will be put in <code>build/src</code> and <code>build/test</code>, respectively.</p>
+<p>Now, create an input file (see <a href="https://github.com/SABCEMM/SABCEMM/wiki/Create-an-Input-File">Creating an Input File</a>) or use one of the existing files in src/input.</p>
+<p>Then, SABCEMM is run like:</p>
+<p><code>cd src ./financeSimulation PATH/TO/INPUT_FILE.xml</code></p>
+<p>The simulation results will be placed in a folder <code>output</code> (relative to the program's working directory).</p>
+<p>Some of SABCEMM's features need additional libraries. Those features are turned off in CMake by default. See the section dependencies for further guidance. Per default, SABCEMM does not have any dependencies.</p>
+<h1>dependencies</h1>
+<p>SABCEMM uses CMake as a build-system. If you're not familiar with CMake, have a look at the <a href="https://cmake.org/cmake-tutorial/">CMake Tutorial</a>.</p>
+<p>Header-only/small dependencies are bundled and possibly encapsuled in submodules (boost, tinyxml2)</p>
+<p>However, you must install the following libraries manually:</p>
+<h3>mandatory:</h3>
+<p>&ndash;none&ndash;</p>
+<h3>optional:</h3>
+<ul>
+<li><a href="https://software.intel.com/en-us/intel-mkl/">Intel MKL</a> (install manually, on arch you may try: pacaur -S intel-mkl)</li>
+<li><a href="http://www.nag.com/">NAG</a> (install manually)</li>
+<li>HDF5 (on ubuntu: apt install libhdf5-dev, on arch: pacman -S hdf5-cpp-fortran)</li>
+<li>curses (on ubuntu: apt install libncurses5-dev, on arch: pacman -S curses)</li>
+<li>lcov for test coverage generation (on ubuntu: apt install lcov, on arch: pacaur -S lcov)</li>
+</ul>
+<p>The code is compiled conditionally, depending on the available libraries and user-controlled switches in CMake (<code>WITH_HDF5</code>, <code>WITH_INTEL_MKL</code>, <code>WITH_NAG</code>).</p>
+<p>If dependencies are not met, cmake will fail and not generate Makefiles. Try "ccmake ." and fix the wrong paths.</p>
+<h1>Special Notes</h1>
+<ul>
+<li>Curses can be causing problems. As a workaround, add <code>-std=c99</code> to <code>CMAKE_C_FLAGS</code> und <code>-ltinfo</code> to <code>CMAKE_EXE_LINKER_FLAGS</code>.</li>
+<li>HDF is installed to a standard location and found automatically. Note that HDF5_DIR is set to "HDF5_DIR-NOTFOUND". That's ok! </li>
+</ul>
+</div></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon May 21 2018 12:53:27 for SABCEMM by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon May 21 2018 13:42:35 for SABCEMM by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.14
 </small></address>

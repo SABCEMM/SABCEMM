@@ -1,19 +1,23 @@
-<map id="ExcessDemandCalculator/ExcessDemandCalculator.h" name="ExcessDemandCalculator/ExcessDemandCalculator.h">
-<area shape="rect" id="node3" href="$a00191.html" title="../Parameter/Parameter.h" alt="" coords="720,412,891,437"/>
-<area shape="rect" id="node21" href="$a00005.html" title="../Agent/Agent.h" alt="" coords="1223,92,1340,117"/>
-<area shape="rect" id="node27" href="$a00359.html" title="../VariableContainer\l/ExcessDemand.h" alt="" coords="1527,165,1665,204"/>
-<area shape="rect" id="node29" href="$a00353.html" title="../VariableContainer\l/Dividend.h" alt="" coords="999,165,1137,204"/>
-<area shape="rect" id="node6" href="$a00197.html" title="ParameterSetAgent.h" alt="" coords="999,565,1148,591"/>
-<area shape="rect" id="node10" href="$a00215.html" title="ParameterSetExcessDemand\lCalculator.h" alt="" coords="39,559,236,597"/>
-<area shape="rect" id="node11" href="$a00221.html" title="ParameterSetPriceCalculator.h" alt="" coords="261,565,465,591"/>
-<area shape="rect" id="node12" href="$a00203.html" title="ParameterSetDataItemCollector.h" alt="" coords="703,485,924,511"/>
-<area shape="rect" id="node19" href="$a00227.html" title="ParameterSetRNG.h" alt="" coords="729,565,874,591"/>
-<area shape="rect" id="node20" href="$a00209.html" title="ParameterSetDividend.h" alt="" coords="489,565,656,591"/>
-<area shape="rect" id="node13" href="$a00341.html" title="../Util/Util.h" alt="" coords="1679,565,1765,591"/>
-<area shape="rect" id="node22" href="$a00284.html" title="../RandomGenerator\l/RandomGenerator.h" alt="" coords="1019,252,1165,291"/>
-<area shape="rect" id="node24" href="$a00371.html" title="../VariableContainer\l/Price.h" alt="" coords="1213,165,1351,204"/>
-<area shape="rect" id="node25" href="$a00347.html" title="../VariableContainer\l/DeltaT.h" alt="" coords="1215,252,1353,291"/>
-<area shape="rect" id="node26" href="$a00161.html" title="../Group/Group.h" alt="" coords="1477,339,1598,364"/>
-<area shape="rect" id="node28" href="$a00365.html" title="../VariableContainer\l/GlobalNews.h" alt="" coords="837,165,975,204"/>
-<area shape="rect" id="node23" href="$a00386.html" title="../Writer/Writer.h" alt="" coords="1231,339,1348,364"/>
+<map id="ExcessDemandCalculator/ExcessDemandCalculator.cpp" name="ExcessDemandCalculator/ExcessDemandCalculator.cpp">
+<area shape="rect" id="node2" href="$a00137.html" title="ExcessDemandCalculator.h" alt="" coords="1246,165,1432,191"/>
+<area shape="rect" id="node30" href="$a00356.html" title="../VariableContainer\l/Dividend.h" alt="" coords="939,312,1077,351"/>
+<area shape="rect" id="node31" href="$a00149.html" title="ExcessDemandCalculatorHarras.h" alt="" coords="1595,92,1821,117"/>
+<area shape="rect" id="node32" href="$a00155.html" title="ExcessDemandCalculatorLLS.h" alt="" coords="1081,92,1290,117"/>
+<area shape="rect" id="node33" href="$a00143.html" title="ExcessDemandCalculatorFW.h" alt="" coords="1365,92,1571,117"/>
+<area shape="rect" id="node4" href="$a00194.html" title="../Parameter/Parameter.h" alt="" coords="759,559,930,584"/>
+<area shape="rect" id="node22" href="$a00005.html" title="../Agent/Agent.h" alt="" coords="1321,239,1438,264"/>
+<area shape="rect" id="node28" href="$a00362.html" title="../VariableContainer\l/ExcessDemand.h" alt="" coords="1681,312,1819,351"/>
+<area shape="rect" id="node7" href="$a00200.html" title="ParameterSetAgent.h" alt="" coords="1051,712,1200,737"/>
+<area shape="rect" id="node11" href="$a00218.html" title="ParameterSetExcessDemand\lCalculator.h" alt="" coords="39,705,236,744"/>
+<area shape="rect" id="node12" href="$a00224.html" title="ParameterSetPriceCalculator.h" alt="" coords="312,712,516,737"/>
+<area shape="rect" id="node13" href="$a00206.html" title="ParameterSetDataItemCollector.h" alt="" coords="709,632,929,657"/>
+<area shape="rect" id="node20" href="$a00230.html" title="ParameterSetRNG.h" alt="" coords="731,712,875,737"/>
+<area shape="rect" id="node21" href="$a00212.html" title="ParameterSetDividend.h" alt="" coords="540,712,706,737"/>
+<area shape="rect" id="node14" href="$a00344.html" title="../Util/Util.h" alt="" coords="1731,712,1817,737"/>
+<area shape="rect" id="node23" href="$a00287.html" title="../RandomGenerator\l/RandomGenerator.h" alt="" coords="1314,399,1460,437"/>
+<area shape="rect" id="node25" href="$a00374.html" title="../VariableContainer\l/Price.h" alt="" coords="1102,312,1240,351"/>
+<area shape="rect" id="node26" href="$a00350.html" title="../VariableContainer\l/DeltaT.h" alt="" coords="1049,399,1187,437"/>
+<area shape="rect" id="node27" href="$a00164.html" title="../Group/Group.h" alt="" coords="1632,485,1753,511"/>
+<area shape="rect" id="node29" href="$a00368.html" title="../VariableContainer\l/GlobalNews.h" alt="" coords="1417,312,1555,351"/>
+<area shape="rect" id="node24" href="$a00389.html" title="../Writer/Writer.h" alt="" coords="1336,485,1454,511"/>
 </map>
