@@ -1,5 +1,5 @@
 # Simulator for Agent Based Computational Economic Market Models (SABCEMM)
-
+Before getting started, have a look at our full [Doxygen Code Documentation](https://sabcemm.github.io/SABCEMM/).
 
 
 # First steps 
