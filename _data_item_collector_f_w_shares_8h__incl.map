@@ -1,0 +1,23 @@
+<map id="DataCollector/DataItemCollectorFWShares.h" name="DataCollector/DataItemCollectorFWShares.h">
+<area shape="rect" id="node2" href="$_data_item_collector_8h.html" title="DataItemCollector.h" alt="" coords="701,405,840,431"/>
+<area shape="rect" id="node23" href="$_agent_8h.html" title="../Agent/Agent.h" alt="" coords="1560,239,1677,264"/>
+<area shape="rect" id="node31" href="$_agent_f_w_chartist_8h.html" title="../Agent/AgentFWChartist.h" alt="" coords="1656,92,1840,117"/>
+<area shape="rect" id="node35" href="$_agent_f_w_fundamentalist_8h.html" title="../Agent/AgentFWFundamentalist.h" alt="" coords="1864,92,2093,117"/>
+<area shape="rect" id="node4" href="$_writer_8h.html" title="../Writer/Writer.h" alt="" coords="712,485,829,511"/>
+<area shape="rect" id="node6" href="$_parameter_8h.html" title="../Parameter/Parameter.h" alt="" coords="988,559,1159,584"/>
+<area shape="rect" id="node15" href="$_util_8h.html" title="../Util/Util.h" alt="" coords="206,712,292,737"/>
+<area shape="rect" id="node8" href="$_parameter_set_agent_8h.html" title="ParameterSetAgent.h" alt="" coords="1580,712,1729,737"/>
+<area shape="rect" id="node12" href="$_parameter_set_excess_demand_calculator_8h.html" title="ParameterSetExcessDemand\lCalculator.h" alt="" coords="839,705,1036,744"/>
+<area shape="rect" id="node13" href="$_parameter_set_price_calculator_8h.html" title="ParameterSetPriceCalculator.h" alt="" coords="1300,712,1505,737"/>
+<area shape="rect" id="node14" href="$_parameter_set_data_item_collector_8h.html" title="ParameterSetDataItemCollector.h" alt="" coords="963,632,1183,657"/>
+<area shape="rect" id="node21" href="$_parameter_set_r_n_g_8h.html" title="ParameterSetRNG.h" alt="" coords="670,712,815,737"/>
+<area shape="rect" id="node22" href="$_parameter_set_dividend_8h.html" title="ParameterSetDividend.h" alt="" coords="1110,712,1276,737"/>
+<area shape="rect" id="node24" href="$_random_generator_8h.html" title="../RandomGenerator\l/RandomGenerator.h" alt="" coords="1248,399,1394,437"/>
+<area shape="rect" id="node25" href="$_price_8h.html" title="../VariableContainer\l/Price.h" alt="" coords="1681,312,1819,351"/>
+<area shape="rect" id="node26" href="$_delta_t_8h.html" title="../VariableContainer\l/DeltaT.h" alt="" coords="1444,399,1582,437"/>
+<area shape="rect" id="node27" href="$_group_8h.html" title="../Group/Group.h" alt="" coords="1860,485,1982,511"/>
+<area shape="rect" id="node28" href="$_excess_demand_8h.html" title="../VariableContainer\l/ExcessDemand.h" alt="" coords="1844,312,1982,351"/>
+<area shape="rect" id="node29" href="$_global_news_8h.html" title="../VariableContainer\l/GlobalNews.h" alt="" coords="1204,312,1342,351"/>
+<area shape="rect" id="node30" href="$_dividend_8h.html" title="../VariableContainer\l/Dividend.h" alt="" coords="1417,312,1555,351"/>
+<area shape="rect" id="node32" href="$_agent_f_w_8h.html" title="AgentFW.h" alt="" coords="1935,165,2022,191"/>
+</map>

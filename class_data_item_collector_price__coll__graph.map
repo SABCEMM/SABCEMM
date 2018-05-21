@@ -1,0 +1,8 @@
+<map id="DataItemCollectorPrice" name="DataItemCollectorPrice">
+<area shape="rect" id="node2" href="$class_data_item_collector.html" title="Pure&#45;Virtual Base class for all implementations of a data collector. " alt="" coords="22,584,178,871"/>
+<area shape="rect" id="node3" href="$class_writer.html" title="Pure&#45;Virtual class that defines the default interface for a writer. " alt="" coords="103,276,231,523"/>
+<area shape="rect" id="node4" title="STL class. " alt="" coords="28,141,108,215"/>
+<area shape="rect" id="node5" title="STL class. " alt="" coords="5,5,131,92"/>
+<area shape="rect" id="node6" href="$class_price.html" title="Container Class for the Price. " alt="" coords="202,611,396,844"/>
+<area shape="rect" id="node8" title="STL class. " alt="" coords="435,363,549,436"/>
+</map>

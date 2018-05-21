@@ -1,0 +1,10 @@
+<map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
+<area shape="rect" id="node1" href="$class_random_generator.html" title="Pure&#45;Virutal Class to generate random numbers. " alt="" coords="5,153,137,179"/>
+<area shape="rect" id="node2" href="$class_random_generator_from_file.html" title="RandomGeneratorFromFile" alt="" coords="188,5,372,31"/>
+<area shape="rect" id="node3" href="$class_random_generator_intel_m_k_l.html" title="Class generates random number with help of Intel MKL VS. " alt="" coords="188,55,372,80"/>
+<area shape="rect" id="node4" href="$class_random_generator_n_a_g.html" title="To use this class, you must have WITH_NAG enabled in CMake. " alt="" coords="200,104,361,129"/>
+<area shape="rect" id="node5" href="$class_random_generator_r_a_n_d_u.html" title="RandomGeneratorRANDU" alt="" coords="191,153,370,179"/>
+<area shape="rect" id="node6" href="$class_random_generator_std_lib.html" title="Class generates random number with help of &lt;random&gt;. " alt="" coords="195,203,365,228"/>
+<area shape="rect" id="node7" href="$class_random_generator_std_lib_old.html" title="Class generates random number with help of &lt;random&gt;. " alt="" coords="185,252,375,277"/>
+<area shape="rect" id="node8" href="$class_random_number_pool.html" title="RandomNumberPool" alt="" coords="207,301,353,327"/>
+</map>

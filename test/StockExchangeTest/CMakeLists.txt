@@ -1,1 +1,0 @@
-add_library(StockExchangeTest StockExchangeTest.cpp)

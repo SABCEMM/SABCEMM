@@ -1,0 +1,27 @@
+<map id="Simulation" name="Simulation">
+<area shape="rect" id="node2" href="$class_writer.html" title="Pure&#45;Virtual class that defines the default interface for a writer. " alt="" coords="1106,1091,1233,1337"/>
+<area shape="rect" id="node7" href="$class_data_item_collector.html" title="Pure&#45;Virtual Base class for all implementations of a data collector. " alt="" coords="1201,1405,1357,1692"/>
+<area shape="rect" id="node3" title="STL class. " alt="" coords="1249,869,1328,943"/>
+<area shape="rect" id="node4" title="STL class. " alt="" coords="1232,501,1358,588"/>
+<area shape="rect" id="node5" href="$class_data_collector.html" title="Composite of DataCollectors. " alt="" coords="1355,1995,1547,2175"/>
+<area shape="rect" id="node30" href="$class_stock_exchange.html" title="This class represents the stock exchange. " alt="" coords="1921,2249,2133,2536"/>
+<area shape="rect" id="node8" title="STL class. " alt="" coords="1378,213,1492,287"/>
+<area shape="rect" id="node10" href="$class_parameter.html" title="Class that defines a parameter object. " alt="" coords="684,816,805,996"/>
+<area shape="rect" id="node11" href="$class_parameter_set_excess_demand_calculator.html" title="{ParameterSetExcessDemand\lCalculator\n|+ excessDemandCalculatorClass\l|+ validate()\l+ ParameterSetExcessDemand\lCalculator()\l+ readFromXML()\l}" alt="" coords="206,481,424,608"/>
+<area shape="rect" id="node12" href="$class_parameter_set_dividend.html" title="Config for the Dividend Generator as needed for the LLS Model. " alt="" coords="667,481,822,608"/>
+<area shape="rect" id="node13" href="$class_parameter_set_r_n_g.html" title="Parameters defining the Random Number Generator (RNG) " alt="" coords="1075,468,1208,621"/>
+<area shape="rect" id="node15" href="$class_parameter_set_agent.html" title="Parameters for the Agent from the paper &quot;How to grow a bubble: A model of myopic adapting agents&quot; by ..." alt="" coords="24,140,163,360"/>
+<area shape="rect" id="node17" href="$class_parameter_set_data_item_collector.html" title="Definition/ParameterSet for the DataItemCollectors. " alt="" coords="783,180,993,320"/>
+<area shape="rect" id="node18" href="$class_parameter_set_price_calculator.html" title="Parameters defining the PriceCalculator. " alt="" coords="449,421,643,668"/>
+<area shape="rect" id="node33" href="$class_excess_demand_calculator.html" title="Virtual parent class for all ExcessDemandCalculator. " alt="" coords="1996,1753,2199,1920"/>
+<area shape="rect" id="node20" href="$class_agent.html" title="Virtual parent class for all Agent. " alt="" coords="1818,1084,1988,1344"/>
+<area shape="rect" id="node21" href="$class_group.html" title="{Group\n||+ Group()\l+ hasGroup()\l+ addGroup()\l+ setGroups()\l+ removeGroup()\l+ resetGroups()\l+ getGroups()\l}" alt="" coords="1705,829,1829,983"/>
+<area shape="rect" id="node23" href="$class_price.html" title="Container Class for the Price. " alt="" coords="1853,789,2047,1023"/>
+<area shape="rect" id="node26" href="$class_variable_container.html" title="{VariableContainer\n|&#45; Simulation\l|+ VariableContainer()\l+ ~VariableContainer()\l+ factory()\l}" alt="" coords="2319,1499,2474,1599"/>
+<area shape="rect" id="node32" href="$class_price_calculator.html" title="Virtual parent class for all PriceCalculator. " alt="" coords="1727,1981,1940,2188"/>
+<area shape="rect" id="node24" href="$class_delta_t.html" title="Container Class for the DeltaT. " alt="" coords="2239,836,2338,976"/>
+<area shape="rect" id="node29" href="$class_dividend.html" title="Container Class for the Dividend. " alt="" coords="2419,1084,2568,1344"/>
+<area shape="rect" id="node25" href="$class_random_generator.html" title="Pure&#45;Virutal Class to generate random numbers. " alt="" coords="2394,789,2593,1023"/>
+<area shape="rect" id="node27" href="$class_global_news.html" title="Container for the GlobalNews required for the StockExchangeHarras. " alt="" coords="2592,1137,2782,1291"/>
+<area shape="rect" id="node28" href="$class_excess_demand.html" title="Container Class for the ExcessDemand. " alt="" coords="2011,1131,2165,1297"/>
+</map>
