@@ -1,5 +1,5 @@
 # Simulator for Agent Based Computational Economic Market Models (SABCEMM)
-Before getting started, have a look at our full [Doxygen Code Documentation](https://sabcemm.github.io/SABCEMM/).
+Before getting started, have a look at our full [Doxygen Code Documentation](https://sabcemm.github.io/SABCEMM/) and in our [User Guide](https://github.com/SABCEMM/SABCEMM/wiki/User-Guide).
 
 
 # First steps 
@@ -17,15 +17,19 @@ Get the source code:
 
 Update the submodules: 
 
-`git submodule init
-git submodule update`
+`git submodule init`
+
+`git submodule update`
 
 Build the program:
 
-`mkdir build
-cd build
-cmake ..
-make`
+`mkdir build`
+
+`cd build`
+
+`cmake ..`
+
+`make`
 
 
 SABCEMM and its test will be put in `build/src` and `build/test`, respectively.
@@ -35,8 +39,9 @@ or use one of the existing files in src/input.
  
 Then, SABCEMM is run like:
  
-`cd src 
-./financeSimulation PATH/TO/INPUT_FILE.xml `
+`cd src`
+
+`./financeSimulation PATH/TO/INPUT_FILE.xml `
 
 The simulation results will be placed in a folder `output` (relative to the program's working directory).
  
