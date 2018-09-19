@@ -7,7 +7,7 @@ We put great effort into making this software accesible to everyone, however all
 
 # First steps 
 
-This tutorial guides you through the first steps to use the SABCEMM framework on a **linux** operating system..
+This tutorial guides you through the first steps to use the SABCEMM framework on a **Linux** ([Ubuntu](https://www.ubuntu.com),[CentOS](https://www.centos.org), ...) operating system..
 If you are trying to use the simulator on a Windows or Mac, please have a look at 
 [SABCEMM on Windows or Mac](https://github.com/SABCEMM/SABCEMM/wiki/SABCEMM-on-Windows-or-Mac) for further information.
 
