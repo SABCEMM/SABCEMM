@@ -1,5 +1,5 @@
 # Simulator for Agent Based Computational Economic Market Models (SABCEMM)
-Before getting started, have a look at our full [Doxygen Code Documentation](https://sabcemm.github.io/SABCEMM/) and at our [User Guide](https://github.com/SABCEMM/SABCEMM/wiki/User-Guide). In case of any problems or if you have suggestions/propositions/comments for futur realeses we encourage everyone to open an [issue](https://github.com/SABCEMM/SABCEMM/issues).
+Before getting started, have a look at our full [Doxygen Code Documentation](https://sabcemm.github.io/SABCEMM/) and at our [User Guide](https://github.com/SABCEMM/SABCEMM/wiki/User-Guide). In case of any problems or if you have suggestions/propositions/comments for futur releases we encourage everyone to open an [issue](https://github.com/SABCEMM/SABCEMM/issues).
 
 We are using [Git](https://git-scm.com) ([Tutorial](https://git-scm.com/book/en/v2/Git-Basics-Getting-a-Git-Repository), [Installing](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)) for version control and distribution of the code and [CMake](https://cmake.org) ([Tutorial](https://cmake.org/cmake-tutorial/), [Installing](https://cmake.org/install/)) to manage the compiling and linking of the software. If you have not worked with this software, you can find usefull information using the provided links.
 
