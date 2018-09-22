@@ -52,7 +52,7 @@ and call
 
 `./financeSimulation PATH/TO/INPUT_FILE.xml `
 
-The simulation results will be placed in a folder `output` (relative to the program's working directory).
+The simulation results will be placed in the folder `output` (relative to the program's working directory).
  
 Some of SABCEMM's features need additional libraries. Those features are turned
  off in CMake by default. See the section dependencies for further guidance.
