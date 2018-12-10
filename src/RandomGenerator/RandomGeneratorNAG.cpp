@@ -48,7 +48,7 @@
 /** Standard constructor. Calls constructor with seed argument and passes a seed from the randomDevice.
  *
  */
-RandomGeneratorNAG::RandomGeneratorNAG():RandomGeneratorNAG(getSeed())  {
+RandomGeneratorNAG::RandomGeneratorNAG():RandomGeneratorNAG(createSeed())  {
 }
 
 /** Standard constructor.

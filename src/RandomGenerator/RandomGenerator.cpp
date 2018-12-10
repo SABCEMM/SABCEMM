@@ -60,7 +60,10 @@ using namespace std;
 
 RandomGenerator::RandomGenerator(int seed): seed(seed)
 {
+}
 
+RandomGenerator::RandomGenerator(): seed(createSeed())
+{
 }
 
 RandomGenerator* RandomGenerator::factory(Parameter* parameter, Writer* writer){

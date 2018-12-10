@@ -56,7 +56,7 @@ RandomGeneratorStdLib::RandomGeneratorStdLib(int seed) :
     RandomGenerator(seed)
 {
 	randomGenerator = new std::mt19937_64(static_cast<unsigned>(seed));
-	//randomGenerator = new std::mt19937(getSeed());
+	//randomGenerator = new std::mt19937(createSeed());
 	//randomGenerator = new std::mt19937;
 }
 

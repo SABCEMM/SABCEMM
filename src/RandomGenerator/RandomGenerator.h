@@ -59,10 +59,11 @@ class RandomGenerator {
 #endif
 protected:
     int seed;
-    static int createSeed();
-public:
-    virtual ~RandomGenerator() = default;
 
+public:
+	static int createSeed();
+    virtual ~RandomGenerator() = default;
+	RandomGenerator();
     RandomGenerator(int seed);
 
     int getSeed(){return seed;}

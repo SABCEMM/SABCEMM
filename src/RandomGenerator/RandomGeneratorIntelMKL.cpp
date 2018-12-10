@@ -54,7 +54,7 @@ using namespace std;
 /** Standard constructor. Uses Seed from RandomDevice
  *
  */
-RandomGeneratorIntelMKL::RandomGeneratorIntelMKL():RandomGeneratorIntelMKL(getSeed()) {
+RandomGeneratorIntelMKL::RandomGeneratorIntelMKL():RandomGeneratorIntelMKL(createSeed()) {
 }
 
 /** Constructor that uses a given seed
