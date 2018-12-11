@@ -68,15 +68,18 @@ Header-only/small dependencies are bundled and possibly encapsuled in submodules
 However, you must install the following libraries manually:
 
 ### mandatory:
+* [Boost Libraries](https://www.boost.org/)([Getting Started](https://www.boost.org/doc/libs/1_66_0/more/getting_started/unix-variants.html)) 
 * curses (Please ask your system administrator to install this software for you. On ubuntu: apt install libncurses5-dev, on arch: pacman -S curses)
 
 ### optional:
 * [Intel MKL](https://software.intel.com/en-us/intel-mkl/) ([Download](https://software.intel.com/en-us/mkl/choose-download), [Installing](https://software.intel.com/en-us/articles/intel-math-kernel-library-intel-mkl-2018-install-guide))
 * [NAG](http://www.nag.com/) ([Download](https://www.nag.co.uk/content/downloads-nag-c-library-versions), [Installing](https://www.nag.co.uk/content/installing-nag-c-library-mark-261-and-library-documentation?ProdCode=cll6i261dl)) 
 * [HDF5](https://support.hdfgroup.org/HDF5/) ([Download](https://www.hdfgroup.org/downloads/), [Installing](https://support.hdfgroup.org/HDF5/release/obtainsrc.html))
+* [OpenMP](https://www.openmp.org/)([Setup](https://en.wikibooks.org/wiki/OpenMP/Setup)) Optional feature to run multiple simulations in parallel.
 * [lcov](http://ltp.sourceforge.net/coverage/lcov.php) for test coverage generation ([User Guide](http://ltp.sourceforge.net/coverage/lcov/readme.php))
 
-The code is compiled conditionally, depending on the available libraries and user-controlled switches in CMake (`WITH_HDF5`, `WITH_INTEL_MKL`, `WITH_NAG`). Edit the `CMakeCache.txt` and change those variables to ON if you would like to use these libraries. Alternativly use [CCMake](https://cmake.org/cmake/help/v3.0/manual/ccmake.1.html).
+
+The code is compiled conditionally, depending on the available libraries and user-controlled switches in CMake (`WITH_HDF5`, `WITH_INTEL_MKL`, `WITH_NAG`, `WITH_OPENMP`). Edit the `CMakeCache.txt` and change those variables to ON if you would like to use these libraries. Alternativly use [CCMake](https://cmake.org/cmake/help/v3.0/manual/ccmake.1.html).
  
 If dependencies are not met, cmake will fail and not generate Makefiles. Try `ccmake .` and fix the wrong paths.
 
@@ -84,4 +87,4 @@ If dependencies are not met, cmake will fail and not generate Makefiles. Try `cc
 
 * Curses can be causing problems. As a workaround, add `-std=c99` to `CMAKE_C_FLAGS` und `-ltinfo` to `CMAKE_EXE_LINKER_FLAGS`.
 * HDF is installed to a standard location and found automatically. Note that HDF5_DIR is set to "HDF5_DIR-NOTFOUND". That's ok!
-
+* When running simulations in parallel we advise to disable the progress bar by disableling `WITH_PROGBAR`!
