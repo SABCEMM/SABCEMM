@@ -43,6 +43,7 @@
 
 #include "../VariableContainer/ExcessDemand.h"
 #include "DataItemCollector.h"
+#include <vector>
 
 
 /** DataItemCollector for the ExcessDemand. Implements DataItemCollectorBase.
@@ -50,13 +51,11 @@
 class DataItemCollectorExcessDemand: public DataItemCollector {
 #if BUILD_TESTS
 FRIEND_TEST(DataItemCollectorExcessDemand, collectData);
-FRIEND_TEST(DataItemCollectorExcessDemand, write);
 FRIEND_TEST(DataItemCollectorExcessDemand, clearData);
 FRIEND_TEST(DataItemCollectorExcessDemand, checkInitilisation);
 #endif
 private:
 	ExcessDemand* excessDemand; /**< Pointer to the ExcessDemand container */
-	std::vector<double> excessDemandHistory; /**< Vector to store excessDemand in */
 
 	virtual void collectData();
 
@@ -66,10 +65,9 @@ public:
 
 	virtual ~DataItemCollectorExcessDemand();
 
+	virtual std::vector<std::vector<double>> * getData();
 
-	 virtual void write();
 
-	 virtual void clearData();
 
 	 virtual void checkInitilisation();
 };

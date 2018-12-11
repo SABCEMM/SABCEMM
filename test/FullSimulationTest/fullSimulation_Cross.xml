@@ -40,6 +40,7 @@
 -->
 
 <settings>
+    <writer>writernone</writer>
     <case>
         <RNGSettings>
             <RNG>RandomGeneratorStdLib</RNG>

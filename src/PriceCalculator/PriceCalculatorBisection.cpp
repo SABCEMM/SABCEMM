@@ -42,6 +42,8 @@
 #include "../Util/Util.h"
 #include "PriceCalculatorBisection.h"
 
+#include <iostream>
+using namespace std;
 //Begin EXPORT ED
 //#include "../Writer/WriterTxt.h"
 //#include <vector>
@@ -69,8 +71,19 @@ void PriceCalculatorBisection::stepCalculate() {
 	assert(excessDemand != nullptr);
 	assert(price != nullptr);
 
-    double a = lowerBound;
-    double b = upperBound;
+
+    double a,b;
+
+    if(adaptive)
+    {
+        a = low*price->getPrice();
+        b = high*price->getPrice();
+    }
+    else
+    {
+        a = low;
+        b = high;
+    }
 
     double m = (a+b)/2;
 
@@ -100,7 +113,7 @@ void PriceCalculatorBisection::stepCalculate() {
     if(!healthy)
     {
 
-        const int MAX_PRICE = (int)upperBound*10;
+        const int MAX_PRICE = (int)b*10;
 
         // assuming that f is a falling function.
         for(int new_b = (int)b; b < MAX_PRICE ; new_b*=2)
@@ -132,10 +145,11 @@ void PriceCalculatorBisection::stepCalculate() {
     }
     if(healthy)
     {
-        int i = 0;
+        size_t i = 0;
         for(m = (a+b)/2; abs(getExcessDemandAtPrice(m)) > epsilon; m = (a+b)/2)
         {
-            if(sign(getExcessDemandAtPrice(a)) == sign(getExcessDemandAtPrice(b)))
+            double demandAtA = getExcessDemandAtPrice(a);
+            if(sign(demandAtA) == sign(getExcessDemandAtPrice(b)))
             {
 
                 return;
@@ -151,13 +165,16 @@ void PriceCalculatorBisection::stepCalculate() {
 
             **/
 
-            if(sign(getExcessDemandAtPrice(a)) == sign(getExcessDemandAtPrice(m)))
+            if(sign(demandAtA) == sign(getExcessDemandAtPrice(m)))
                 a = m;
             else
                 b = m;
 
             if(i > maxIterations)
+            {
+                cerr << "bisection did not converge" << endl;
                 throw NoConvergenceException();
+            }
         }
 
 
@@ -186,46 +203,27 @@ void PriceCalculatorBisection::postStepCalculate(){
 }
 
 
-/** Standardconstructor
- */
-PriceCalculatorBisection::PriceCalculatorBisection():PriceCalculatorBisection(nullptr, nullptr, nullptr){
-
-
-}
-
 /** Constructor for the PriceCalculatorHarras. For Documentation see parent class PriceCalculator.
  */
 PriceCalculatorBisection::PriceCalculatorBisection(ExcessDemandCalculator* newExcessDemandCalculator, Price* newPrice,
-                                                   ExcessDemand* newExcessDemand):
-		PriceCalculator(newExcessDemandCalculator, newPrice, newExcessDemand){
-
-	epsilon = 1e-3;
-	maxIterations = 100000;
-	lowerBound = 0;
-	upperBound = 10;
+                                                   ExcessDemand* newExcessDemand, bool adaptive, double low, double high, double epsilon, size_t maxIterations):
+    PriceCalculator(newExcessDemandCalculator, newPrice, newExcessDemand),
+    epsilon(epsilon),
+    maxIterations(maxIterations),
+    adaptive(adaptive),
+    low(low),
+    high(high)
+{
+    if(adaptive)
+        assert(low < high);
+    else
+        assert(low+epsilon<high-epsilon);
 	agents = nullptr;
-
-}
-
-void PriceCalculatorBisection::setEpsilon(double newEpsilon){
-	assert(newEpsilon > 0);
-	epsilon = newEpsilon;
-}
-
-void PriceCalculatorBisection::setMaxIterations(int newMaxIterations){
-	assert(newMaxIterations>0);
-	maxIterations = newMaxIterations;
 }
 
 void PriceCalculatorBisection::setAgents(std::vector<Agent*>* newAgents){
-	assert(newAgents != nullptr);
-	agents = newAgents;
-}
-
-void PriceCalculatorBisection::setBounds(double newLowerBound, double newUpperBound){
-	assert(newLowerBound+epsilon<newUpperBound-epsilon);
-	lowerBound = newLowerBound;
-	upperBound = newUpperBound;
+    assert(newAgents != nullptr);
+    agents = newAgents;
 }
 
 double PriceCalculatorBisection::getExcessDemandAtPrice(double iterPrice){

@@ -43,33 +43,34 @@
 
 #include <vector>
 
-#include "../Agent/Agent.h"
-#include "../Agent/AgentEMB.h"
+#include "../Agent/AgentLLS.h"
 #include "DataItemCollector.h"
 
 
 /** DataCollector for the average gamma of EMB agents. Gamma is tracked before noise is added. */
-class DataItemCollectorEMBGamma: public DataItemCollector {
+class DataItemCollectorEMBGamma : public DataItemCollector {
 private:
-        std::vector<double> gammaHistory;
-        std::vector<AgentEMB*>* agents; /**< Pointer to the agents vector */
-        bool perAgent; //< If TRUE the amount of stocks in the market is averaged over the agents
+    DataItemCollector::Method method;
+    std::vector<AgentLLS *> *agents; /**< Pointer to the agents vector */
 
 protected:
-     virtual void  collectData() ;
+    virtual void collectData();
 
 public:
-        DataItemCollectorEMBGamma();
-        explicit DataItemCollectorEMBGamma(std::vector<Agent*>* newAgents);
+    DataItemCollectorEMBGamma();
 
-     virtual void  write() ;
+    explicit DataItemCollectorEMBGamma(std::string method);
+    explicit DataItemCollectorEMBGamma(DataItemCollector::Method method);
 
-     virtual void  clearData() ;
+    explicit DataItemCollectorEMBGamma(std::vector<Agent *> *newAgents);
 
-     virtual void  checkInitilisation() ;
+    virtual void checkInitilisation();
 
-        void setPerAgents(bool newPerAgent);
-        void setAgents(std::vector<Agent*>* newAgents);
+    virtual std::vector<std::vector<double>> * getData();
+
+    void setPerAgents(bool newPerAgent);
+
+    void setAgents(std::vector<Agent *> *newAgents);
 };
 
 #endif /* DATACOLLECTOR_DATAITEMCOLLECTOREMBGAMMA_H_ */

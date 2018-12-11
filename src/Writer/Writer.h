@@ -43,8 +43,10 @@
 #include <vector>
 #include <string>
 
-#include "../Parameter/Parameter.h"
+#include "../Input/Input.h"
 #include "../Util/Util.h"
+#include "../DataCollector/DataItemCollector.h"
+#include "../QuantitiesOfInterest/QuantityOfInterest.h"
 #include <cstddef> //for std::size_t
 
 /** Pure-Virtual class that defines the default interface for a writer. A class that writes the results of a
@@ -58,43 +60,26 @@ public:
 	Writer();
 	virtual ~Writer();
 
-	static Writer* factory(Parameter* parameter);
-
-    /// @todo Verallgemeinerung auf nicht nur double?
-    /** Writes a vector to a txt file either forwards or backwards. Overwrites any existing files.
-    * \param newVector Pointer to the vector that should be written to file.
-    * \param name Filename that should be used.
-    */
-    virtual void vectorToFile(std::vector<double>* newVector, std::string name) = 0;
-	virtual void vectorToFile(std::vector<double>* newVector, std::string name, int groupID) = 0;
-	virtual void vectorToFile(std::vector<double>* newVector, std::string name, int groupID,
-							  Util::DataItemCollectorMethod method) = 0;
-
-    virtual void matrixToFile(std::vector<std::vector<double>>* newVector, std::string name) = 0;
-	virtual void matrixToFile(std::vector<std::vector<double>>* newVector, std::string name, int groupID) = 0;
-	virtual void matrixToFile(std::vector<std::vector<double>>* newVector, std::string name, int groupID,
-							  Util::DataItemCollectorMethod method) = 0;
-    /** Writes an array to a txt file either forwards or backwards. Overwrites any existing files.
-     * \param newArray Pointer to the array that should be written to file.
-     * \param arraySize Size/Length of the array.
-     * \param name Filename that should be used.
-     */
-	virtual void arrayToFile(double* newArray, int arraySize, std::string name, int groupID) = 0;
+	static Writer *factory(Input::fromFile input, int reps);
 
     /** Extracts and writes information from the parameter object which contains all input parameters.
      * \param newParameter Parameter object whose information is extracted.
      * \todo Warum Übergabe per Pointer?
      */
-	virtual void saveInput(Parameter* newParameter) = 0;
+	virtual void saveInput(Input& input) = 0;
     /** Saves build-info.
      * @see buildinfo
      */
     virtual void saveBuildInfo() = 0;
 
-	virtual void rngInformation(std::size_t uniformPoolInitialSize, std::size_t uniformPoolSize, int uniformPoolFills,
-								std::size_t normalPoolInitialSize, std::size_t normalPoolSize, int normalPoolFills, int seed) = 0;
+	virtual void rngInformation(std::size_t &uniformGenerated, std::size_t &uniformUnused, std::size_t &normalGenerated,
+                                    std::size_t &normalUnused, int &seed) = 0;
 
 	virtual void saveTime(double time) = 0;
+
+	virtual void addSimulation(std::string simulationIdentifier) = 0;
+	virtual void addQoI(std::string method, QuantityOfInterest::Quantity quantity, int groupID,
+						std::vector<std::vector<double>> *newVector, std::string &name_) = 0;
 };
 
 #endif /* WRITER_H_ */

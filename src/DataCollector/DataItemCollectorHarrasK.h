@@ -54,18 +54,15 @@
 class DataItemCollectorHarrasK: public DataItemCollector {
 #if BUILD_TESTS
 	FRIEND_TEST(DataItemCollectorHarrasK, collectData);
+	FRIEND_TEST(DataItemCollectorHarrasK, clearData);
 	FRIEND_TEST(DataItemCollectorHarrasK, collectData_with1Group);
 	FRIEND_TEST(DataItemCollectorHarrasK, collectData_with2Group);
-	FRIEND_TEST(DataItemCollectorHarrasK, write);
-	FRIEND_TEST(DataItemCollectorHarrasK, clearData);
 	FRIEND_TEST(DataItemCollectorHarrasK, checkInitilisation);
 	FRIEND_TEST(DataItemCollectorHarrasK, setAgents);
 #endif
 private:
-	std::vector<double> kHistory; /**< Vector to store the history in */
-	std::vector<std::vector<double>> kHistoryDetail; /**< Vector to store the history in */
 	std::vector<AgentHarras*>* agents; /**< Pointer to the agents vector */
-	Util::DataItemCollectorMethod method;
+	Method method;
 
 protected:
 	 virtual void  collectData() ;
@@ -74,13 +71,9 @@ public:
 	DataItemCollectorHarrasK();
 
 	explicit DataItemCollectorHarrasK(std::vector<Agent*>* newAgents);
-	DataItemCollectorHarrasK(Util::DataItemCollectorMethod method, std::vector<Agent*>* newAgents);
+	DataItemCollectorHarrasK(std::string method, std::vector<Agent*>* newAgents);
 
 	virtual ~DataItemCollectorHarrasK();
-
-	 virtual void  write() ;
-
-	 virtual void  clearData() ;
 
 	 virtual void  checkInitilisation() ;
 

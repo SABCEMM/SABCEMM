@@ -40,6 +40,10 @@
 -->
 
 <settings>
+    <writer>writertxt</writer>
+    <filename>Harras_fig_23</filename>
+    <simulationsperfile>1</simulationsperfile><!-- optional -->
+    <numthreads>1</numthreads><!-- optional -->
     <!--C1=0 -->
     <case>
         <RNGSettings>
@@ -61,18 +65,30 @@
                 <stock>1</stock>
             </AgentHarras>
         </agents>
-        <dataItemCollectorClasses>
-            <DataCollectorPrice />
-            <DataCollectorExcessDemand />
-            <DataCollectorHarrasK />
-            <DataCollectorAmountOfCash />
-            <DataCollectorAmountOfStock />
-            <DataCollectorWealth />
-        </dataItemCollectorClasses>
+        <qoi>
+            <price>
+                <full></full>
+            </price>
+            <excessdemand>
+                <full></full>
+            </excessdemand>
+            <cash>
+                <full></full>
+            </cash>
+            <stock>
+                <full></full>
+            </stock>
+            <harrasK>
+                <full></full>
+            </harrasK>
+            <wealth>
+                <full></full>
+            </wealth>
+        </qoi>
         <numsteps>13000</numsteps>
         <outputname>Harras_C1_4</outputname>
         <deltaT>1</deltaT>
-        <writerClass>WriterHDF5</writerClass>
+
         <excessDemandCalculatorSettings>
             <excessDemandCalculatorClass>ExcessDemandCalculatorHarras</excessDemandCalculatorClass>
         </excessDemandCalculatorSettings>

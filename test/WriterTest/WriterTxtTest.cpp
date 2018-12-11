@@ -43,20 +43,6 @@
 #include "../../src/Writer/WriterTxt.h"
 
 TEST(WriterTxt, vectorToFile){
-    WriterTxt testWriter("./output/writerTest");
 
-	std::vector<double> testVector;
-	testVector.clear();
-
-	for(int i=0; i<15; i++){
-		testVector.push_back(i);
-	}
-
-	testWriter.vectorToFile(&testVector,"testVector",1);
-	testWriter.vectorToFile(&testVector,"testVector",1);
-
-	testWriter.vectorToFile(&testVector,"testVector2",1);
-	//Händisch nachgeschaut
-	EXPECT_EQ(0,0);
 
 }

@@ -213,7 +213,7 @@ public:
   //func_base& f, double &x );
 double glomin ( double a, double b, double c, double m, double e, double t,
 		std::function<double (double)> f, double &x );
-double local_min ( double a, double b, double t, func_base& f,
+double local_min ( double a, double b, double t, std::function<double (double)> f,
   double &x );
 double local_min_rc ( double &a, double &b, int &status, double value );
 double r8_epsilon ( );

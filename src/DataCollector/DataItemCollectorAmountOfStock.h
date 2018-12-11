@@ -9,7 +9,7 @@
 #define DATACOLLECTOR_DATAITEMCOLLECTORAMOUNTOFSTOCK_H_
 
 #include <vector>
-
+#include <string>
 #include "../Agent/Agent.h"
 #include "../Util/Util.h"
 #include "DataItemCollector.h"
@@ -20,18 +20,15 @@
 class DataItemCollectorAmountOfStock: public DataItemCollector {
 #if BUILD_TESTS
 	FRIEND_TEST(DataItemCollectorAmountOfStock, collectData);
+	FRIEND_TEST(DataItemCollectorAmountOfStock, clearData);
 	FRIEND_TEST(DataItemCollectorAmountOfStock, collectData_with1Group);
 	FRIEND_TEST(DataItemCollectorAmountOfStock, collectData_with2Group);
-	FRIEND_TEST(DataItemCollectorAmountOfStock, write);
-	FRIEND_TEST(DataItemCollectorAmountOfStock, clearData);
 	FRIEND_TEST(DataItemCollectorAmountOfStock, checkInitilisation);
 	FRIEND_TEST(DataItemCollectorAmountOfStock, setAgents);
 #endif
 private:
-	std::vector<double> amountOfStock;
-	std::vector<std::vector<double>> amountOfStockDetail;
 	std::vector<Agent*>* agents;
-	Util::DataItemCollectorMethod method;
+	Method method;
 
 protected:
 	 virtual void  collectData() ;
@@ -39,13 +36,11 @@ protected:
 public:
 	DataItemCollectorAmountOfStock();
 
-	explicit DataItemCollectorAmountOfStock(Util::DataItemCollectorMethod method);
+	explicit DataItemCollectorAmountOfStock(std::string method);
 
 	virtual ~DataItemCollectorAmountOfStock();
 
-	 virtual void  write() ;
-
-	 virtual void  clearData() ;
+	virtual std::vector<std::vector<double>> * getData();
 
 	 virtual void  checkInitilisation() ;
 

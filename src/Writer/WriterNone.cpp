@@ -40,39 +40,29 @@
 #include <boost/core/ignore_unused.hpp>
 #include "WriterNone.h"
 #include <cstddef> //for std::size_t
-void WriterNone::vectorToFile(std::vector<double> *newVector, std::string name) {
-    boost::ignore_unused(newVector, name);
-}
-void WriterNone::vectorToFile(std::vector<double> *newVector, std::string name, int groupID) {
-    boost::ignore_unused(newVector, name, groupID);
-}
-void WriterNone::vectorToFile(std::vector<double> *newVector, std::string name, int groupID,
-                              Util::DataItemCollectorMethod method) {
-    boost::ignore_unused(newVector, name, groupID, method);
-}
-void WriterNone::arrayToFile(double *newArray, int arraySize, std::string name, int groupID){
-    boost::ignore_unused(newArray, arraySize, name, groupID);
-}
-void WriterNone::saveInput(Parameter *newParameter){
-    boost::ignore_unused(newParameter);
+void WriterNone::saveInput(Input& input){
+    boost::ignore_unused(input);
 }
 void WriterNone::saveBuildInfo(){
 }
-void WriterNone::rngInformation(std::size_t uniformPoolInitialSize, std::size_t uniformPoolSize, int uniformPoolFills,
-                                std::size_t normalPoolInitialSize, std::size_t normalPoolSize, int normalPoolFills, int seed){
-    boost::ignore_unused(uniformPoolInitialSize, uniformPoolSize, uniformPoolFills,
-    normalPoolInitialSize, normalPoolSize, normalPoolFills, seed);
-}
-void WriterNone::matrixToFile(std::vector<std::vector<double>>* newVector, std::string name){
-    boost::ignore_unused(newVector, name);
-}
-void WriterNone::matrixToFile(std::vector<std::vector<double>>* newVector, std::string name, int groupID){
-    boost::ignore_unused(newVector, name, groupID);
-}
-void WriterNone::matrixToFile(std::vector<std::vector<double>>* newVector, std::string name, int groupID,
-                              Util::DataItemCollectorMethod method){
-    boost::ignore_unused(newVector, name, groupID, method);
+void WriterNone::rngInformation(std::size_t &uniformGenerated, std::size_t &uniformUnused, std::size_t &normalGenerated,
+                                std::size_t &normalUnused, int &seed) {
+    boost::ignore_unused(uniformGenerated, uniformUnused, normalGenerated,
+                         normalUnused, seed);
 }
 void WriterNone::saveTime(double time){
     boost::ignore_unused(time);
+}
+
+
+void WriterNone::addSimulation(std::string simulationIdentifier) {boost::ignore_unused(simulationIdentifier);};
+
+void WriterNone::addQoI(std::string method, QuantityOfInterest::Quantity quantity, int groupID,
+                        std::vector<std::vector<double>> *newVector, std::string &name_) {
+
+    boost::ignore_unused(method);
+    boost::ignore_unused(quantity);
+    boost::ignore_unused(groupID);
+    boost::ignore_unused(newVector);
+    boost::ignore_unused(name_);
 }

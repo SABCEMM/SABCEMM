@@ -68,7 +68,7 @@ RandomGeneratorIntelMKL::RandomGeneratorIntelMKL(int seed): RandomGenerator(seed
 	//VSL_BRNG_NONDETERM
 	//VSL_BRNG_ARS5
 	//VSL_BRNG_PHILOX4X32X10
-	vslNewStream(&stream, VSL_BRNG_PHILOX4X32X10, static_cast<const unsigned int>(seed));
+	vslNewStream(&stream, VSL_BRNG_MT2203, static_cast<const unsigned int>(seed));
 }
 
 
@@ -138,6 +138,7 @@ void RandomGeneratorIntelMKL::getNormalRandomInt(double mu, double sigma, std::v
 	}
 
 	delete[] tempRandNumbers;
+	tempRandNumbers = nullptr;
 }
 
 void RandomGeneratorIntelMKL::getNormalRandomDouble(double mu, double sigma, double* randNumber) {

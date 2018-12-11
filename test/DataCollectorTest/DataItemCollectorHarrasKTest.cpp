@@ -71,7 +71,7 @@ TEST(DataItemCollectorHarrasK, collectData){
 
     collector.collectData();
 
-    EXPECT_EQ(collector.kHistory.back(), 1);
+    EXPECT_EQ(collector.dataMatrix.at(0).back(), 1);
 
     for (std::size_t i=0; i<16; i++)
     {
@@ -98,7 +98,7 @@ TEST(DataItemCollectorHarrasK, collectData_with1Group){
         trust.push_back(2);
     }
 
-    vector<int> groups;
+    std::vector<int> groups;
     groups.push_back(2);
     for (int i=0; i<16; i++)
     {
@@ -116,7 +116,7 @@ TEST(DataItemCollectorHarrasK, collectData_with1Group){
 
     collector.collectData();
 
-    EXPECT_EQ(collector.kHistory.back(), 2);
+    EXPECT_EQ(collector.dataMatrix.at(0).back(), 2);
 
     for (std::size_t i=0; i<16; i++)
     {
@@ -131,8 +131,8 @@ TEST(DataItemCollectorHarrasK, collectData_with2Group){
     std::vector<double> trust1 (4,2); // four double with value 2
     std::vector<double> trust2 (4,3); // four double with value 3
 
-    vector<int> groups1 (1,2);
-    vector<int> groups2 (1,3);
+    std::vector<int> groups1 (1,2);
+    std::vector<int> groups2 (1,3);
 
     DeltaT deltaT(1);
     RandomGenerator* randomGenerator;
@@ -164,7 +164,7 @@ TEST(DataItemCollectorHarrasK, collectData_with2Group){
 
     collector.collectData();
 
-    EXPECT_EQ(collector.kHistory.back(), 2);
+    EXPECT_EQ(collector.dataMatrix.at(0).back(), 2);
 
     for (std::size_t i=0; i<16; i++)
     {
@@ -174,32 +174,6 @@ TEST(DataItemCollectorHarrasK, collectData_with2Group){
     delete randomGenerator;
 }
 
-
-TEST(DataItemCollectorHarrasK, write){
-    MockWriter mockWriter;
-    DataItemCollectorHarrasK dataItemCollectorHarrasK;
-    dataItemCollectorHarrasK.setWriter(&mockWriter);
-
-    EXPECT_CALL(mockWriter, vectorToFile(testing::_,testing::_,testing::_,testing::_)).Times(1);
-
-    dataItemCollectorHarrasK.write();
-}
-
-TEST(DataItemCollectorHarrasK, clearData){
-    DataItemCollectorHarrasK dataItemCollectorHarrasK;
-    vector<double> testK;
-    testK.push_back(2);
-    testK.push_back(3);
-    testK.push_back(4);
-
-    dataItemCollectorHarrasK.kHistory = testK;
-
-    EXPECT_EQ(testK.size(), dataItemCollectorHarrasK.kHistory.size());
-
-    dataItemCollectorHarrasK.clearData();
-
-    EXPECT_EQ( 0, dataItemCollectorHarrasK.kHistory.size());
-}
 
 
 TEST(DataItemCollectorHarrasK, checkInitilisation){

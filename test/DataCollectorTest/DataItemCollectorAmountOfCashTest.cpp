@@ -56,12 +56,12 @@ TEST(DataItemCollectorAmountOfCash, collectDataMean){
 		tempAgent->setCash(newCash);	
         agents.push_back(static_cast<Agent*>(tempAgent));
 	}
-	DataItemCollectorAmountOfCash collector(Util::DataItemCollectorMethod::MEAN);
+	DataItemCollectorAmountOfCash collector(DataItemCollector::Method::MEAN);
 	collector.setAgents(&agents);
 
 	collector.collectData();
 
-	EXPECT_EQ(collector.amountOfCash.back(), 2);
+	EXPECT_EQ(collector.dataMatrix.at(0).back(), 2);
 	
 	for (std::size_t i=0; i<16; i++)
 	{
@@ -78,12 +78,12 @@ TEST(DataItemCollectorAmountOfCash, collectDataStd){
         tempAgent->setCash(tempCash);
         agents.push_back(static_cast<Agent*>(tempAgent));
     }
-    DataItemCollectorAmountOfCash collector(Util::DataItemCollectorMethod::STD);
+    DataItemCollectorAmountOfCash collector(DataItemCollector::Method::STD);
     collector.setAgents(&agents);
 
     collector.collectData();
 
-    EXPECT_NEAR(collector.amountOfCash.back(), 4.760952285695233, 0.2);
+    EXPECT_NEAR(collector.dataMatrix.at(0).back(), 4.760952285695233, 0.2);
 
     for (std::size_t i=0; i<16; i++)
     {
@@ -94,7 +94,7 @@ TEST(DataItemCollectorAmountOfCash, collectDataStd){
 TEST(DataItemCollectorAmountOfCash, collectData_with1Group){
 	std::vector<Agent*> agents;
 	double newCash=2;
-	vector<int> groups;
+	std::vector<int> groups;
 	groups.push_back(2);
 	for (int i=0; i<16; i++)
 	{
@@ -109,7 +109,7 @@ TEST(DataItemCollectorAmountOfCash, collectData_with1Group){
 
 	collector.collectData();
 
-	EXPECT_EQ(collector.amountOfCash.back(), 2);
+	EXPECT_EQ(collector.dataMatrix.at(0).back(), 2);
 
 	for (std::size_t i=0; i<16; i++)
 	{
@@ -120,9 +120,9 @@ TEST(DataItemCollectorAmountOfCash, collectData_with1Group){
 TEST(DataItemCollectorAmountOfCash, collectData_with2Group){
 	std::vector<Agent*> agents;
 	double newCash=2;
-	vector<int> groups1;
+	std::vector<int> groups1;
 	groups1.push_back(2);
-	vector<int> groups2;
+	std::vector<int> groups2;
 	groups2.push_back(3);
 	for (int i=0; i<8; i++)
 	{
@@ -144,7 +144,7 @@ TEST(DataItemCollectorAmountOfCash, collectData_with2Group){
 
 	collector.collectData();
 
-	EXPECT_EQ(collector.amountOfCash.back(), 2);
+	EXPECT_EQ(collector.dataMatrix.at(0).back(), 2);
 
 	for (std::size_t i=0; i<16; i++)
 	{
@@ -154,40 +154,6 @@ TEST(DataItemCollectorAmountOfCash, collectData_with2Group){
 
 
 
-TEST(DataItemCollectorAmountOfCash, write){
-    MockWriter mockWriter;
-    DataItemCollectorAmountOfCash dataItemCollectorAmountOfCash;
-    dataItemCollectorAmountOfCash.setWriter(&mockWriter);
-
-    EXPECT_CALL(mockWriter, vectorToFile(testing::_,testing::_,testing::_,testing::_)).Times(1);
-
-    dataItemCollectorAmountOfCash.write();
-}
-
-TEST(DataItemCollectorAmountOfCash, clearData){
-    DataItemCollectorAmountOfCash dataItemCollectorAmountOfCash;
-    vector<double> testCash;
-    std::vector<std::vector<double>> testCashDetail;
-
-    testCash.push_back(2);
-    testCash.push_back(3);
-    testCash.push_back(4);
-
-    testCashDetail.push_back(testCash);
-    testCashDetail.push_back(testCash);
-    testCashDetail.push_back(testCash);
-
-    dataItemCollectorAmountOfCash.amountOfCash = testCash;
-    dataItemCollectorAmountOfCash.amountOfCashDetail = testCashDetail;
-
-    EXPECT_EQ(testCash.size(), dataItemCollectorAmountOfCash.amountOfCash.size());
-    EXPECT_EQ(testCashDetail.size(), dataItemCollectorAmountOfCash.amountOfCashDetail.size());
-
-    dataItemCollectorAmountOfCash.clearData();
-
-    EXPECT_EQ( 0, dataItemCollectorAmountOfCash.amountOfCash.size());
-    EXPECT_EQ( 0, dataItemCollectorAmountOfCash.amountOfCashDetail.size());
-}
 TEST(DataItemCollectorAmountOfCash, checkInitilisation){
     std::vector<Agent*> newAgents;
 

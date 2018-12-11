@@ -40,6 +40,7 @@
 
 
 #include <cmath>
+#include <cassert>
 #include "Agent.h"
 #include "AgentCross.h"
 

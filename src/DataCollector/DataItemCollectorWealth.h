@@ -53,29 +53,24 @@ class DataItemCollectorWealth: public DataItemCollector {
 	FRIEND_TEST(DataItemCollectorWealth, collectData);
 	FRIEND_TEST(DataItemCollectorWealth, collectData_with1Group);
 	FRIEND_TEST(DataItemCollectorWealth, collectData_with2Group);
-	FRIEND_TEST(DataItemCollectorWealth, write);
-	FRIEND_TEST(DataItemCollectorWealth, clearData);
 	FRIEND_TEST(DataItemCollectorWealth, checkInitilisation);
 	FRIEND_TEST(DataItemCollectorWealth, setAgents);
 #endif
 private:
-	std::vector<double> wealthHistory;
-	std::vector<std::vector<double>> wealthHistoryDetail;
 	std::vector<Agent*>* agents;
 	Price* price;
-	Util::DataItemCollectorMethod method;
+	Method method;
 protected:
 	virtual void collectData();
 public:
 	DataItemCollectorWealth();
 
-	explicit DataItemCollectorWealth(Util::DataItemCollectorMethod method);
+	explicit DataItemCollectorWealth(std::string method);
 
 	virtual ~DataItemCollectorWealth();
 
-	virtual void write();
 
-	virtual void clearData();
+	virtual std::vector<std::vector<double>> * getData();
 
 	virtual void checkInitilisation();
 

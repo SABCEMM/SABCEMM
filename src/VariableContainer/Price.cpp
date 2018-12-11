@@ -38,14 +38,16 @@
  */
 
 #include "Price.h"
-
-
-
+#include <cmath>
 
 
 /// Constructor for the Price container that is intialized to 1.
-Price::Price() {
+Price::Price(bool take_exponential): take_exponential(take_exponential) {
 	price = 1;
+}
+
+/// Constructor for the Price container that is intialized to 1.
+Price::Price(): Price(false) {
 }
 
 
@@ -68,5 +70,15 @@ void Price::setPrice(double price){
  * \return const reference to the current price
  */
 const double& Price::getPrice() const{
+	return price;
+}
+
+/** Getter method for the current price.
+ * \return const reference to the current price
+ */
+double Price::getPrice_tracking(){
+	if(take_exponential){
+		return exp(price);
+	}
 	return price;
 }

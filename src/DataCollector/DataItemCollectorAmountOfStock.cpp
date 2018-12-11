@@ -6,19 +6,24 @@
  */
 
 #include "DataItemCollectorAmountOfStock.h"
+#include <string>
+#include <cassert>
 
 
 DataItemCollectorAmountOfStock::DataItemCollectorAmountOfStock() :
-        DataItemCollectorAmountOfStock(Util::DataItemCollectorMethod::MEAN) {
+        DataItemCollectorAmountOfStock("mean") {
 
 }
 
-DataItemCollectorAmountOfStock::DataItemCollectorAmountOfStock(Util::DataItemCollectorMethod method) {
+DataItemCollectorAmountOfStock::DataItemCollectorAmountOfStock(std::string method) {
 	agents = nullptr;
-	amountOfStock.clear();
-	amountOfStockDetail.clear();
+	dataMatrix.clear();
 
-	this->method = method;
+	this->method = DataItemCollector::stringToDataItemCollectorMethod(method);
+	if(this->method!=Method::DETAIL){
+		std::vector<double> temp;
+		dataMatrix.push_back(temp);
+	}
 }
 
 DataItemCollectorAmountOfStock::~DataItemCollectorAmountOfStock() = default;
@@ -37,34 +42,21 @@ void DataItemCollectorAmountOfStock::collectData(){
 	}
 
 	switch(method){
-		case Util::DataItemCollectorMethod::MEAN:
-			amountOfStock.push_back(Util::mean(tempStock));
+		case DataItemCollector::Method::MEAN:
+			dataMatrix.at(0).push_back(Util::mean(tempStock));
 			break;
-		case Util::DataItemCollectorMethod::STD:
-			amountOfStock.push_back(Util::std(tempStock));
+		case DataItemCollector::Method::STD:
+			dataMatrix.at(0).push_back(Util::std(tempStock));
 			break;
-		case Util::DataItemCollectorMethod::DETAIL:
-			amountOfStockDetail.push_back(tempStock);
+		case DataItemCollector::Method::DETAIL:
+			dataMatrix.push_back(tempStock);
+            break;
+        default:
+            throw "invalid collector method" + DataItemCollector::methodToString(method);
 	}
 }
-void DataItemCollectorAmountOfStock::write(){
 
-	assert(writer != nullptr);
-	switch(method){
-		case Util::DataItemCollectorMethod::DETAIL:
-			writer->matrixToFile(&amountOfStockDetail, name, groupToTrack_, method);
-			break;
-		default:
-			writer->vectorToFile(&amountOfStock, name, groupToTrack_, method);
-	}
 
-}
-void DataItemCollectorAmountOfStock::clearData(){
-
-	amountOfStock.clear();
-	amountOfStockDetail.clear();
-
-}
 void DataItemCollectorAmountOfStock::checkInitilisation(){
 
 	assert(agents!=nullptr);
@@ -74,4 +66,8 @@ void DataItemCollectorAmountOfStock::setAgents(std::vector<Agent*>* newAgents){
 
 	agents = newAgents;
 
+}
+
+std::vector<std::vector<double>> * DataItemCollectorAmountOfStock::getData(){
+	return &dataMatrix;
 }

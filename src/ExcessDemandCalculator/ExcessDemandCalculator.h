@@ -43,7 +43,7 @@
 
 #include <vector>
 
-#include "../Parameter/Parameter.h"
+#include "../Input/Input.h"
 #include "../Agent/Agent.h"
 #include "../VariableContainer/ExcessDemand.h"
 #include "../VariableContainer/Dividend.h"
@@ -61,7 +61,7 @@ public:
 	ExcessDemandCalculator();
 	ExcessDemandCalculator(std::vector<Agent*>* newAgents, ExcessDemand* newExcessDemand);
 
-	static ExcessDemandCalculator* factory(Parameter* parameter, std::vector<Agent*>* agents,
+	static ExcessDemandCalculator* factory(Input& input, std::vector<Agent*>* agents,
 										   ExcessDemand* excessDemand, Price* price, Dividend* dividend);
 
 	virtual ~ExcessDemandCalculator();

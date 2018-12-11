@@ -38,14 +38,12 @@
  */
 
 #include "gmock/gmock.h"
-
+#include <vector>
 #include "../../src/DataCollector/DataItemCollector.h"
 
 class MockDataItemCollector: public DataItemCollector{
 public:
 	MOCK_METHOD0(collectData, void());
-	MOCK_METHOD0(write, void());
-	MOCK_METHOD0(clearData, void());
 	MOCK_METHOD0(checkInitilisation, void());
 
 

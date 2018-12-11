@@ -48,7 +48,7 @@
 
 
 TEST(DataItemCollectorWealth, collectData){
-    vector<Agent*> agents;
+    std::vector<Agent*> agents;
 	double newStock=2;
 	double newCash=2;
 	Price* newPrice = new Price;
@@ -66,7 +66,7 @@ TEST(DataItemCollectorWealth, collectData){
 
 	collector.collectData();
 
-	EXPECT_EQ(collector.wealthHistory.back(), 4);
+	EXPECT_EQ(collector.dataMatrix.at(0).back(), 4);
 
 	for (std::size_t i=0; i<16; i++)
 	{
@@ -76,12 +76,12 @@ TEST(DataItemCollectorWealth, collectData){
 }
 
 TEST(DataItemCollectorWealth, collectData_with1Group){
-    vector<Agent*> agents;
+    std::vector<Agent*> agents;
     double newStock=2;
     double newCash=2;
     Price* newPrice = new Price;
     newPrice->setPrice(1);
-	vector<int> groups(1,2);
+	std::vector<int> groups(1,2);
 
 	for (int i=0; i<16; i++)
 	{
@@ -98,7 +98,7 @@ TEST(DataItemCollectorWealth, collectData_with1Group){
 
     collector.collectData();
 
-    EXPECT_EQ(collector.wealthHistory.back(), 4);
+    EXPECT_EQ(collector.dataMatrix.at(0).back(), 4);
 
     for (std::size_t i=0; i<16; i++)
     {
@@ -108,13 +108,13 @@ TEST(DataItemCollectorWealth, collectData_with1Group){
 }
 
 TEST(DataItemCollectorWealth, collectData_with2Group){
-    vector<Agent*> agents;
+    std::vector<Agent*> agents;
     double newStock=2;
     double newCash=2;
     Price* newPrice = new Price;
     newPrice->setPrice(2);
-	vector<int> groups1(1,2);
-	vector<int> groups2(1,3);
+	std::vector<int> groups1(1,2);
+    std::vector<int> groups2(1,3);
 
 	for (int i=0; i<8; i++)
 	{
@@ -141,7 +141,7 @@ TEST(DataItemCollectorWealth, collectData_with2Group){
 
     collector.collectData();
 
-    EXPECT_EQ(collector.wealthHistory.back(), 6);
+    EXPECT_EQ(collector.dataMatrix.at(0).back(), 6);
 
     for (std::size_t i=0; i<16; i++)
     {
@@ -150,32 +150,6 @@ TEST(DataItemCollectorWealth, collectData_with2Group){
     delete newPrice;
 }
 
-
-TEST(DataItemCollectorWealth, write){
-    MockWriter mockWriter;
-    DataItemCollectorWealth dataItemCollectorWealth;
-    dataItemCollectorWealth.setWriter(&mockWriter);
-
-    EXPECT_CALL(mockWriter, vectorToFile(testing::_,testing::_,testing::_,testing::_)).Times(1);
-
-    dataItemCollectorWealth.write();
-}
-
-TEST(DataItemCollectorWealth, clearData){
-    DataItemCollectorWealth dataItemCollectorWealth;
-    vector<double> testWealth;
-    testWealth.push_back(2);
-    testWealth.push_back(3);
-    testWealth.push_back(4);
-
-    dataItemCollectorWealth.wealthHistory = testWealth;
-
-    EXPECT_EQ(testWealth.size(), dataItemCollectorWealth.wealthHistory.size());
-
-    dataItemCollectorWealth.clearData();
-
-    EXPECT_EQ( 0, dataItemCollectorWealth.wealthHistory.size());
-}
 
 TEST(DataItemCollectorWealth, checkInitilisation){
     std::vector<Agent*> newAgents;

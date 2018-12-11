@@ -1,0 +1,53 @@
+<settings>
+    <writer>writernone</writer>
+    <case>
+        <RNGSettings>
+            <RNG>RandomGeneratorStdLib</RNG>
+            <numThreads>8</numThreads>
+            <poolSize>5000000</poolSize>
+            <seed>100</seed>
+        </RNGSettings>
+        <agents>
+            <AgentLLS>
+                <cash>1000</cash>
+                <stock>10</stock>
+                <riskTolerance>1.5</riskTolerance>
+                <stdNoiseSigma>0.2</stdNoiseSigma>
+                <initialGamma>0.5</initialGamma>
+                <AgentRII>
+                    <count>2</count>
+                    <k>0.04</k>
+                    <utility>original</utility>
+                </AgentRII>
+            </AgentLLS>
+        </agents>
+        <dividendSettings>
+            <Z1>-0.07</Z1>
+            <Z2>0.1</Z2>
+            <interestRate>0.01</interestRate>
+            <initialDividend>0.5</initialDividend>
+        </dividendSettings>
+        <dataItemCollectorClasses>
+            <DataCollectorPrice />
+            <DataCollectorExcessDemand />
+            <DataCollectorAmountOfCash />
+        </dataItemCollectorClasses>
+        <numsteps>1</numsteps>
+        <outputname>2</outputname>
+        <deltaT>1</deltaT>
+        <writerClass>WriterNone</writerClass>
+        <excessDemandCalculatorSettings>
+            <excessDemandCalculatorClass>ExcessDemandCalculatorLLS</excessDemandCalculatorClass>
+        </excessDemandCalculatorSettings>
+        <priceCalculatorSettings>
+            <priceCalculatorClass>PriceCalculatorLLS</priceCalculatorClass>
+            <epsilon>0.000001</epsilon>
+            <maxIterations>10000</maxIterations>
+            <lowerBound>0.000001</lowerBound>
+            <upperBound>1000000</upperBound>
+        </priceCalculatorSettings>
+        <stockExchangeClass>StockExchangeHarras</stockExchangeClass>
+        <repetitions>1</repetitions>
+        <startPrice>50</startPrice>
+    </case>
+</settings>

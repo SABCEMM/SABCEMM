@@ -1,5 +1,3 @@
-add_subdirectory(boost)
-LIST(APPEND _LIB_INCLUDES ${BOOST_INCLUDES})
 add_subdirectory(tinyxml2)
 LIST(APPEND _LIB_INCLUDES ${TINYXML2_INCLUDES})
 

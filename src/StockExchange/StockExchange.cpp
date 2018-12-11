@@ -44,7 +44,7 @@
 #include <random>
 #include <boost/core/ignore_unused.hpp>
 #include <limits>
-
+#include "../DataCollector/DataCollector.h"
 
 /** Setter method for the DataCollector composite
  * \param newDataCollector Pointer to the new DataCollector composite
@@ -112,7 +112,7 @@ void StockExchange::setNumAgents() {
 
 /** StandardConstructor of the StockExchange
  */
-StockExchange::StockExchange(): StockExchange(nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr) {
+StockExchange::StockExchange(): StockExchange(nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr) {
 
 
 }
@@ -127,7 +127,9 @@ StockExchange::StockExchange(): StockExchange(nullptr, nullptr, nullptr, nullptr
  */
 StockExchange::StockExchange(DataCollector* newDataCollector, std::vector<Agent*>* newAgents,
                              RandomGenerator* newRandomGenerator, PriceCalculator* newPriceCalculator,
-                             ExcessDemandCalculator* newExcessDemandCalculator, Dividend* newDividend,
+                             ExcessDemandCalculator* newExcessDemandCalculator,
+                             ShareCalculator* newShareCalculator,
+                             Dividend* newDividend,
 							 GlobalNews* newGlobalNews){
 
 	numAgents = 0;
@@ -136,6 +138,7 @@ StockExchange::StockExchange(DataCollector* newDataCollector, std::vector<Agent*
 	randomGenerator = newRandomGenerator;
 	priceCalculator = newPriceCalculator;
 	excessDemandCalculator = newExcessDemandCalculator;
+    shareCalculator = newShareCalculator;
 	dividend = newDividend;
 	setNumAgents();
 	agentIndex.clear();
@@ -234,8 +237,6 @@ void StockExchange::step(){
 	{
 		agents->at(agentIndex[j])->stepUpdate();
 	}
-
-
 }
 
 
@@ -257,7 +258,10 @@ void StockExchange::postStep(){
 		agent->postStepUpdate();
 	}
 
-	dataCollector->collect();
+    if(shareCalculator != nullptr)
+        shareCalculator->updateShares();
+
+    dataCollector->collect();
 }
 
 StockExchange* StockExchange::factory() {
@@ -268,12 +272,13 @@ StockExchange* StockExchange::factory() {
 
 StockExchange* StockExchange::factory(DataCollector* newDataCollector, std::vector<Agent*>* newAgents,
 									  RandomGenerator* newRandomGenerator, PriceCalculator* newPriceCalculator,
-									  ExcessDemandCalculator* newExcessDemandCalculator, Dividend* newDividend,
+                                      ExcessDemandCalculator* newExcessDemandCalculator, ShareCalculator* newShareCalculator,
+                                      Dividend* newDividend,
 									  GlobalNews* newGlobalNews) {
 
 	return new StockExchange(newDataCollector, newAgents,
 							 newRandomGenerator, newPriceCalculator,
-							 newExcessDemandCalculator, newDividend,
+                             newExcessDemandCalculator, newShareCalculator, newDividend,
 							 newGlobalNews);
 }
 

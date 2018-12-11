@@ -6,6 +6,9 @@ add_library(PriceCalculator
         PriceCalculatorGeneral.cpp
         PriceCalculatorHarras.cpp
         PriceCalculatorHarrasNoise.cpp
-        PriceCalculatorLLS.cpp)
+        PriceCalculatorLLS.cpp
+        PriceCalculatorLLSNoise.cpp
+        PriceCalculatorLLS1.cpp
+        )
 
 add_coverage(PriceCalculator)

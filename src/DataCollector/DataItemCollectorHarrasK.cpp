@@ -41,22 +41,26 @@
 #include "DataItemCollectorHarrasK.h"
 
 
-DataItemCollectorHarrasK::DataItemCollectorHarrasK() : DataItemCollectorHarrasK(Util::DataItemCollectorMethod::MEAN, nullptr) {
+DataItemCollectorHarrasK::DataItemCollectorHarrasK() : DataItemCollectorHarrasK("mean", nullptr) {
 
 }
 
 /** Constructor for the DataItemCollectorHarrasK. Requires a pointer to an array of AgentHarras.
  */
-DataItemCollectorHarrasK::DataItemCollectorHarrasK(std::vector<Agent*>* newAgents):DataItemCollectorHarrasK(Util::DataItemCollectorMethod::MEAN, newAgents) {
+DataItemCollectorHarrasK::DataItemCollectorHarrasK(std::vector<Agent*>* newAgents):DataItemCollectorHarrasK("mean", newAgents) {
 
 }
 
-DataItemCollectorHarrasK::DataItemCollectorHarrasK(Util::DataItemCollectorMethod method, std::vector<Agent*>* newAgents) {
+DataItemCollectorHarrasK::DataItemCollectorHarrasK(std::string method, std::vector<Agent*>* newAgents) {
 	agents = (std::vector<AgentHarras*>*)newAgents;
-	kHistory.clear();
-	kHistoryDetail.clear();
+	dataMatrix.clear();
 
-	this->method = method;
+	this->method = DataItemCollector::stringToDataItemCollectorMethod(method);
+
+	if(this->method!=Method::DETAIL){
+		std::vector<double> temp;
+		dataMatrix.push_back(temp);
+	}
 }
 
 
@@ -65,31 +69,9 @@ DataItemCollectorHarrasK::DataItemCollectorHarrasK(Util::DataItemCollectorMethod
 DataItemCollectorHarrasK::~DataItemCollectorHarrasK() = default;
 
 
-/** Clears all data in the history.
- */
-void DataItemCollectorHarrasK::clearData(){
-
-	kHistory.clear();
-	kHistoryDetail.clear();
-
-}
-
-
 /** Writes the kHistory.
  */
-void DataItemCollectorHarrasK::write(){
 
-	assert(writer != nullptr);
-
-    switch(method){
-        case Util::DataItemCollectorMethod::DETAIL:
-            writer->matrixToFile(&kHistoryDetail, name, groupToTrack_, method);
-            break;
-        default:
-            writer->vectorToFile(&kHistory, name, groupToTrack_, method);
-    }
-
-}
 
 
 /** Check if everything is initialized and ready to run.
@@ -115,14 +97,17 @@ void DataItemCollectorHarrasK::collectData(){
 	}
 
 	switch(method){
-		case Util::DataItemCollectorMethod::MEAN:
-			kHistory.push_back(Util::mean(tempK));
+		case DataItemCollector::Method::MEAN:
+			dataMatrix.at(0).push_back(Util::mean(tempK));
 			break;
-		case Util::DataItemCollectorMethod::STD:
-			kHistory.push_back(Util::std(tempK));
+		case DataItemCollector::Method::STD:
+			dataMatrix.at(0).push_back(Util::std(tempK));
 			break;
-		case Util::DataItemCollectorMethod::DETAIL:
-			kHistoryDetail.push_back(tempK);
+		case DataItemCollector::Method::DETAIL:
+			dataMatrix.push_back(tempK);
+            break;
+        default:
+            throw "invalid collector method" + DataItemCollector::methodToString(method);
 	}
 }
 

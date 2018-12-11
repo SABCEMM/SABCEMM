@@ -39,14 +39,14 @@
  */
 #include "NeighbourhoodGenerator.h"
 
-
+#include <vector>
 
 
 
 
 /** Construtor requires a pointer to a vector of agents.
  */
-NeighbourhoodGenerator::NeighbourhoodGenerator(vector<Agent*>* newAgents){
+NeighbourhoodGenerator::NeighbourhoodGenerator(std::vector<Agent*>* newAgents){
 	agents = newAgents;
 	countAgents = agents->size();
 }

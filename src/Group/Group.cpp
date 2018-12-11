@@ -52,7 +52,7 @@
  * \param groupID Group ID which the object might have.
  * \return True if Object has Group, False if not.
  */
-bool Group::hasGroup(int& groupID) {
+bool Group::hasGroup(int groupID) {
 
 
     if(groupID == -1){

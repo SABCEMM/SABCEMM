@@ -42,21 +42,17 @@
 #include "gmock/gmock.h"
 
 #include "../../src/Writer/Writer.h"
-#include "../../src/Parameter/Parameter.h"
+#include "../../src/Input/Input.h"
+#include "../../src/DataCollector/DataItemCollector.h"
+#include "../../src/Simulation.h"
 #include <cstddef> //for std::size_t
 class MockWriter: public Writer{
 public:
-    MOCK_METHOD1(saveInput, void(Parameter* newParameter));
+    MOCK_METHOD1(saveInput, void(Input& input));
     MOCK_METHOD0(saveBuildInfo,void());
-    MOCK_METHOD2(vectorToFile, void(std::vector<double>* newVector, std::string name));
-    MOCK_METHOD3(vectorToFile, void(std::vector<double>* newVector, std::string name, int groupID));
-    MOCK_METHOD4(vectorToFile, void(std::vector<double>* newVector, std::string name, int groupID, Util::DataItemCollectorMethod method));
-    MOCK_METHOD4(arrayToFile, void(double* newArray, int arraySize, std::string name, int groupID));
-    MOCK_METHOD7(rngInformation, void(std::size_t uniformPoolInitialSize, std::size_t uniformPoolSize, int uniformPoolRefills,
-            std::size_t normalPoolInitialSize, std::size_t normalPoolSize, int normalPoolRefills, int seed));
-    MOCK_METHOD2(matrixToFile, void(std::vector<std::vector<double>>* newVector, std::string name));
-    MOCK_METHOD3(matrixToFile, void(std::vector<std::vector<double>>* newVector, std::string name, int groupID));
-    MOCK_METHOD4(matrixToFile, void(std::vector<std::vector<double>>* newVector, std::string name, int groupID, Util::DataItemCollectorMethod method));
     MOCK_METHOD1(saveTime, void(double time));
+    MOCK_METHOD1(addSimulation, void(std::string simulationIdentifier));
+    MOCK_METHOD5(addQoI, void(std::string method, QuantityOfInterest::Quantity quantity,
+                        int groupID, std::vector<std::vector<double>>* newVector, std::string& name_));
 };
 

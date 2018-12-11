@@ -61,7 +61,7 @@ private:
 
 public:
     Group();
-    bool hasGroup(int& groupID);
+    virtual bool hasGroup(int groupID);
     void addGroup(int groupID);
     void setGroups(std::vector<int> groups);
     void removeGroup(int groupID);

@@ -1,0 +1,50 @@
+<settings>
+    <writer>writernone</writer>
+    <case>
+        <RNGSettings>
+            <RNG>RandomGeneratorStdLib</RNG>            
+            <poolSize>100000</poolSize>
+        </RNGSettings>
+        <agents>
+            <AgentFW>
+                <!-- general settings -->
+                <count>1</count>
+                <AgentFundamentalist>
+                    <phi>1.15</phi>
+                    <sigma>0.715</sigma>
+                    <fundamentalPrice>1</fundamentalPrice>
+                </AgentFundamentalist>
+                <AgentChartist>
+                    <chi>0.81</chi>
+                    <sigma>1.528</sigma>
+                </AgentChartist>
+                <eta>0.987</eta>
+                <!-- TPA constants -->
+                <switchingStrategy>TPAC</switchingStrategy>
+                <nu>0.05</nu>
+                <!-- W constants -->
+                <indexStrategy>W</indexStrategy>
+                <alpha_w>1041</alpha_w>
+            </AgentFW>
+        </agents>        
+        <dataItemCollectorClasses>
+            <DataCollectorPrice />
+            <DataCollectorExcessDemand />
+            <DataCollectorFWShares />
+        </dataItemCollectorClasses>
+        <numsteps>15</numsteps>
+        <outputname>TPA-W</outputname>
+	    <deltaT>1</deltaT>
+        <writerClass>WriterNone</writerClass>
+        <excessDemandCalculatorSettings>
+		    <excessDemandCalculatorClass>ExcessDemandCalculatorFW</excessDemandCalculatorClass>
+        </excessDemandCalculatorSettings>
+        <priceCalculatorSettings>
+            <priceCalculatorClass>PriceCalculatorFW</priceCalculatorClass>
+            <mu>0.01</mu>
+        </priceCalculatorSettings>
+        <stockExchangeClass>StockExchangeHarras</stockExchangeClass>
+        <repetitions>1</repetitions>
+	    <startPrice>1</startPrice>
+    </case>
+</settings>

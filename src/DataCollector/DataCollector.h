@@ -47,11 +47,11 @@
 #endif
 
 #include "DataItemCollector.h"
-#include "../Parameter/Parameter.h"
+#include "../Input/Input.h"
 #include "../VariableContainer/Price.h"
 #include "../VariableContainer/ExcessDemand.h"
 #include "../Agent/Agent.h"
-#include "../Writer/Writer.h"
+
 
 class DataCollectorTest;
 
@@ -69,19 +69,19 @@ private:
 	std::vector<DataItemCollector*> components; /** Pointers to all activated DataCollectors */
 
 public:
-	static DataCollector* factory(Parameter* parameter, Price* price, ExcessDemand* excessDemand,
-                                  std::vector<Agent*>* agents, Writer* writer);
+	static DataCollector* factory(Input& input, Price* price, ExcessDemand* excessDemand,
+                                  std::vector<Agent*>* agents, std::vector<Switchable *> &switchableGroups);
 	DataCollector();
 	~DataCollector();
 
 	void checkInitilisation();
 
-	void write();
 	void collect();
 	void clearData();
 
 	void add(DataItemCollector* newDataCollector);
 	void deleteDataItemCollectors();
+
 };
 
 #endif /* DATACOLLECTORCOMPOSITE_H_ */

@@ -42,6 +42,10 @@
 
 <!-- Cross Model: Figure 8,9,10 -->
 <settings>
+    <writer>writertxt</writer>
+    <filename>Cross_fig_8-9-10</filename>
+    <simulationsperfile>1</simulationsperfile><!-- optional -->
+    <numthreads>1</numthreads><!-- optional -->
     <case>
         <RNGSettings>
             <RNG>RandomGeneratorIntelMKL</RNG>
@@ -64,21 +68,25 @@
                 <gamma>0</gamma>
             </AgentCrossWealth>
         </agents>
-        <dataItemCollectorClasses>
-            <DataCollectorPrice />
-            <DataCollectorExcessDemand />
-            <DataCollectorAmountOfCash>
-                    <method>detail</method>
-                <collectInterval>100</collectInterval>
-            </DataCollectorAmountOfCash>
-        </dataItemCollectorClasses>
+        <qoi>
+            <price>
+                <full></full>
+            </price>
+            <excessdemand>
+                <full></full>
+            </excessdemand>
+            <cash>
+                <full></full>
+            </cash>
+        </qoi>
+
         <dividendSettings>
             <interestRate>0.01</interestRate>
         </dividendSettings>
         <numsteps>13000</numsteps>
         <outputname>Cross_base_WE0_1000</outputname>
         <deltaT>0.00004</deltaT>
-        <writerClass>WriterHDF5</writerClass>
+
         <excessDemandCalculatorSettings>
             <!-- see the term for sigma(n) on p.5 for the calculation of market sentiment / excess demand.-->
             <excessDemandCalculatorClass>ExcessDemandCalculatorHarras</excessDemandCalculatorClass>
@@ -121,18 +129,21 @@
                 <gamma>0.1</gamma>
             </AgentCrossWealth>
         </agents>
-        <dataItemCollectorClasses>
-            <DataCollectorPrice />
-            <DataCollectorExcessDemand />
-            <DataCollectorAmountOfCash>
-                <method>detail</method>
-                <collectInterval>100</collectInterval>
-            </DataCollectorAmountOfCash>
-        </dataItemCollectorClasses>
+        <qoi>
+            <price>
+                <full></full>
+            </price>
+            <excessdemand>
+                <full></full>
+            </excessdemand>
+            <cash>
+                <full></full>
+            </cash>
+        </qoi>
         <numsteps>13000</numsteps>
         <outputname>Cross_base_WE0-1_1000</outputname>
         <deltaT>0.00004</deltaT>
-        <writerClass>WriterHDF5</writerClass>
+
         <excessDemandCalculatorSettings>
             <!-- see the term for sigma(n) on p.5 for the calculation of market sentiment / excess demand.-->
             <excessDemandCalculatorClass>ExcessDemandCalculatorHarras</excessDemandCalculatorClass>
@@ -175,17 +186,21 @@
                 <gamma>0.2</gamma>
             </AgentCrossWealth>
         </agents>
-        <dataItemCollectorClasses>
-            <DataCollectorPrice />
-            <DataCollectorExcessDemand />
-                    <DataCollectorAmountOfCash>
-                    <method>detail</method>
-                <collectInterval>100</collectInterval>
-            </DataCollectorAmountOfCash></dataItemCollectorClasses>
+        <qoi>
+            <price>
+                <full></full>
+            </price>
+            <excessdemand>
+                <full></full>
+            </excessdemand>
+            <cash>
+                <full></full>
+            </cash>
+        </qoi>
         <numsteps>13000</numsteps>
         <outputname>Cross_base_WE0-2_1000</outputname>
         <deltaT>0.00004</deltaT>
-        <writerClass>WriterHDF5</writerClass>
+
         <excessDemandCalculatorSettings>
             <!-- see the term for sigma(n) on p.5 for the calculation of market sentiment / excess demand.-->
             <excessDemandCalculatorClass>ExcessDemandCalculatorHarras</excessDemandCalculatorClass>
@@ -228,18 +243,21 @@
                 <gamma>0.3</gamma>
             </AgentCrossWealth>
         </agents>
-        <dataItemCollectorClasses>
-            <DataCollectorPrice />
-            <DataCollectorExcessDemand />
-                        <DataCollectorAmountOfCash>
-                    <method>detail</method>
-                <collectInterval>100</collectInterval>
-            </DataCollectorAmountOfCash>
-        </dataItemCollectorClasses>
+        <qoi>
+            <price>
+                <full></full>
+            </price>
+            <excessdemand>
+                <full></full>
+            </excessdemand>
+            <cash>
+                <full></full>
+            </cash>
+        </qoi>
         <numsteps>13000</numsteps>
         <outputname>Cross_base_WE0-3_1000</outputname>
         <deltaT>0.00004</deltaT>
-        <writerClass>WriterHDF5</writerClass>
+
         <excessDemandCalculatorSettings>
             <!-- see the term for sigma(n) on p.5 for the calculation of market sentiment / excess demand.-->
             <excessDemandCalculatorClass>ExcessDemandCalculatorHarras</excessDemandCalculatorClass>
@@ -282,17 +300,21 @@
                 <gamma>0.4</gamma>
             </AgentCrossWealth>
         </agents>
-        <dataItemCollectorClasses>
-            <DataCollectorPrice />
-            <DataCollectorExcessDemand />
-                    <DataCollectorAmountOfCash>
-                    <method>detail</method>
-                <collectInterval>100</collectInterval>
-            </DataCollectorAmountOfCash></dataItemCollectorClasses>
+        <qoi>
+            <price>
+                <full></full>
+            </price>
+            <excessdemand>
+                <full></full>
+            </excessdemand>
+            <cash>
+                <full></full>
+            </cash>
+        </qoi>
         <numsteps>13000</numsteps>
         <outputname>Cross_base_WE0-4_1000</outputname>
         <deltaT>0.00004</deltaT>
-        <writerClass>WriterHDF5</writerClass>
+
         <excessDemandCalculatorSettings>
             <!-- see the term for sigma(n) on p.5 for the calculation of market sentiment / excess demand.-->
             <excessDemandCalculatorClass>ExcessDemandCalculatorHarras</excessDemandCalculatorClass>
@@ -335,17 +357,21 @@
                 <gamma>0.5</gamma>
             </AgentCrossWealth>
         </agents>
-        <dataItemCollectorClasses>
-            <DataCollectorPrice />
-            <DataCollectorExcessDemand />
-                    <DataCollectorAmountOfCash>
-                    <method>detail</method>
-                <collectInterval>100</collectInterval>
-            </DataCollectorAmountOfCash></dataItemCollectorClasses>
+        <qoi>
+            <price>
+                <full></full>
+            </price>
+            <excessdemand>
+                <full></full>
+            </excessdemand>
+            <cash>
+                <full></full>
+            </cash>
+        </qoi>
         <numsteps>13000</numsteps>
         <outputname>Cross_base_WE0-5_1000</outputname>
         <deltaT>0.00004</deltaT>
-        <writerClass>WriterHDF5</writerClass>
+
         <excessDemandCalculatorSettings>
             <!-- see the term for sigma(n) on p.5 for the calculation of market sentiment / excess demand.-->
             <excessDemandCalculatorClass>ExcessDemandCalculatorHarras</excessDemandCalculatorClass>
@@ -388,17 +414,21 @@
                 <gamma>0.6</gamma>
             </AgentCrossWealth>
         </agents>
-        <dataItemCollectorClasses>
-            <DataCollectorPrice />
-            <DataCollectorExcessDemand />
-                    <DataCollectorAmountOfCash>
-                    <method>detail</method>
-                <collectInterval>100</collectInterval>
-            </DataCollectorAmountOfCash></dataItemCollectorClasses>
+        <qoi>
+            <price>
+                <full></full>
+            </price>
+            <excessdemand>
+                <full></full>
+            </excessdemand>
+            <cash>
+                <full></full>
+            </cash>
+        </qoi>
         <numsteps>13000</numsteps>
         <outputname>Cross_base_WE0-6_1000</outputname>
         <deltaT>0.00004</deltaT>
-        <writerClass>WriterHDF5</writerClass>
+
         <excessDemandCalculatorSettings>
             <!-- see the term for sigma(n) on p.5 for the calculation of market sentiment / excess demand.-->
             <excessDemandCalculatorClass>ExcessDemandCalculatorHarras</excessDemandCalculatorClass>
@@ -441,17 +471,21 @@
                 <gamma>0.7</gamma>
             </AgentCrossWealth>
         </agents>
-        <dataItemCollectorClasses>
-            <DataCollectorPrice />
-            <DataCollectorExcessDemand />
-                    <DataCollectorAmountOfCash>
-                    <method>detail</method>
-                <collectInterval>100</collectInterval>
-            </DataCollectorAmountOfCash></dataItemCollectorClasses>
+        <qoi>
+            <price>
+                <full></full>
+            </price>
+            <excessdemand>
+                <full></full>
+            </excessdemand>
+            <cash>
+                <full></full>
+            </cash>
+        </qoi>
         <numsteps>13000</numsteps>
         <outputname>Cross_base_WE0-7_1000</outputname>
         <deltaT>0.00004</deltaT>
-        <writerClass>WriterHDF5</writerClass>
+
         <excessDemandCalculatorSettings>
             <!-- see the term for sigma(n) on p.5 for the calculation of market sentiment / excess demand.-->
             <excessDemandCalculatorClass>ExcessDemandCalculatorHarras</excessDemandCalculatorClass>
@@ -494,17 +528,21 @@
                 <gamma>0.8</gamma>
             </AgentCrossWealth>
         </agents>
-        <dataItemCollectorClasses>
-            <DataCollectorPrice />
-            <DataCollectorExcessDemand />
-                    <DataCollectorAmountOfCash>
-                    <method>detail</method>
-                <collectInterval>100</collectInterval>
-            </DataCollectorAmountOfCash></dataItemCollectorClasses>
+        <qoi>
+            <price>
+                <full></full>
+            </price>
+            <excessdemand>
+                <full></full>
+            </excessdemand>
+            <cash>
+                <full></full>
+            </cash>
+        </qoi>
         <numsteps>13000</numsteps>
         <outputname>Cross_base_WE0-8_1000</outputname>
         <deltaT>0.00004</deltaT>
-        <writerClass>WriterHDF5</writerClass>
+
         <excessDemandCalculatorSettings>
             <!-- see the term for sigma(n) on p.5 for the calculation of market sentiment / excess demand.-->
             <excessDemandCalculatorClass>ExcessDemandCalculatorHarras</excessDemandCalculatorClass>
@@ -547,17 +585,21 @@
                 <gamma>0.9</gamma>
             </AgentCrossWealth>
         </agents>
-        <dataItemCollectorClasses>
-            <DataCollectorPrice />
-            <DataCollectorExcessDemand />
-                    <DataCollectorAmountOfCash>
-                    <method>detail</method>
-                <collectInterval>100</collectInterval>
-            </DataCollectorAmountOfCash></dataItemCollectorClasses>
+        <qoi>
+            <price>
+                <full></full>
+            </price>
+            <excessdemand>
+                <full></full>
+            </excessdemand>
+            <cash>
+                <full></full>
+            </cash>
+        </qoi>
         <numsteps>13000</numsteps>
         <outputname>Cross_base_WE0-9_1000</outputname>
         <deltaT>0.00004</deltaT>
-        <writerClass>WriterHDF5</writerClass>
+
         <excessDemandCalculatorSettings>
             <!-- see the term for sigma(n) on p.5 for the calculation of market sentiment / excess demand.-->
             <excessDemandCalculatorClass>ExcessDemandCalculatorHarras</excessDemandCalculatorClass>
@@ -600,17 +642,21 @@
                 <gamma>1</gamma>
             </AgentCrossWealth>
         </agents>
-        <dataItemCollectorClasses>
-            <DataCollectorPrice />
-            <DataCollectorExcessDemand />
-                    <DataCollectorAmountOfCash>
-                    <method>detail</method>
-                <collectInterval>100</collectInterval>
-            </DataCollectorAmountOfCash></dataItemCollectorClasses>
+        <qoi>
+            <price>
+                <full></full>
+            </price>
+            <excessdemand>
+                <full></full>
+            </excessdemand>
+            <cash>
+                <full></full>
+            </cash>
+        </qoi>
         <numsteps>13000</numsteps>
         <outputname>Cross_base_WE1_1000</outputname>
         <deltaT>0.00004</deltaT>
-        <writerClass>WriterHDF5</writerClass>
+
         <excessDemandCalculatorSettings>
             <!-- see the term for sigma(n) on p.5 for the calculation of market sentiment / excess demand.-->
             <excessDemandCalculatorClass>ExcessDemandCalculatorHarras</excessDemandCalculatorClass>

@@ -48,7 +48,7 @@ private:
 
 public:
     PriceCalculatorLLS();
-    PriceCalculatorLLS(ExcessDemandCalculator* newExcessDemandCalculator, Price* newPrice, ExcessDemand* newExcessDemand);
+    PriceCalculatorLLS(ExcessDemandCalculator* newExcessDemandCalculator, Price* newPrice, ExcessDemand* newExcessDemand, bool adaptive, double low, double high, double epsilon, size_t maxIterations);
 
     virtual ~PriceCalculatorLLS();
 

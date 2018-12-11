@@ -63,11 +63,16 @@ private:
 	double epsilon;
     /// Bisection will fail if solution is solution is after this amount of iterations.
     /// A failing bisection will terminate the program.
-	int maxIterations;
-    /// lower bound of the interval in which the price is to be located.
-	double lowerBound;
-    /// upper bound of the interval in which the price is to be located.
-	double upperBound;
+    std::size_t maxIterations;
+
+    /// Controls whether adaptive bounds are active.
+    /// With adaptive bounds, the price is sought within the interval [low*oldPrice, high*oldPrice].
+    /// Without adaptive bounds, the price is sought within the interval [low, high].
+    bool adaptive;
+    /// @see adaptive
+    double low;
+    /// @see adaptive
+    double high;
 
     /// agents of the current simulation
 	std::vector<Agent*>* agents;
@@ -76,8 +81,8 @@ private:
 	double getExcessDemandAtPrice(double iterPrice);
 
 public:
-    PriceCalculatorBisection();
-    PriceCalculatorBisection(ExcessDemandCalculator* newExcessDemandCalculator, Price* newPrice, ExcessDemand* newExcessDemand);
+    PriceCalculatorBisection() = default;
+    PriceCalculatorBisection(ExcessDemandCalculator* newExcessDemandCalculator, Price* newPrice, ExcessDemand* newExcessDemand, bool adaptive, double low, double high, double epsilon, std::size_t maxIterations);
 
 	virtual ~PriceCalculatorBisection();
 
@@ -87,9 +92,6 @@ public:
 
 	virtual void postStepCalculate();
 
-	void setEpsilon(double newEpsilon);
-	void setMaxIterations(int newMaxIterations);
-	void setBounds(double newLowerBound, double newUpperBound);
 	void setAgents(std::vector<Agent*>* newAgents);
 
 

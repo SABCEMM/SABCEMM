@@ -41,6 +41,7 @@
 #include "WriterTxt.h"
 #include "WriterHDF5.h"
 #include "WriterNone.h"
+#include "../Input/Input.h"
 
 #include <iostream>
 
@@ -57,18 +58,18 @@ Writer::Writer() : outputLocation("output"){
 Writer::~Writer() = default;
 
 
-Writer* Writer::factory(Parameter* parameter){
-    if (*(parameter->writerClass) == "WriterTxt") {
-        return new WriterTxt(*(parameter->outputname));
-    } else if (*(parameter->writerClass) == "WriterHDF5") {
+Writer * Writer::factory(Input::fromFile input, int reps) {
+    std::string filename = input.filename + "_" + std::to_string(reps);
+    if (input.writerClass == "writertxt" ||input.writerClass == "writerxml" ) {
+        return new WriterTxt(filename);
+    } else if (input.writerClass == "writerhdf5") {
 #if WITH_HDF5
-        return new WriterHDF5(*(parameter->outputname));
+        return new WriterHDF5(filename);
 #else
-        std::cerr << "SABCEMM was built without HDF5 support." << std::endl;
-        exit(1);
-
+        std::cerr << "SABCEMM was built without HDF5 support. Using WriterTxT instead!" << std::endl;
+        return new WriterTxt(filename);
 #endif
-    } else if (*parameter->writerClass == "WriterNone") {
+    } else if (input.writerClass == "writernone") {
         return new WriterNone;
     } else {
         throw("writerClass unknown!");

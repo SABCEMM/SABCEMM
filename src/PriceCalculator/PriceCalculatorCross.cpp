@@ -37,7 +37,7 @@
  * @brief This file belongs to the SABCEMM projekt. See github.com/SABCEMM/SABCEMM
  */
 #include <cmath>
-
+#include <cassert>
 #include "PriceCalculatorCross.h"
 
 

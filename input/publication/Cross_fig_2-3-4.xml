@@ -40,6 +40,10 @@
 -->
 
 <settings>
+    <writer>writertxt</writer>
+    <filename>Cross_fig_2-3-4</filename>
+    <simulationsperfile>1</simulationsperfile><!-- optional -->
+    <numthreads>1</numthreads><!-- optional -->
     <!-- Cross Base Model as in Figure 2,3,4 -->
     <case>
         <RNGSettings>
@@ -62,14 +66,18 @@
                 <stock>1</stock>
             </AgentCross>
         </agents>
-        <dataItemCollectorClasses>
-            <DataCollectorPrice />
-            <DataCollectorExcessDemand />
-        </dataItemCollectorClasses>
+        <qoi>
+            <price>
+                <full></full>
+            </price>
+            <excessdemand>
+                <full></full>
+            </excessdemand>
+        </qoi>
         <numsteps>13000</numsteps>
         <outputname>Cross_base</outputname>
         <deltaT>0.00004</deltaT>
-        <writerClass>WriterHDF5</writerClass>
+
         <excessDemandCalculatorSettings>
             <!-- see the term for sigma(n) on p.5 for the calculation of market sentiment / excess demand.-->
             <excessDemandCalculatorClass>ExcessDemandCalculatorHarras</excessDemandCalculatorClass>
@@ -108,14 +116,18 @@
                 <stock>1</stock>
             </AgentCross>
         </agents>
-        <dataItemCollectorClasses>
-            <DataCollectorPrice />
-            <DataCollectorExcessDemand />
-        </dataItemCollectorClasses>
+        <qoi>
+            <price>
+                <full></full>
+            </price>
+            <excessdemand>
+                <full></full>
+            </excessdemand>
+        </qoi>
         <numsteps>13000</numsteps>
         <outputname>Cross_hetero</outputname>
         <deltaT>0.00004</deltaT>
-        <writerClass>WriterHDF5</writerClass>
+
         <excessDemandCalculatorSettings>
             <!-- see the term for sigma(n) on p.5 for the calculation of market sentiment / excess demand.-->
             <excessDemandCalculatorClass>ExcessDemandCalculatorHarras</excessDemandCalculatorClass>

@@ -1,13 +1,15 @@
 add_library(Agent
-        Agent.cpp
-        AgentFWChartist.cpp
+        Agent.cpp        
         AgentCrossWealth.cpp
         AgentCross.cpp
-        AgentEMB.cpp
-        AgentFWFundamentalist.cpp
+
         AgentFW.cpp
+        AgentFWChartist.cpp
+        AgentFWFundamentalist.cpp
+
         AgentHarras.cpp
-        AgentRII.cpp
+
+        AgentLLS.cpp
         )
 
 add_coverage(Agent)

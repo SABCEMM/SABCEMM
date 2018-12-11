@@ -43,6 +43,7 @@
 #include "ExcessDemandCalculatorLLS.h"
 #include "../VariableContainer/Dividend.h"
 #include "ExcessDemandCalculatorFW.h"
+#include "../Input/Input.h"
 
 
 /** Standardconstructor
@@ -65,21 +66,28 @@ ExcessDemandCalculator::ExcessDemandCalculator(std::vector<Agent*>* newAgents, E
 
 }
 
-ExcessDemandCalculator* ExcessDemandCalculator::factory(Parameter* parameter, std::vector<Agent*>* agents,
+ExcessDemandCalculator* ExcessDemandCalculator::factory(Input& input, std::vector<Agent*>* agents,
 														ExcessDemand* excessDemand, Price* price, Dividend* dividend){
+
+    Input& EDCinput = input["excessDemandCalculatorSettings"];
+
 	ExcessDemandCalculator* excessDemandCalculator;
-	if (*(parameter->parameterSetExcessDemandCalculator.excessDemandCalculatorClass) == "ExcessDemandCalculatorHarras") {
+    if (EDCinput["excessDemandCalculatorClass"].getString() == "excessdemandcalculatorharras") {
 		excessDemandCalculator = new ExcessDemandCalculatorHarras(agents,excessDemand);
 	}
-	else if (*(parameter->parameterSetExcessDemandCalculator.excessDemandCalculatorClass) == "ExcessDemandCalculatorLLS") {
-		excessDemandCalculator = new ExcessDemandCalculatorLLS(agents, excessDemand, price, dividend);
-		double totalAmountOfStock = 0;
-		for (auto &i : parameter->parameterSetAgent) {
-			totalAmountOfStock += *(i.stock) * *(i.count);
-		}
-		(dynamic_cast<ExcessDemandCalculatorLLS*>(excessDemandCalculator))->setTotalAmountOfStock(totalAmountOfStock);
+    else if (EDCinput["excessDemandCalculatorClass"].getString() == "excessdemandcalculatorlls") {
+        double stocksPerAgent = 0;
+        size_t agentCount = agents->size();
+        for (auto &agent : *agents) {
+            stocksPerAgent += agent->getStock();
+        }
+        stocksPerAgent /= double(agentCount);
+
+        excessDemandCalculator = new ExcessDemandCalculatorLLS(agents, excessDemand, price, dividend,
+                                                               EDCinput["excessDemandCalculatorClass"]("mode") ? EDCinput["excessDemandCalculatorClass"]["mode"].getString():"original",
+                                                               stocksPerAgent);
 	}
-	else if (*(parameter->parameterSetExcessDemandCalculator.excessDemandCalculatorClass) == "ExcessDemandCalculatorFW"){
+    else if (EDCinput["excessDemandCalculatorClass"].getString() == "excessdemandcalculatorfw"){
 		excessDemandCalculator = new ExcessDemandCalculatorFW(agents, excessDemand);
 	}
 

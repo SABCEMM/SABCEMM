@@ -53,36 +53,12 @@ TEST(DataItemCollectorPrice, collectData){
 	DataItemCollectorPrice collector(newPrice);
 	collector.collectData();
 
-	EXPECT_EQ(collector.priceHistory.back(), 5);	
+	EXPECT_EQ(collector.dataMatrix.at(0).back(), 5);
 	
 	delete newPrice;
 }
 
-TEST(DataItemCollectorPrice, write){
-	MockWriter mockWriter;
-	DataItemCollectorPrice dataItemCollectorPrice;
-	dataItemCollectorPrice.setWriter(&mockWriter);
 
-	EXPECT_CALL(mockWriter, vectorToFile(testing::_,testing::_,testing::_)).Times(1);
-
-	dataItemCollectorPrice.write();
-}
-TEST(DataItemCollectorPrice, clearData){
-	DataItemCollectorPrice dataItemCollectorPrice;
-	vector<double> testPrice;
-	testPrice.push_back(2);
-	testPrice.push_back(3);
-	testPrice.push_back(4);
-
-	dataItemCollectorPrice.priceHistory = testPrice;
-
-	EXPECT_EQ(testPrice.size(), dataItemCollectorPrice.priceHistory.size());
-	EXPECT_EQ(testPrice, dataItemCollectorPrice.priceHistory);
-
-	dataItemCollectorPrice.clearData();
-
-	EXPECT_EQ( 0, dataItemCollectorPrice.priceHistory.size());
-}
 TEST(DataItemCollectorPrice, checkInitilisation){
 
 	DataItemCollectorPrice dataItemCollectorPrice;

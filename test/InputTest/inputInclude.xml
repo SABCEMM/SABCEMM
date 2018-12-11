@@ -1,0 +1,11 @@
+<settings>
+<case>
+    <include>inputInclude2.xml</include>
+    <a>7.2</a>
+    <b>
+        <c>6</c>
+        <d>5</d>
+    </b>
+    <e>testString</e>
+</case>
+</settings>

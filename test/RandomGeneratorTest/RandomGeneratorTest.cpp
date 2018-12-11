@@ -121,12 +121,12 @@ TYPED_TEST(RandomGeneratorTest, getUniformRandomDoubleVector) {
 		EXPECT_GE(upperBound,testDouble[i]);
 	}
 
-	double mean = std::accumulate(testDouble.begin(),testDouble.end(),0.0)/testDouble.size();
+    double mean = std::accumulate(testDouble.begin(),testDouble.end(),0.0)/(double)testDouble.size();
 
 	std::vector<double> diff(testDouble.size());
 	std::transform(testDouble.begin(), testDouble.end(), diff.begin(), [mean](double x) { return x - mean; });
 	double sq_sum = std::inner_product(diff.begin(), diff.end(), diff.begin(), 0.0);
-	double stdev = std::sqrt(sq_sum / testDouble.size());
+    double stdev = std::sqrt(sq_sum / (double)testDouble.size());
 
 	//Check if computed avergare is in the one percent error margin
 	EXPECT_LE(expectedAverage-epsilon,mean);
@@ -169,12 +169,12 @@ TYPED_TEST(RandomGeneratorTest, getUniformRandomIntVector) {
 		EXPECT_LE(lowerBound,testInt[i]);
 		EXPECT_GE(upperBound,testInt[i]);
 	}
-	double mean = std::accumulate(testInt.begin(),testInt.end(),0.0)/testInt.size();
+    double mean = std::accumulate(testInt.begin(),testInt.end(),0.0)/(double)testInt.size();
 
 	std::vector<double> diff(testInt.size());
 	std::transform(testInt.begin(), testInt.end(), diff.begin(), [mean](double x) { return x - mean; });
 	double sq_sum = std::inner_product(diff.begin(), diff.end(), diff.begin(), 0.0);
-	double stdev = std::sqrt(sq_sum / testInt.size());
+    double stdev = std::sqrt(sq_sum / (double)testInt.size());
 
 	//Check if computed avergare is in the one percent error margin
 	EXPECT_LE(expectedAverage-epsilon,mean);
@@ -210,7 +210,7 @@ TYPED_TEST(RandomGeneratorTest, getNormalRandomVector) {
 
 	this->randomGenerator.getNormalRandomDouble(mu, sigma, &testDouble ,count);
 
-    long double mean = std::accumulate(testDouble.begin(),testDouble.end(),0.0)/testDouble.size();
+    long double mean = std::accumulate(testDouble.begin(),testDouble.end(),0.0)/(long double)testDouble.size();
 
 
 	std::vector<long double> diff(testDouble.size());

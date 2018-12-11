@@ -42,12 +42,13 @@
 
 #include <cstddef> //for std::size_t
 #include <vector>
-#include "../Parameter/Parameter.h"
 #include "../Agent/Agent.h"
-#include "../DataCollector/DataCollector.h"
+//#include "../DataCollector/DataCollector.h"
+class DataCollector;
 #include "../RandomGenerator/RandomGenerator.h"
 #include "../PriceCalculator/PriceCalculator.h"
 #include "../ExcessDemandCalculator/ExcessDemandCalculator.h"
+#include "../Switching/ShareCalculator.h"
 #include "../VariableContainer/Dividend.h"
 #include "../VariableContainer/GlobalNews.h"
 
@@ -60,7 +61,11 @@ class StockExchange {
     FRIEND_TEST(stockExchange, step);
     FRIEND_TEST(fullSimulationTest, fullSimulation_Harras);
     FRIEND_TEST(fullSimulationTest, fullSimulation_Cross);
-    FRIEND_TEST(fullSimulationTest, fullSimulation_FW);
+    FRIEND_TEST(fullSimulationTest, fullSimulation_DCA_HPM);
+    FRIEND_TEST(fullSimulationTest, fullSimulation_TPA_W);
+	FRIEND_TEST(fullSimulationTest, fullSimulation_TPAC_W);
+    FRIEND_TEST(fullSimulationTest, fullSimulation_RII);
+    FRIEND_TEST(fullSimulationTest, fullSimulation_EMB);
 #endif
 protected:
 	std::size_t numAgents; /**< Amount of agents in the agents vector. Stored seperatly to avoid calling agents->size() so often. */
@@ -69,13 +74,14 @@ protected:
 	RandomGenerator* randomGenerator; /**< Pointer to the randomGenerator */
 	PriceCalculator* priceCalculator; /**< Pointer to the priceCalculator */
 	ExcessDemandCalculator* excessDemandCalculator; /**< Pointer to the excessDemandCalculator */
+    ShareCalculator* shareCalculator;
 	Dividend* dividend;
-	vector<std::size_t> agentIndex; /**< Index of all agents. Can be shuffeld for the random update. */
+	std::vector<std::size_t> agentIndex; /**< Index of all agents. Can be shuffeld for the random update. */
 	GlobalNews* globalNews; /**< Pointer to the GlobalNews container */
 
 	StockExchange();
 	StockExchange(DataCollector* newDataCollector, std::vector<Agent*>* newAgents, RandomGenerator* newRandomGenerator,
-				  PriceCalculator* newPriceCalculator, ExcessDemandCalculator* newExcessDemandCalculator,
+                  PriceCalculator* newPriceCalculator, ExcessDemandCalculator* newExcessDemandCalculator, ShareCalculator* newShareCalculator,
 				  Dividend* newDividend, GlobalNews* newGlobalNews);
 
 public:
@@ -83,7 +89,9 @@ public:
 	static StockExchange* factory();
 	static StockExchange* factory(DataCollector* newDataCollector, std::vector<Agent*>* newAgents,
 										  RandomGenerator* newRandomGenerator, PriceCalculator* newPriceCalculator,
-										  ExcessDemandCalculator* newExcessDemandCalculator, Dividend* newDividend,
+                                          ExcessDemandCalculator* newExcessDemandCalculator,
+                                          ShareCalculator* newShareCalculator,
+                                          Dividend* newDividend,
 										  GlobalNews* newGlobalNews);
 
 	void setDataCollector(DataCollector* newDataCollector);

@@ -46,25 +46,14 @@
 #include "../MockClasses/MockDataItemCollector.h"
 #include "../MockClasses/MockWriter.h"
 
-TEST(DataItemCollector, setWriter){
-    MockWriter mockWriter;
-    MockDataItemCollector mockDataItemCollector;
-
-    mockDataItemCollector.setWriter(&mockWriter);
-    EXPECT_EQ(&mockWriter, mockDataItemCollector.writer);
-
-}
 
 TEST(DataItemCollector, collect){
 
 	MockDataItemCollector mockCollector;
 
 	mockCollector.setCollectInterval(5);
-	mockCollector.setWriteInterval(5);
 
 	EXPECT_CALL(mockCollector, collectData()).Times(2);
-	EXPECT_CALL(mockCollector, write()).Times(2);
-    EXPECT_CALL(mockCollector, clearData()).Times(2);
 	
 	for(int i=0; i<10; i++){
 		mockCollector.collect();
@@ -77,11 +66,7 @@ TEST(DataItemCollector, collect1){
 	MockDataItemCollector mockCollector;
 
 	mockCollector.setCollectInterval(1);
-	mockCollector.setWriteInterval(1);
-
 	EXPECT_CALL(mockCollector, collectData()).Times(10);
-	EXPECT_CALL(mockCollector, write()).Times(10);
-    EXPECT_CALL(mockCollector, clearData()).Times(10);
 
 	for(int i=0; i<10; i++){
 		mockCollector.collect();
@@ -105,13 +90,7 @@ TEST(DataItemCollector, getName){
     EXPECT_EQ(mockCollector.getName(), testName);
 }
 
-TEST(DataItemCollector, setWriteInterval){
-    MockDataItemCollector mockCollector;
 
-    int writeInterval = 2345;
-    mockCollector.setWriteInterval(writeInterval);
-    EXPECT_EQ(writeInterval, mockCollector.writeInterval);
-}
 TEST(DataItemCollector, setCollectInterval){
     MockDataItemCollector mockCollector;
     int collectInterval = 123;
@@ -123,4 +102,27 @@ TEST(DataItemCollector, setGroupToTrack){
     int groupToTrack = 3;
     mockCollector.setGroupToTrack(groupToTrack);
     EXPECT_EQ(groupToTrack, mockCollector.groupToTrack_);
+}
+
+TEST(DataItemCollector, clearData){
+    MockDataItemCollector dataItemCollector;
+    std::vector<std::vector<double>> dataMatrix;
+    std::vector<double> dataVector;
+    dataVector.push_back(2);
+    dataVector.push_back(3);
+    dataVector.push_back(4);
+    dataMatrix.push_back(dataVector);
+    dataVector.push_back(6);
+    dataVector.push_back(7);
+    dataMatrix.push_back(dataVector);
+
+    dataItemCollector.dataMatrix = dataMatrix;
+
+    EXPECT_EQ(dataMatrix.size(), dataItemCollector.dataMatrix.size());
+    EXPECT_EQ(dataMatrix.at(0).size(), dataItemCollector.dataMatrix.at(0).size());
+    EXPECT_EQ(dataMatrix.at(1).size(), dataItemCollector.dataMatrix.at(1).size());
+
+    dataItemCollector.clearData();
+
+    EXPECT_EQ(0, dataItemCollector.dataMatrix.size());
 }

@@ -38,7 +38,7 @@
  */
 
 #include "VariableContainer.h"
-#include "../Parameter/Parameter.h"
+#include "../Input/Input.h"
 #include "DeltaT.h"
 #include "Dividend.h"
 #include "ExcessDemand.h"
@@ -46,20 +46,26 @@
 #include "Price.h"
 #include "../RandomGenerator/RandomGenerator.h"
 
-VariableContainer* VariableContainer::factory(Parameter* parameter, RandomGenerator* randomNumberPool){
+VariableContainer* VariableContainer::factory(Input& input, RandomGenerator* randomNumberPool){
     VariableContainer* variableContainer = new VariableContainer;
 
-    variableContainer->price = new Price();
-    variableContainer->price->setPrice(*(parameter->startPrice));
+    bool take_exponential = false;
+    std::string priceCalculator = input["priceCalculatorSettings"]["priceCalculatorClass"].getString();
+    if(priceCalculator == "pricecalculatorfw"){
+        take_exponential = true;
+    }
+
+    variableContainer->price = new Price(take_exponential);
+    variableContainer->price->setPrice(input["startPrice"].getDouble());
     variableContainer->excessDemand = new ExcessDemand();
 
-    variableContainer->deltaT = new DeltaT(*(parameter->deltaT));
+    variableContainer->deltaT = new DeltaT(input["deltaT"].getDouble());
 
-    if(parameter->parameterSetDividend.Z1){
+    if(input("dividendSettings")){
         variableContainer->dividend = new Dividend(randomNumberPool, variableContainer->deltaT,
-                                                   *(parameter->parameterSetDividend.Z1),
-                                                   *(parameter->parameterSetDividend.Z2),
-                                                   *(parameter->parameterSetDividend.initialDividend));
+                                                   input["dividendSettings"]["Z1"].getDouble(),
+                                                   input["dividendSettings"]["Z2"].getDouble(),
+                                                   input["dividendSettings"]["initialDividend"].getDouble());
 
     }
     else {
@@ -67,14 +73,14 @@ VariableContainer* VariableContainer::factory(Parameter* parameter, RandomGenera
     }
 
     variableContainer->globalNews = nullptr;
-    for (auto &i : parameter->parameterSetAgent) {
+
         //If Harras Agents are used create globalNews, if multiple harras agent groups
         // are present last globale news will dominate.
-        if (*(i.type) == "AgentHarras") {
+        if (input["agents"].hasChild("agentharras")) {
             variableContainer->globalNews = new GlobalNews(randomNumberPool);
             //stockExchange->setGlobalNews(globalNews);
         }
-    }
+
 
     return variableContainer;
 }
@@ -88,7 +94,13 @@ VariableContainer::VariableContainer(){
 
 VariableContainer::~VariableContainer(){
     delete price;
+    price = nullptr;
     delete excessDemand;
+    excessDemand  = nullptr;
+    delete deltaT;
+    deltaT = nullptr;
     delete dividend;
+    dividend = nullptr;
     delete globalNews;
+    globalNews = nullptr;
 }

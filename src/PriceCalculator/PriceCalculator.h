@@ -40,7 +40,7 @@
 #ifndef _PriceCalculator_hpp_
 #define _PriceCalculator_hpp_
 
-#include "../Parameter/Parameter.h"
+#include "../Input/Input.h"
 #include "../ExcessDemandCalculator/ExcessDemandCalculator.h"
 #include "../VariableContainer/Price.h"
 #include "../VariableContainer/ExcessDemand.h"
@@ -71,9 +71,9 @@ protected:
 public:
 	PriceCalculator();
 	PriceCalculator(ExcessDemandCalculator* newExcessDemandCalculator, Price* newPrice, ExcessDemand* newExcessDemand);
-	static PriceCalculator* factory(Parameter* parameter, ExcessDemandCalculator* excessDemandCalculator,
-									Price* price, ExcessDemand* excessDemand, DeltaT* deltaT,
-									RandomGenerator* randomNumberPool, std::vector<Agent*>* agents);
+    static PriceCalculator* factory(Input& input, ExcessDemandCalculator* excessDemandCalculator,
+                                    Price* price, ExcessDemand* excessDemand, DeltaT* deltaT,
+                                    RandomGenerator* randomNumberPool, std::vector<Agent*>* agents);
 	virtual ~PriceCalculator();
 
 	void setDeltaT(DeltaT* newDeltaT);

@@ -40,6 +40,7 @@
 //#include "omp.h"
 #include <cstddef> //for std::size_t
 #include "RandomNumberPool.h"
+#include<algorithm>
 
 
 /** Standard Constructor for the RandomNumberPool. Pool sizes for normal and uniform distribution are set to one.
@@ -61,26 +62,23 @@ RandomNumberPool::RandomNumberPool(std::size_t newUniformPoolInitialSize, std::s
 	uniformPoolInitialSize = newUniformPoolInitialSize;
 	normalPoolInitialSize = newNormalPoolInitialSize;
 	uniformPool.clear();
+	uniformPool.reserve(uniformPoolInitialSize);
 	normalPool.clear();
+	normalPool.reserve(normalPoolInitialSize);
 	uniformPoolFills = 0;
 	normalPoolFills = 0;
-
+	uniformPoolUnused = 0;
+	normalPoolUnused = 0;
 }
 
 /** Destructor of the RandomNumberPool
  */
 RandomNumberPool::~RandomNumberPool() {
 
-
-    if(writer!= nullptr){
-        writer->rngInformation(uniformPoolInitialSize, uniformPool.size(), uniformPoolFills, normalPoolInitialSize,
-                               normalPool.size(), normalPoolFills, randomGenerator->getSeed());
-    }
-
-	uniformPool.clear();
-	normalPool.clear();
+	clearPools();
 
 	delete randomGenerator;
+	randomGenerator = nullptr;
 }
 
 /** Set the RandomGenerator to fill the pools.
@@ -302,6 +300,21 @@ void RandomNumberPool::getNormalRandomDouble(double mu, double sigma, std::vecto
 
 }
 
-void RandomNumberPool::setWriter(Writer *newWriter) {
-    writer= newWriter;
+
+void RandomNumberPool::clearPools(){
+	uniformPoolUnused += uniformPool.size();
+	normalPoolUnused += normalPool.size();
+	normalPool.clear();
+	normalPool.shrink_to_fit();
+	uniformPool.clear();
+	uniformPool.shrink_to_fit();
+}
+
+void RandomNumberPool::getUsageInformation(std::size_t& uniformGenerated, std::size_t& uniformUnused,
+										   std::size_t& normalGenerated, std::size_t& normalUnused, int& seed){
+	uniformGenerated = uniformPoolFills * uniformPoolInitialSize;
+	uniformUnused = uniformPoolUnused + uniformPool.size();
+	normalGenerated = normalPoolFills * normalPoolInitialSize;
+	normalUnused = normalPoolUnused + normalPool.size();
+	seed = randomGenerator->getSeed();
 }

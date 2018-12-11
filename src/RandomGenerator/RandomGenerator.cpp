@@ -43,7 +43,6 @@
 
 #include "RandomGenerator.h"
 #include "RandomGeneratorStdLib.h"
-#include "../Writer/Writer.h"
 #if WITH_INTEL_MKL
 #include "RandomGeneratorIntelMKL.h"
 
@@ -55,46 +54,46 @@
 #include "RandomGeneratorRANDU.h"
 #include "RandomGeneratorFromFile.h"
 #include "RandomNumberPool.h"
+#include "../Input/Input.h"
 
 using namespace std;
 
 RandomGenerator::RandomGenerator(int seed): seed(seed)
 {
-}
 
-RandomGenerator::RandomGenerator(): seed(createSeed())
-{
 }
+RandomGenerator::RandomGenerator():seed(createSeed())
+{}
 
-RandomGenerator* RandomGenerator::factory(Parameter* parameter, Writer* writer){
-	optional<string> type = parameter->parameterSetRNG.type;
-	optional<int> seed = parameter->parameterSetRNG.seed;
-	optional<string> fileName = parameter->parameterSetRNG.fileName;
+RandomGenerator* RandomGenerator::factory(Input& input){
+	Input& RGinput = input["RNGSettings"];
+	string type = RGinput["RNG"].getString();
+
 
 
 	RandomGenerator* randomGenerator;
 	//RandomGenerator
-	if (*type == "RandomGeneratorStdLib") {
-		if(seed){
-			randomGenerator = new RandomGeneratorStdLib(*seed);
+	if (type == "randomgeneratorstdlib") {
+		if(RGinput("seed")){
+			randomGenerator = new RandomGeneratorStdLib(RGinput["seed"].getInt());
 		}
 		else{
 			randomGenerator = new RandomGeneratorStdLib();
 		}
 	}
-	else if (*type == "RandomGeneratorStdLibOld") {
-		if(seed){
-			randomGenerator = new RandomGeneratorStdLibOld(*seed);
+	else if (type == "randomgeneratorstdlibold") {
+		if(RGinput("seed")){
+			randomGenerator = new RandomGeneratorStdLibOld(RGinput["seed"].getInt());
 		}
 		else{
 			randomGenerator = new RandomGeneratorStdLibOld();
 		}
 	}
 #if WITH_INTEL_MKL
-	else if (*type== "RandomGeneratorIntelMKL") {
+	else if (type== "randomgeneratorintelmkl") {
 
-		if(seed){
-			randomGenerator = new RandomGeneratorIntelMKL(*seed);
+		if(RGinput("seed")){
+			randomGenerator = new RandomGeneratorIntelMKL(RGinput["seed"].getInt());
 		}
 		else{
 			randomGenerator = new RandomGeneratorIntelMKL();
@@ -102,43 +101,51 @@ RandomGenerator* RandomGenerator::factory(Parameter* parameter, Writer* writer){
 	}
 #endif
 #if WITH_NAG
-		else if (*type == "RandomGeneratorNAG") {
-		if(seed){
-			randomGenerator = new RandomGeneratorNAG(*seed);
+		else if (type == "randomgeneratornag") {
+		if(RGinput("seed")){
+			randomGenerator = new RandomGeneratorNAG(RGinput["seed"].getInt());
 		}
 		else{
 			randomGenerator = new RandomGeneratorNAG();
 		}
 	}
 #endif
-	else if (*type == "RandomGeneratorRANDU") {
-		if(seed){
-			randomGenerator = new RandomGeneratorRANDU(*seed);
+	else if (type == "randomgeneratorrandu") {
+		if(RGinput("seed")){
+			randomGenerator = new RandomGeneratorRANDU(RGinput["seed"].getInt());
 		}
 		else{
 			randomGenerator = new RandomGeneratorRANDU();
 		}
 	}
-	else if (*type == "RandomGeneratorFromFile") {
-		if(fileName){
-			randomGenerator = new RandomGeneratorFromFile(*fileName);
+	else if (type == "randomgeneratorfromfile") {
+		if(RGinput("fileName")){
+			randomGenerator = new RandomGeneratorFromFile(RGinput["fileName"].getString());
 		}
 		else
-			throw("RandomGeneratorFromFile needs a file name.");
+			throw("randomgeneratorFromFile needs a file name.");
 	}
 	else {
-		throw("RandomGeneratorClass unknown!");
+		throw("randomgeneratorClass unknown!");
 	}
 	//RandomNumberPool TODO: Make nice!!
-	if (*(parameter->parameterSetRNG.enablePool)) {
-		RandomNumberPool* randomNumberPool = new RandomNumberPool(*(parameter->parameterSetRNG.poolSizeUniform),
-																  *(parameter->parameterSetRNG.poolSizeNormal));
-		randomNumberPool->setRandomGenerator(randomGenerator);
-		randomNumberPool->setWriter(writer);
-		return dynamic_cast<RandomGenerator*>(randomNumberPool);
-	} else {
-		return dynamic_cast<RandomGenerator*>(randomGenerator);
+
+	size_t poolSizeUniform = 1;
+	size_t poolSizeNormal = 1;
+	if (RGinput("poolSize")) {
+		if (RGinput["poolSize"]("uniform") && RGinput["poolSize"]("normal")){
+			poolSizeNormal = RGinput["poolSize"]["normal"].getSizeT();
+			poolSizeUniform = RGinput["poolSize"]["uniform"].getSizeT();
+		}else{
+			poolSizeNormal = RGinput["poolSize"].getSizeT();
+			poolSizeUniform = RGinput["poolSize"].getSizeT();
+		}
+
 	}
+
+	RandomNumberPool* randomNumberPool = new RandomNumberPool(poolSizeUniform, poolSizeNormal);
+	randomNumberPool->setRandomGenerator(randomGenerator);
+	return dynamic_cast<RandomGenerator*>(randomNumberPool);
 
 }
 

@@ -45,20 +45,5 @@
 #include "../../src/Writer/WriterHDF5.h"
 
 TEST(WriterHDF5, vectorToFile){
-    WriterHDF5 testWriter("writerTest");
-
-	std::vector<double> testVector;
-	testVector.clear();
-
-	for(int i=0; i<15; i++){
-		testVector.push_back(i);
-	}
-
-	testWriter.vectorToFile(&testVector,"testVector3",1);
-    testWriter.vectorToFile(&testVector,"testVector3",1);
-
-    testWriter.vectorToFile(&testVector,"testVector4",1);
-	//Händisch nachgeschaut
-	EXPECT_EQ(0,0);
 
 }

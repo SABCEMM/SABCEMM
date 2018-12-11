@@ -98,11 +98,11 @@ void Dividend::setZ(double newZ1, double newZ2){
 	assert(newZ2>=newZ1);
 	z1 = newZ1;
 	z2 = newZ2;
-	expectedValue = (z1+z2)/2;
+    expectedIncrease = (z1+z2)/2;
 }
 
-const double& Dividend::getExpectedValue() const{
-	return expectedValue;
+const double& Dividend::getExpectedIncrease() const{
+    return expectedIncrease;
 }
 
 const double& Dividend::getZ1() const{

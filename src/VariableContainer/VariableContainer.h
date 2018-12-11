@@ -53,7 +53,7 @@ class Price;
 class Simulation;
 
 #include "../RandomGenerator/RandomGenerator.h"
-#include "../Parameter/Parameter.h"
+#include "../Input/Input.h"
 
 
 class VariableContainer {
@@ -61,7 +61,11 @@ class VariableContainer {
 #if BUILD_TESTS
     FRIEND_TEST(fullSimulationTest, fullSimulation_Harras);
     FRIEND_TEST(fullSimulationTest, fullSimulation_Cross);
-    FRIEND_TEST(fullSimulationTest, fullSimulation_FW);
+    FRIEND_TEST(fullSimulationTest, fullSimulation_DCA_HPM);
+    FRIEND_TEST(fullSimulationTest, fullSimulation_TPA_W);
+    FRIEND_TEST(fullSimulationTest, fullSimulation_TPAC_W);
+    FRIEND_TEST(fullSimulationTest, fullSimulation_RII);
+    FRIEND_TEST(fullSimulationTest, fullSimulation_EMB);
 #endif
 private:
     DeltaT* deltaT;
@@ -71,7 +75,7 @@ private:
     Price* price;
 
 public:
-    static VariableContainer* factory(Parameter* parameter, RandomGenerator* randomNumberPool);
+    static VariableContainer* factory(Input& input, RandomGenerator* randomNumberPool);
     VariableContainer();
     ~VariableContainer();
 };

@@ -41,7 +41,6 @@
 #ifndef _NeighbourhoodGenerator_hpp_
 #define _NeighbourhoodGenerator_hpp_
 
-#include "../Parameter/Parameter.h"
 #include "../Agent/Agent.h"
 #include <vector>
 #include <cstddef> //for std::size_t
@@ -56,7 +55,7 @@ protected:
 	std::vector<Agent*>* agents; /**< Pointer to the array of agents */
 
 public:
-    explicit NeighbourhoodGenerator(vector<Agent*>* newAgents);
+    explicit NeighbourhoodGenerator(std::vector<Agent*>* newAgents);
 	virtual ~NeighbourhoodGenerator();
 	virtual void generateNeighbourhood() = 0;
 

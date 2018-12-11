@@ -54,13 +54,10 @@
 class DataItemCollectorPrice: public DataItemCollector {
 #if BUILD_TESTS
 FRIEND_TEST(DataItemCollectorPrice, collectData);
-FRIEND_TEST(DataItemCollectorPrice, write);
-FRIEND_TEST(DataItemCollectorPrice, clearData);
 FRIEND_TEST(DataItemCollectorPrice, checkInitilisation);
 #endif
 private:
 	Price* price; /**< Pointer to the Price container */
-	std::vector<double> priceHistory; /**< Vector to store the price in */
 
 	 virtual void  collectData() ;
 
@@ -70,10 +67,7 @@ public:
 
 	virtual ~DataItemCollectorPrice();
 
-
-	 virtual void  write() ;
-
-	 virtual void  clearData() ;
+	virtual std::vector<std::vector<double>> * getData();
 
 	 virtual void  checkInitilisation() ;
 };

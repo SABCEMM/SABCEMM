@@ -1,0 +1,10 @@
+<settings>
+    <case>
+        <a>7.2</a>
+        <b>
+            <c>6</c>
+            <c>5</c>
+        </b>
+        <e>testString</e>
+    </case>
+</settings>

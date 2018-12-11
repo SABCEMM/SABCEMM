@@ -5,10 +5,12 @@ add_subdirectory(Exceptions)
 add_subdirectory(ExcessDemandCalculator)
 add_subdirectory(Group)
 add_subdirectory(NeighbourhoodGenerator)
-add_subdirectory(Parameter)
+add_subdirectory(Input)
 add_subdirectory(PriceCalculator)
+add_subdirectory(QuantitiesOfInterest)
 add_subdirectory(RandomGenerator)
 add_subdirectory(StockExchange)
+add_subdirectory(Switching)
 add_subdirectory(Util)
 add_subdirectory(VariableContainer)
 add_subdirectory(Writer)
@@ -18,7 +20,7 @@ add_library(Main
         Simulation.cpp
     )
 
-target_compile_definitions(Main PUBLIC -DWITH_PROGBAR=$<BOOL:${CURSES_FOUND}>)
+#target_compile_definitions(Main PUBLIC -DWITH_PROGBAR=$<BOOL:${CURSES_FOUND}>)
 
 add_executable (financeSimulation FinanceSimulation.cpp)
 install(TARGETS financeSimulation
@@ -32,19 +34,25 @@ target_link_libraries(financeSimulation
         DataCollector
         ExcessDemandCalculator
         NeighbourhoodGenerator
-        Parameter
+        Input
         PriceCalculator
+        QuantitiesOfInterest
         RandomGenerator
         StockExchange
+        Switching
         VariableContainer
         Writer
         tinyxml2
         Version # linked lastly as Writer depends on it.
 )
 
+target_link_libraries(financeSimulation ${Boost_LIBRARIES})
+
+if(${WITH_PROGBAR})
 if(CURSES_FOUND)
     target_link_libraries(financeSimulation progressbar ${CURSES_LIBRARIES})
 endif(CURSES_FOUND)
+endif()
 
 if(${WITH_INTEL_MKL})
     target_link_libraries(financeSimulation ${MKL_LIBRARIES})

@@ -50,7 +50,7 @@
  */
 class LatticeNeighbourhoodGenerator: public NeighbourhoodGenerator {
 public:
-    explicit LatticeNeighbourhoodGenerator(vector<Agent*>* newAgents);
+    explicit LatticeNeighbourhoodGenerator(std::vector<Agent*>* newAgents);
 
 	virtual ~LatticeNeighbourhoodGenerator();
 	 virtual void  generateNeighbourhood() ;

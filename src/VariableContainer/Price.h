@@ -43,6 +43,7 @@
 #if BUILD_TESTS
 #include "gtest/gtest_prod.h"
 
+
 #endif
 
 
@@ -51,10 +52,13 @@
 class PriceCalculatorBisection;
 class PriceCalculatorCross;
 class PriceCalculatorFW;
+class PriceCalculatorFWContinous;
 class PriceCalculatorGeneral;
 class PriceCalculatorHarras;
 class PriceCalculatorHarrasNoise;
 class PriceCalculatorLLS;
+class PriceCalculatorLLS1;
+class PriceCalculatorLLSNoise;
 class Simulation;
 class VariableContainer;
 
@@ -67,11 +71,14 @@ class Price{
 	friend PriceCalculatorBisection;
     friend PriceCalculatorCross;
     friend PriceCalculatorFW;
+    friend PriceCalculatorFWContinous;
     friend PriceCalculatorGeneral;
     friend PriceCalculatorHarras;
     friend PriceCalculatorHarrasNoise;
+    friend PriceCalculatorLLS1;
 	friend Simulation;
 	friend PriceCalculatorLLS;
+    friend PriceCalculatorLLSNoise;
 	friend VariableContainer;
 #if BUILD_TESTS
 	FRIEND_TEST(DataItemCollectorWealth, collectData);
@@ -88,12 +95,15 @@ class Price{
 private:
 	double price; /**< Holds the current price */
 	void setPrice(double price);
+	bool take_exponential;
 
 public:
 	Price();
+    Price(bool take_exponential);
 	virtual ~Price();
 
     const double& getPrice() const;
+	double getPrice_tracking();
 };
 
 #endif /* VARIABLECONTAINERS_PRICE_H_ */

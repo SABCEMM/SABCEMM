@@ -42,29 +42,34 @@
 #include "AgentCross.h"
 #include "AgentHarras.h"
 #include "AgentCrossWealth.h"
-#include "AgentEMB.h"
+#include "AgentLLS.h"
 #include "AgentFW.h"
 #include "AgentFWFundamentalist.h"
 #include "AgentFWChartist.h"
 
 #include "../RandomGenerator/RandomGenerator.h"
+#include "../Switching/LLSGroup.h"
 #include "../VariableContainer/DeltaT.h"
 #include "../VariableContainer/ExcessDemand.h"
 #include "../VariableContainer/Price.h"
 #include "../VariableContainer/GlobalNews.h"
 #include "../VariableContainer/Dividend.h"
 
-#include "../Parameter/Parameter.h"
-#include "../Parameter/ParameterSetAgent.h"
+#include "../Input/Input.h"
 #include "../NeighbourhoodGenerator/LatticeNeighbourhoodGenerator.h"
 
 
 #include <string>
+#include <cassert>
 #include <vector>
+
+#include <iostream>
+using namespace std;
+
 
 /** Standard constructor for the Agent.
  */
-Agent::Agent(): Agent(nullptr, nullptr, 0, 0){
+Agent::Agent() : Agent(nullptr, nullptr, 0, 0) {
 
 
 }
@@ -74,7 +79,7 @@ Agent::Agent(): Agent(nullptr, nullptr, 0, 0){
  * \param newRandomGenerator Pointer on the RandomGenerator
  * \param newPrice Pointer to the Price container
  */
-Agent::Agent(RandomGenerator* newRandomGenerator, Price* newPrice): Agent(newRandomGenerator, newPrice, 0, 0){
+Agent::Agent(RandomGenerator *newRandomGenerator, Price *newPrice) : Agent(newRandomGenerator, newPrice, 0, 0) {
 
 
 }
@@ -87,176 +92,247 @@ Agent::Agent(RandomGenerator* newRandomGenerator, Price* newPrice): Agent(newRan
  * \param newCash Amount of cash
  * \param newStock Amount of stock
  */
-Agent::Agent(RandomGenerator* newRandomGenerator, Price* newPrice, double newCash, double newStock){
+Agent::Agent(RandomGenerator *newRandomGenerator, Price *newPrice, double newCash, double newStock) {
 
-	cash = newCash;
-	stock = newStock;
-	decision = 0;
-	tradingVolume = 0;
-	randomGenerator = newRandomGenerator;
-	price = newPrice;
-	deltaT = nullptr;
+    cash = newCash;
+    stock = newStock;
+    decision = 0;
+    tradingVolume = 0;
+    randomGenerator = newRandomGenerator;
+    price = newPrice;
+    deltaT = nullptr;
 
 }
 
 
-std::vector<Agent*>* Agent::factory(Parameter* parameter, RandomGenerator* randomNumberPool, Price* price,
-									ExcessDemand* excessDemand, GlobalNews* globalNews, Dividend* dividend,
-									DeltaT* deltaT){
-	std::vector<Agent*>* agents = new std::vector<Agent*>;
+std::vector<Agent*> *Agent::factory(Input &input, RandomGenerator *randomNumberPool, Price *price,
+                                     ExcessDemand *excessDemand, GlobalNews *globalNews, Dividend *dividend,
+                                     DeltaT *deltaT, std::vector<Switchable *> &switchableGroups) {
+    std::vector<Agent*> *agents = new std::vector<Agent *>;
 
-	std::vector<Agent*> tempHarrasAgents;
+    std::vector<Agent*> tempHarrasAgents;
 
-	//Create Agents by Iterating over AgentClasses
+    //Create Agents by Iterating over AgentClasses
 
-
-	for (auto parameterSetAgent : parameter->parameterSetAgent) {
-		tempHarrasAgents.clear();
-
-		// Make Code more readable
-		string type = *parameterSetAgent.type;
+    if (!input("agents")) {
+        input["agents"]; // Abort if no agents are configured
+    }
 
 
-		for (std::size_t j = 0; j < *(parameterSetAgent.count); j++) {
-			if (type == "AgentHarras") {
-				auto * tempAgent = new AgentHarras(randomNumberPool, price, excessDemand, globalNews,
-                                                   *(parameterSetAgent.cash), *(parameterSetAgent.stock),
-                                                   *(parameterSetAgent.C1), *(parameterSetAgent.C2),
-                                                   *(parameterSetAgent.C3), *(parameterSetAgent.threshold),
-                                                   *(parameterSetAgent.g), *(parameterSetAgent.alpha),
-                                                   *(parameter->parameterSetPriceCalculator.marketDepth));
+    for (auto& agentInput : input["agents"].getChildren()) {
+        tempHarrasAgents.clear();
 
-				if(parameterSetAgent.groups){
-					tempAgent->setGroups(*(parameterSetAgent.groups));
-				}
-				tempHarrasAgents.push_back(static_cast<Agent*>(tempAgent));
-			}
-			else if (type == "AgentCross") {
-				auto * tempAgent = new AgentCross(randomNumberPool, price,	excessDemand,
-                                                  *(parameterSetAgent.cash), *(parameterSetAgent.stock),
-                                                  deltaT,
-                                                  *(parameterSetAgent.b1), *(parameterSetAgent.b2),
-                                                  *(parameterSetAgent.A1), *(parameterSetAgent.A2));
-				if(parameterSetAgent.groups){
-					tempAgent->setGroups(*(parameterSetAgent.groups));
-				}
-				agents->push_back(static_cast<Agent*>(tempAgent));
-			}
-			else if (type == "AgentCrossWealth") {
-				auto * tempAgent = new AgentCrossWealth(randomNumberPool,
-														price,
-														excessDemand,
-														*(parameterSetAgent.cash),
-														*(parameterSetAgent.stock),
-                										deltaT,
-                                                        *(parameterSetAgent.b1), *(parameterSetAgent.b2),
-                                                        *(parameterSetAgent.A1), *(parameterSetAgent.A2),
-                                                        *(parameterSetAgent.gamma),
-                                                        *(parameter->parameterSetDividend.interestRate));
+        // Make Code more readable
+        string type = agentInput("type") ? agentInput["type"].getString() : agentInput.getName();
 
-				if(parameterSetAgent.groups){
-					tempAgent->setGroups(*(parameterSetAgent.groups));
-				}
+        /// @todo LLS agents have a different mechanism for count, but this should be unified.
+        if (type == "agentlls") {
+            const size_t embCount = agentInput("AgentEMB") ? agentInput["AgentEMB"]["count"].getSizeT() : 0;
+            const size_t riiCount = agentInput("AgentRII") ? agentInput["AgentRII"]["count"].getSizeT() : 0;
+            const size_t totalCount = embCount + riiCount;
+            LLSGroup *group = new LLSGroup(*randomNumberPool,
+                                           *dividend,
+                                           agentInput("AgentRII") && agentInput["AgentRII"]("k")
+                                           ? agentInput["AgentRII"]["k"].getDouble() : 0,
+                                           *price,
+                                           agentInput("alpha_p1") ? agentInput["alpha_p1"].getDouble() : 0,
+                                           agentInput("alpha_p2") ? agentInput["alpha_p2"].getDouble() : 0);
+
+            for (size_t i = 0; i < totalCount; ++i) {
+                AgentLLS::MemorySpanMode memSpanMode = AgentLLS::MemorySpanMode::fixed;
+                if(agentInput("AgentEMB"))
+                {
+                    if(agentInput["AgentEMB"]("memorySpan"))
+                    {
+                        if(agentInput["AgentEMB"]("memorySpanMu") || agentInput["AgentEMB"]("memorySpanSigma") )
+                        {
+                            cerr << "memorySpan and (memorySpanMu, memorySpanSigma) are mutually exclusive." << endl;
+                            continue;
+                        }
+                        memSpanMode = AgentLLS::MemorySpanMode::fixed;
+                    }
+                    else if(agentInput["AgentEMB"]("memorySpanMu") || agentInput["AgentEMB"]("memorySpanSigma"))
+                    {
+                         if(!agentInput["AgentEMB"]("memorySpanMu") || !agentInput["AgentEMB"]("memorySpanSigma") )
+                         {
+                             cerr << "memorySpanMu or memorySpanSigma not specified." << endl;
+                             continue;
+                         }
+                         memSpanMode = AgentLLS::MemorySpanMode::random;
+                    }
+                    else
+                    {
+                        cerr << "AgentEMB lacks settings memory span settings." << endl;
+                        continue;
+                    }
+                }
+
+                auto tempAgent = new AgentLLS(randomNumberPool,
+                                               price,
+                                               agentInput["cash"].getDouble(),
+                                               agentInput["stock"].getDouble(),
+                                               dividend,
+                                               agentInput["riskTolerance"].getDouble(),
+                                               agentInput["stdNoiseSigma"].getDouble(),
+                                               input["dividendSettings"]["interestRate"].getDouble(),
+                                               agentInput["initialGamma"].getDouble(),
+                        // we expect validation to be done in the parameter object
+                                               agentInput("AgentRII") && agentInput["AgentRII"]("k") ? agentInput["AgentRII"]["k"].getDouble() : 0,
+                                               agentInput("AgentRII") && agentInput["AgentRII"]("utility")? agentInput["AgentRII"]["utility"].getString() : "original",
+                                               agentInput("AgentRII") && agentInput["AgentRII"]("group") ? agentInput["AgentRII"]["group"].getIntSet() : set<int>(),
+                                               agentInput("AgentEMB") && agentInput["AgentEMB"]("utility") ? agentInput["AgentEMB"]["utility"].getString() : "original",
+                                               agentInput("AgentEMB") && agentInput["AgentEMB"]("group") ? agentInput["AgentEMB"]["group"].getIntSet() : set<int>(),
+                                               agentInput("AgentEMB") ? agentInput["AgentEMB"]("historyMean") : 0,
+                                               agentInput("AgentEMB") ? agentInput["AgentEMB"]("historySigma") : 0,
+                                               agentInput("AgentEMB") && agentInput["AgentEMB"]("gammaMin") ? agentInput["AgentEMB"]["gammaMin"].getDouble() : 0.01,
+                                               agentInput("AgentEMB") && agentInput["AgentEMB"]("gammaMax") ? agentInput["AgentEMB"]["gammaMax"].getDouble() : 0.99, 
+                                               memSpanMode,
+                                               agentInput("AgentEMB") && agentInput["AgentEMB"]("memorySpan") ? agentInput["AgentEMB"]["memorySpan"].getSizeT() : 0,
+                                               agentInput("AgentEMB") && agentInput["AgentEMB"]("memorySpanMu") ? agentInput["AgentEMB"]["memorySpanMu"].getDouble() : 0,
+                                               agentInput("AgentEMB") && agentInput["AgentEMB"]("memorySpanSigma") ? agentInput["AgentEMB"]["memorySpanSigma"].getDouble() : 0
+                );
+
+                if (agentInput("groups")) {
+                    tempAgent->setGroups(agentInput["groups"].getIntVector());
+                }
+
                 agents->push_back(static_cast<Agent*>(tempAgent));
+
+                group->addToGroup(tempAgent);
             }
-            else if (type == "AgentEMB") {
-                auto * tempAgent = new AgentEMB(randomNumberPool, price,
-                                                *(parameterSetAgent.cash), *(parameterSetAgent.stock),
-                                                dividend, *(parameterSetAgent.riskTolerance),
-                                                static_cast<std::size_t>(*(parameterSetAgent.memorySpan)),
-                                                *(parameterSetAgent.stdNoiseSigma),
-                                                *(parameter->parameterSetDividend.interestRate),
-                                                *(parameterSetAgent.historyMean),
-                                                *(parameterSetAgent.historySigma), *(parameterSetAgent.initialGamma));
 
-                if(parameterSetAgent.groups){
-                    tempAgent->setGroups(*(parameterSetAgent.groups));
-				}
+            for (size_t i = 0; i < embCount; ++i)
+                static_cast<AgentLLS*>(agents->at(i))->setStrategy(AgentLLS::LLSStrategy::EMB);
+            for (size_t i = embCount; i < totalCount; ++i)
+                static_cast<AgentLLS*>(agents->at(i))->setStrategy(AgentLLS::LLSStrategy::RII);
+            switchableGroups.push_back(group);
+        } else {
+            for (std::size_t j = 0; j < agentInput["count"].getSizeT(); j++) {
+                if (type == "agentharras") {
+                    auto tempAgent = new AgentHarras(randomNumberPool, price, excessDemand, globalNews,
+                                                      agentInput["cash"].getDouble(), agentInput["stock"].getDouble(),
+                                                      agentInput["C1"].getDouble(), agentInput["C2"].getDouble(),
+                                                      agentInput["C3"].getDouble(), agentInput["threshold"].getDouble(),
+                                                      agentInput["g"].getDouble(), agentInput["alpha"].getDouble(),
+                                                      input["priceCalculatorSettings"]["marketDepth"].getDouble());
 
-				agents->push_back(static_cast<Agent*>(tempAgent));
-			}
-			else if(type == "AgentFW")
-			{
-				// this is one of the rare cases where we actually rely on default values for null-optionals.
-				// The reasoning here is: We assume that the Parameter object validated that for the chosen index
-				// strategy, the correct variables are given. Otherwise, the program would have been aborted.
-				// For certain index strategies, not all coefficients are used - they are therefore not specified in the
-				// input file. Still, AgentFW expects these variables to be given. As they are not used, 0 is chosen
-				// but any value would be fine.
-				// We should NOT use this method in the Parameter object (therefore initializing all alphas with 0 here)
-				// as we cannot warn the user about unspecified variables in the input file then.
-				// The same reasoning applies to nu (which is only needed for TPA) and beta
-				// (which is only needed for DCA)
-				auto a1 = new AgentFWFundamentalist(
-						randomNumberPool,
-						price,
-						*parameterSetAgent.eta,
-						parameterSetAgent.beta.value_or(0),
-						parameterSetAgent.alpha_w.value_or(0),
-						parameterSetAgent.alpha_n.value_or(0),
-						parameterSetAgent.alpha_p.value_or(0),
-						parameterSetAgent.alpha_0.value_or(0),
-						parameterSetAgent.nu.value_or(0),
-						switchingStrategyToString.at(*parameterSetAgent.switchingStrategy),
-						*parameterSetAgent.indexStrategy,
-						*parameterSetAgent.sigma_f,
-						*parameterSetAgent.phi,
-						*parameterSetAgent.fundamentalPrice
-				);
-				auto a2 = new AgentFWChartist(
-						randomNumberPool,
-						price,
-						*parameterSetAgent.eta,
-						parameterSetAgent.beta.value_or(0),
-						parameterSetAgent.alpha_w.value_or(0),
-						parameterSetAgent.alpha_n.value_or(0),
-						parameterSetAgent.alpha_p.value_or(0),
-						parameterSetAgent.alpha_0.value_or(0),
-						parameterSetAgent.nu.value_or(0),
-						switchingStrategyToString.at(*parameterSetAgent.switchingStrategy),
-						*parameterSetAgent.indexStrategy,
-						*parameterSetAgent.sigma_c,
-						*parameterSetAgent.chi
-				);
+                    if (agentInput("groups")) {
+                        tempAgent->setGroups(agentInput["groups"].getIntVector());
+                    }
+                    tempHarrasAgents.push_back(static_cast<Agent *>(tempAgent));
+                } else if (type == "agentcross") {
+                    auto tempAgent = new AgentCross(randomNumberPool, price, excessDemand,
+                                                     agentInput["cash"].getDouble(), agentInput["stock"].getDouble(),
+                                                     deltaT,
+                                                     agentInput["b1"].getDouble(), agentInput["b2"].getDouble(),
+                                                     agentInput["A1"].getDouble(), agentInput["A2"].getDouble());
+                    if (agentInput("groups")) {
+                        tempAgent->setGroups(agentInput["groups"].getIntVector());
+                    }
+                    agents->push_back(static_cast<Agent *>(tempAgent));
+                } else if (type == "agentcrosswealth") {
+                    auto tempAgent = new AgentCrossWealth(randomNumberPool,
+                                                           price,
+                                                           excessDemand,
+                                                           agentInput["cash"].getDouble(),
+                                                           agentInput["stock"].getDouble(),
+                                                           deltaT,
+                                                           agentInput["b1"].getDouble(), agentInput["b2"].getDouble(),
+                                                           agentInput["A1"].getDouble(), agentInput["A2"].getDouble(),
+                                                           agentInput["gamma"].getDouble(),
+                                                           input["dividendSettings"]["interestRate"].getDouble());
 
-				if(parameterSetAgent.groups) {
-					a1->setGroups(*parameterSetAgent.groups);
-					a2->setGroups(*parameterSetAgent.groups);
-				}
-				a1->setPartner(a2);
-				a2->setPartner(a1);
-				agents->push_back(dynamic_cast<Agent*>(a1));
-				agents->push_back(dynamic_cast<Agent*>(a2));
-			}
+                    if (agentInput("groups")) {
+                        tempAgent->setGroups(agentInput["groups"].getIntVector());
+                    }
+                    agents->push_back(static_cast<Agent *>(tempAgent));
+                } else if (type == "agentfw") {
 
-			else {
-				throw("AgentClass unknown!");
-			}
-		}
 
-		//If HarrasAgents are used create NeighbourhoodGenerator and create Neighbourhood
+                    // this is one of the rare cases where we actually rely on default values for null-optionals.
+                    // The reasoning here is: We assume that the Parameter object validated that for the chosen index
+                    // strategy, the correct variables are given. Otherwise, the program would have been aborted.
+                    // For certain index strategies, not all coefficients are used - they are therefore not specified in the
+                    // input file. Still, AgentFW expects these variables to be given. As they are not used, 0 is chosen
+                    // but any value would be fine.
+                    // We should NOT use this method in the Parameter object (therefore initializing all alphas with 0 here)
+                    // as we cannot warn the user about unspecified variables in the input file then.
+                    // The same reasoning applies to nu (which is only needed for TPA) and beta
+                    // (which is only needed for DCA)
+                    auto a1 = new AgentFWFundamentalist(
+                            randomNumberPool,
+                            price,
+                            agentInput("eta") ? agentInput["eta"].getDouble() : 0,
+                            agentInput("beta") ? agentInput["beta"].getDouble() : 0,
+                            agentInput("alpha_w") ? agentInput["alpha_w"].getDouble() : 0,
+                            agentInput("alpha_n") ? agentInput["alpha_n"].getDouble() : 0,
+                            agentInput("alpha_p") ? agentInput["alpha_p"].getDouble() : 0,
+                            agentInput("alpha_0") ? agentInput["alpha_0"].getDouble() : 0,
+                            agentInput("nu") ? agentInput["nu"].getDouble() : 0,
+                            AgentFW::stringToSwitchingStrategy.at(agentInput["switchingStrategy"].getString()),
+                            agentInput["indexStrategy"].getString(),
+                            agentInput["AgentFundamentalist"]["sigma"].getDouble(),
+                            agentInput["AgentFundamentalist"]["phi"].getDouble(),
+                            agentInput["AgentFundamentalist"]["fundamentalPrice"].getDouble()
+                    );
+                    auto a2 = new AgentFWChartist(
+                            randomNumberPool,
+                            price,
+                            agentInput["eta"].getDouble(),
+                            agentInput("beta") ? agentInput["beta"].getDouble() : 0,
+                            agentInput("alpha_w") ? agentInput["alpha_w"].getDouble() : 0,
+                            agentInput("alpha_n") ? agentInput["alpha_n"].getDouble() : 0,
+                            agentInput("alpha_p") ? agentInput["alpha_p"].getDouble() : 0,
+                            agentInput("alpha_0") ? agentInput["alpha_0"].getDouble() : 0,
+                            agentInput("nu") ? agentInput["nu"].getDouble() : 0,
+                            AgentFW::stringToSwitchingStrategy.at(agentInput["switchingStrategy"].getString()),
+                            agentInput["indexStrategy"].getString(),
+                            agentInput["AgentChartist"]["sigma"].getDouble(),
+                            agentInput["AgentChartist"]["chi"].getDouble()
+                    );
 
-		if (type == "AgentHarras"){
-			NeighbourhoodGenerator* neighbourhoodGenerator; /**< Pointer to a NeighbourhoodGenerator */
-			if (*(parameterSetAgent.neighbourhoodGeneratorClass)
-				== "LatticeNeighbourhoodGenerator") {
-				neighbourhoodGenerator = new LatticeNeighbourhoodGenerator(&tempHarrasAgents);
-			} else {
-				throw("neighbourhoodGeneratorClass unknown!");
-			}
+                    if (agentInput("groups")) {
+                        a1->setGroups(agentInput["groups"].getIntVector());
+                        a2->setGroups(agentInput["groups"].getIntVector());
+                    }
+                    a1->setPartner(a2);
+                    a2->setPartner(a1);
 
-			neighbourhoodGenerator->generateNeighbourhood();
+                    //adjust shares if offset necessary
+                    a1->setShare(agentInput("delta_n") ? agentInput["delta_n"].getDouble()+0.5 : 0.5);
 
-			agents->insert(agents->end(), tempHarrasAgents.begin(), tempHarrasAgents.end());
-			delete neighbourhoodGenerator;
-		}
-	}
+                    agents->push_back(dynamic_cast<Agent *>(a1));
+                    agents->push_back(dynamic_cast<Agent *>(a2));
+                }
+                else {
+                    cerr << "agent class " << type << "unknown. Skipping.";
+                }
+            }
+        }
 
-	for (auto &agent : *agents) {
-		agent->setDeltaT(deltaT);
-	}
+        //If HarrasAgents are used create NeighbourhoodGenerator and create Neighbourhood
 
-	return agents;
+        if (type == "agentharras") {
+            NeighbourhoodGenerator *neighbourhoodGenerator; /**< Pointer to a NeighbourhoodGenerator */
+            if (agentInput["neighbourhoodGeneratorClass"].getString()
+                == "latticeneighbourhoodgenerator") {
+                neighbourhoodGenerator = new LatticeNeighbourhoodGenerator(&tempHarrasAgents);
+            } else {
+                throw ("neighbourhoodGeneratorClass unknown!");
+            }
+
+            neighbourhoodGenerator->generateNeighbourhood();
+
+            agents->insert(agents->end(), tempHarrasAgents.begin(), tempHarrasAgents.end());
+            delete neighbourhoodGenerator;
+        }
+    }
+
+    for (auto agent : *agents) {
+        agent->setDeltaT(deltaT);
+    }
+
+    return agents;
 }
 
 /** Virtual destructor of the Agent.
@@ -266,73 +342,69 @@ Agent::~Agent() = default;
 /** Getter method for the agent's current cash.
  * \return Agent's current cash
  */
-double Agent::getCash() const{
+double Agent::getCash() const {
 
 
-	return cash;
+    return cash;
 }
 
 /** Setter method for the agent's current cash.
  * \param newCash New amount of cash for the agent
  */
-void Agent::setCash(double& newCash) {
+void Agent::setCash(double newCash) {
 
-	cash = newCash;
+    cash = newCash;
 
 }
 
 /** Getter method for agent's current decision.
  * \return Agent's current decision
  */
-const int& Agent::getDecision() const{
+int Agent::getDecision() const {
 
 
-	return decision;
+    return decision;
 }
 
 /** Setter method for the randomGenerator.
  */
-void Agent::setRandomGenerator(RandomGenerator* newRandomGenerator) {
+void Agent::setRandomGenerator(RandomGenerator *newRandomGenerator) {
 
-	randomGenerator = newRandomGenerator;
+    randomGenerator = newRandomGenerator;
 
 }
 
 /** Setter method for the Price container
  * \param newPrice Pointer to the new Price container
  */
-void Agent::setPrice(Price* newPrice){
+void Agent::setPrice(Price *newPrice) {
 
-	price = newPrice;
+    price = newPrice;
 
 }
 
 /** Getter method for the agent's current stock.
  */
-double Agent::getStock() const{
+double Agent::getStock() const {
 
 
-	return stock;
+    return stock;
 }
 
 /** Setter methods for the agents stock
  * \param newStock
  */
-void Agent::setStock(double& newStock){
-
-	stock = newStock;
-
+void Agent::setStock(double newStock) {
+    stock = newStock;
 }
 
 /** Getter method for the agent's current trading volume.
  */
-const double& Agent::getTradingVolume() const{
-
-
-	return tradingVolume;
+double Agent::getTradingVolume() const{
+    return tradingVolume;
 }
 
 
-void Agent::setDeltaT(DeltaT* newDeltaT){
-	deltaT = newDeltaT;
+void Agent::setDeltaT(DeltaT *newDeltaT) {
+    deltaT = newDeltaT;
 }

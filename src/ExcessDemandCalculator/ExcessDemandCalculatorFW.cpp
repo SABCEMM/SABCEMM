@@ -1,4 +1,5 @@
 #include "ExcessDemandCalculatorFW.h"
+#include <cassert>
 
 ExcessDemandCalculatorFW::ExcessDemandCalculatorFW(std::vector<Agent*>* agents, ExcessDemand* excessDemand) :
     ExcessDemandCalculator(agents, excessDemand)

@@ -52,53 +52,118 @@
 #include "gtest/gtest_prod.h"
 #endif
 
-/// Determines how to calculate fundamentalist share from switching index
-/// See ch. 3.2 in the paper.
-enum SwitchingStrategy {
-    /// discrete choice approach
-    DCA = 0,
-    /// transition probability approach
-    TPA
-};
 
-/// @todo gibt es keine bessere Lösung für string ==> enum?
-const std::map<std::string, SwitchingStrategy> switchingStrategyToString =
-        boost::assign::map_list_of("DCA", DCA)("TPA", TPA);
 
-/// Determines how to calculate the switching index
-/// See p.11, ch. 3.3 in the paper.
-enum IndexStrategy
-{
-    /// wealth
-    W=0,
-    /// herding
-    H=1,
-    /// predisposition
-    P=2,
-    /// misalignment
-    M=3
-};
+#include <string>
 
-typedef std::bitset<4> IndexStrategies;
+/// @defgroup Franke-Westerhoff
+/// agents and calculators for Franke-Westerhoff
 
+/// @ingroup Franke-Westerhoff
+/// Abstract base class for Franke-Westerhoff agents
+///
+/// Control flow remains in AgentFW while specializations define demand and
+/// share calculation.
+///
+/// In the spirit of the original model, every two @ref AgentFundamentalist
+/// and @ref AgentChartist are simulated together. They need to be coupled to
+/// allow for the calculation of relative @ref attractiveness. Coupling is
+/// realized via the @ref partner member variable.
 class AgentFW : public Agent {
 #if BUILD_TESTS
-FRIEND_TEST(fullSimulationTest, fullSimulation_FW);
+    FRIEND_TEST(fullSimulationTest, fullSimulation_DCA_HPM);
+    FRIEND_TEST(fullSimulationTest, fullSimulation_TPA_W);
+    FRIEND_TEST(fullSimulationTest, fullSimulation_TPAC_W);
 #endif
 public:
+
+    /// Determines how to calculate fundamentalist share from switching index
+/// See ch.3.2 in the paper.
+/// @ingroup Franke-Westerhoff
+/// @see stringToSwitchingStrategy
+    enum SwitchingStrategy {
+        /// discrete choice approach
+                DCA = 0,
+        /// transition probability approach
+                TPA,
+        /// transition probability approach continous
+                TPAC,
+        /// transitions probability approach continous implicit (Haja S.22)
+                TPACI
+    };
+
+/// Converts a string to the corresponding SwitchingStrategy.
+/// @todo gibt es keine bessere Lösung für string ==> enum?
+    static std::map<std::string, SwitchingStrategy> stringToSwitchingStrategy;
+
+/// Determines how to calculate the switching index
+/// See p.11, ch.3.3 in the paper.
+/// @ingroup Franke-Westerhoff
+    enum IndexStrategy
+    {
+        /// wealth
+                W=0,
+        /// herding
+                H=1,
+        /// predisposition
+                P=2,
+        /// misalignment
+                M=3
+    };
+
+/// Holds information about which index strategies are turned on.
+/// The indices of the bitset correspond to the numbers in IndexStrategy.
+/// @see IndexStrategy
+    typedef std::bitset<4> IndexStrategies;
+
+    /// Constructs an AgentFW. A partner must be specified before use.
+    /// @see setPartner
     AgentFW(RandomGenerator* randomGenerator, Price* price, double eta, double beta, double alpha_w, double alpha_n,
-            double alpha_p, double alpha_0, double nu, SwitchingStrategy switchingStrategy, const IndexStrategies& indexStrategy,
+            double alpha_p, double alpha_0, double nu, AgentFW::SwitchingStrategy switchingStrategy, std::string indexStrategy,
             double sigma);
 
 protected:
+    /// @name DCA variables
+    //@{
+    /// memory coefficient
+    const double eta;
+    /// intensity of choice
+    const double beta;
+    //@}
+
+    /// @name factors to relative attractiveness
+    //@{
+    /// influence of wealth
+    const double alpha_w;
+    /// influence of herding
+    const double alpha_n;
+    /// influence of misalignment
+    const double alpha_p;
+    /// influence of predisposition
+    const double alpha_0;
+    //@}
+
+    /// @name TPA variables
+    //@{
+    /// flexibility parameter
+    const double nu;
+    //@}
+
+    const SwitchingStrategy switchingStrategy;
+    /// the bits represent the activation of various terms in the calculation of relative attraciveness
+    /// for the mapping of index <-> strategy, @see IndexStrategy.
+    IndexStrategies indexStrategy;
+
+    /// @name noise
+    //@{
+    /// standard deviation for eps. It holds: eps ~ N(0, sigma)
+    const double sigma;
+    /// current demand noise. Used by implementations to add to the deterministic demand.
+    double eps;
+    //@}
+
     /// price at time t-1 during stepUpdate
     double oldPrice;
-    /// demand at time t-1 during stepUpdate
-    /// note: demand is equivalent to tradingVolume here.
-    double oldDemand;
-    /// demand at time t-2 during stepUpdate
-    /// note: demand is equivalent to tradingVolume here.
-    double oldoldDemand;
 
     /// short-term capital gains
     double g;
@@ -110,33 +175,12 @@ protected:
     /// relative attractiveness at time t-1.
     double oldAttractiveness;
 
-    /// memory coefficient
-    const double eta;
-    /// intensity of choice
-    const double beta;
-
-    /// influence of wealth
-    const double alpha_w;
-    const double alpha_n;
-    const double alpha_p;
-    const double alpha_0;
-
-    const double nu;
-
-    const SwitchingStrategy switchingStrategy;
-    /// the bits represent the activation of various terms in the calculation of relative attraciveness
-    /// for the mapping of index <-> strategy, @see IndexStrategy.
-    const IndexStrategies indexStrategy;
-
-    // demand
+    /// demand
     double d;
     /// demand at time t-1
     double oldd;
     /// demand at time t-2
     double oldoldd;
-    const double sigma;
-    /// current demand noise
-    double eps;
 
     /// share
     double n;
@@ -145,26 +189,46 @@ protected:
 private:
     AgentFW* partner;
 public:
-    // update g_s, w_s (hypothetical wealth)
+    /// Populates the memory variables ("old" variables).
     void preStepUpdate();
+    /// Updates d, g, w.
     void stepUpdate();
+    /// Updates a_t, then the share and trading volume.
+    /// @note we must split the update step as @ref attractiveness needs an
+    /// up-to-date w of both agents.
     void postStepUpdate();
 
+    /// Simple setter.
+    /// @throw partners cannot be reassigned. This method will throw, if you try to.
     void setPartner(AgentFW *partner) {
         if(this->partner != nullptr)
             throw "AgentFW already has a partner";
         this->partner = partner;
     }
 
+    /// Simple getter.
     double getShare(){
         return n;
     }
 
+    void setShare(double n_);
+
+    /// Calculates agent @ref d "demand".
     virtual double calculateDemand() = 0;
-    /// @todo schöner ware es, den nur einmal zu berechnen! Scheitert momentan am Reihenfolgenproblem.
+    /// @ref attractiveness is linearly composed of three terms, of which two can
+    /// be exclusively calculated by the chartist and the fundamentalist,
+    /// respectively. They should implement this method to do so.
     virtual double calculateContributedAttractiveness() = 0;
 
-    void updateBisection(const double&){};
+    /// @todo it's unclear what an update with hypothetical prices means to
+    ///       this agent.
+    void updateBisection(const double&){
+        throw "not implemented.";
+    }
+
+    SwitchingStrategy getSwitchingStrategy(){
+        return switchingStrategy;
+    }
 };
 
 #endif // AGENTFW_H

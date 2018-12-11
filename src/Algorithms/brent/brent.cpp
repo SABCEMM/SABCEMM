@@ -472,7 +472,7 @@ double glomin ( double a, double b, double c, double m, double e, double t,
 }
 //****************************************************************************80
 
-double local_min ( double a, double b, double t, func_base& f,
+double local_min ( double a, double b, double t, function<double (double)> f,
   double &x )
 
 //****************************************************************************80

@@ -52,12 +52,20 @@
  */
 class WriterHDF5: public Writer {
 private:
-	H5::H5File outputFileID;   /* file identifier */
-	H5::Group outputGroup;
+	std::string simulationIdentifier;
+	int simulationNumber;
+
+	H5::FileAccPropList access_plist;
+	H5::FileCreatPropList create_plist;
 
 	void setStringAttribute(H5::Group &_group, std::string _attributeName, std::string _attributeValue);
 	void setDoubleAttribute(H5::Group &_group, std::string _attributeName, double _attributeValue);
 	void setIntAttribute(H5::Group &_group, std::string _attributeName, int _attributeValue);
+
+    void parse(Input& input, H5::Group& group);
+
+	void addDataSet(H5::Group group, std::string name, std::vector<std::vector<double>>* data);
+
 
 public:
 	WriterHDF5();
@@ -65,32 +73,19 @@ public:
 
 	virtual ~WriterHDF5();
 
-	virtual void vectorToFile(std::vector<double>* newVector, std::string name);
-
-	virtual void vectorToFile(std::vector<double>* newVector, std::string name, int groupID);
-
-	virtual void vectorToFile(std::vector<double>* newVector, std::string name, int groupID,
-							  Util::DataItemCollectorMethod method);
-
-	virtual void matrixToFile(std::vector<std::vector<double>>* newVector, std::string name);
-
-	virtual void matrixToFile(std::vector<std::vector<double>>* newVector, std::string name, int groupID);
-
-	virtual void matrixToFile(std::vector<std::vector<double>>* newVector, std::string name, int groupID,
-							  Util::DataItemCollectorMethod method);
-
-	virtual void arrayToFile(double* newArray, int arraySize, std::string name, int groupID);
-
-	virtual void saveInput(Parameter* newParameter);
+	virtual void saveInput(Input& input);
 
 	virtual void saveBuildInfo();
 
-	virtual void rngInformation(std::size_t uniformPoolInitialSize, std::size_t uniformPoolSize, int uniformPoolFills,
-						std::size_t normalPoolInitialSize, std::size_t normalPoolSize, int normalPoolFills, int seed);
+	virtual void rngInformation(std::size_t &uniformGenerated, std::size_t &uniformUnused, std::size_t &normalGenerated,
+                                    std::size_t &normalUnused, int &seed);
 
 	virtual void saveTime(double time);
 
-	std::string getOutputLocation();
+	void addSimulation(std::string simulationIdentifier);
+
+	virtual void addQoI(std::string method, QuantityOfInterest::Quantity quantity, int groupID,
+                        std::vector<std::vector<double>> *newVector, std::string &name_);
 };
 
 #endif /* WriterHDF5_H_ */

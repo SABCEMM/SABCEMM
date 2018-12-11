@@ -38,7 +38,7 @@
  */
 
 #include <cmath>
-
+#include <cassert>
 #include "PriceCalculatorHarrasNoise.h"
 
 

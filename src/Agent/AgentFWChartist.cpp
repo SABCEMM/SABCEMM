@@ -39,25 +39,47 @@
  */
 
 #include "AgentFWChartist.h"
+#include <string>
+#include <cmath>
+#include <cassert>
+#include <algorithm>
 
 double AgentFWChartist::calculateDemand() {
-    return chi*(price->getPrice()-oldPrice) + eps;
+    double demand = 0;
+
+    if(switchingStrategy == AgentFW::SwitchingStrategy::TPAC || switchingStrategy == AgentFW::SwitchingStrategy::TPACI) {
+        throw "Current unpublished research...";
+    }
+    else{
+        demand = chi*(price->getPrice()-oldPrice) + eps;
+    }
+    return demand;
 }
 
 void AgentFWChartist::stepUpdate() {
     AgentFW::stepUpdate();
 
+    double pi_cf = 0;
+    double pi_fc = 0;
+
     switch(switchingStrategy) {
         case DCA:
-            n = 1. / (1 + exp(beta * attractiveness));
+            n = 1. / (1 + exp(beta * oldAttractiveness));
             break;
         case TPA:
-            double pi_cf = min(1., nu * exp(oldAttractiveness));
-            double pi_fc = min(1., nu * exp(-oldAttractiveness));
+            pi_cf = std::min(1., nu * exp(oldAttractiveness));
+            pi_fc = std::min(1., nu * exp(-oldAttractiveness));
 
             // from n_c = n_c + n_f*pi_fc - n_c*pi_cf, assuming n_f+n_c=1
             n = n + (1-n)*pi_fc - n*pi_cf;
+            break;
+        case TPAC:
+            throw "Current unpublished research...";
+            break;
+        case TPACI:
+            throw "Current unpublished research...";
     }
+
 }
 
 double AgentFWChartist::calculateContributedAttractiveness() {
@@ -66,14 +88,14 @@ double AgentFWChartist::calculateContributedAttractiveness() {
     if(indexStrategy[IndexStrategy::W])
         result += -alpha_w*w;
     if(indexStrategy[IndexStrategy::H])
-        result += -alpha_n*oldn;
+        result += -alpha_n*n;
 
     return result;
 }
 
 AgentFWChartist::AgentFWChartist(RandomGenerator *randomGenerator, Price *price, double eta, double beta, double alpha_w,
                              double alpha_n, double alpha_p, double alpha_0, double nu,
-                             SwitchingStrategy switchingStrategy, const IndexStrategies &indexStrategy, double sigma,
+                             SwitchingStrategy switchingStrategy, std::string indexStrategy, double sigma,
                              double chi) :
     AgentFW(randomGenerator, price, eta, beta, alpha_w, alpha_n, alpha_p, alpha_0, nu, switchingStrategy, indexStrategy,
             sigma), chi(chi)

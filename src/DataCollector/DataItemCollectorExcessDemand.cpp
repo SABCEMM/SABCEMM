@@ -41,6 +41,7 @@
 #include "DataItemCollectorExcessDemand.h"
 
 
+
 /** Standardconstructor of the DataItemCollectorExcessDemand. Initialisation delegated.
  */
 DataItemCollectorExcessDemand::DataItemCollectorExcessDemand(): DataItemCollectorExcessDemand(nullptr){
@@ -52,7 +53,9 @@ DataItemCollectorExcessDemand::DataItemCollectorExcessDemand(): DataItemCollecto
  */
 DataItemCollectorExcessDemand::DataItemCollectorExcessDemand(ExcessDemand* newExcessDemand) {
 	excessDemand = newExcessDemand;
-	excessDemandHistory.clear();
+	dataMatrix.clear();
+	std::vector<double> temp;
+	dataMatrix.push_back(temp);
 }
 
 
@@ -66,30 +69,16 @@ DataItemCollectorExcessDemand::~DataItemCollectorExcessDemand() = default;
 void DataItemCollectorExcessDemand::collectData() {
 	assert(excessDemand != nullptr);
 
-	excessDemandHistory.push_back(excessDemand->getExcessDemand());
+	dataMatrix.at(0).push_back(excessDemand->getExcessDemand());
 
 }
-
-
-/** Writes the excessDemandHistory.
- */
-void DataItemCollectorExcessDemand::write(){
-	assert(writer != nullptr);
-
-	writer->vectorToFile(&excessDemandHistory, name, groupToTrack_);
-
-}
-
-
-/** Clear the excessDemandHistory.
- */
-void DataItemCollectorExcessDemand::clearData() {
-	excessDemandHistory.clear();
-}
-
 
 /** Check if everthing is initiliazed and ready to run.
  */
 void DataItemCollectorExcessDemand::checkInitilisation(){
 	assert(excessDemand != nullptr);
+}
+
+std::vector<std::vector<double>> * DataItemCollectorExcessDemand::getData(){
+	return &dataMatrix;
 }

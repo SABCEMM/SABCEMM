@@ -47,18 +47,23 @@
 #endif
 
 #include "AgentFW.h"
+#include <string>
 
+/// @ingroup Franke-Westerhoff
 class AgentFWChartist : public AgentFW {
 #if BUILD_TESTS
-    FRIEND_TEST(fullSimulationTest, fullSimulation_FW);
+    FRIEND_TEST(fullSimulationTest, fullSimulation_DCA_HPM);
+    FRIEND_TEST(fullSimulationTest, fullSimulation_TPA_W);
+    FRIEND_TEST(fullSimulationTest, fullSimulation_TPAC_W);
 #endif
-private:
+protected:
+    /// inflation factor for chartist demand
     const double chi;
 public:
     void stepUpdate() override;
     double calculateContributedAttractiveness() override;
     AgentFWChartist(RandomGenerator* randomGenerator, Price* price, double eta, double beta, double alpha_w, double alpha_n,
-                  double alpha_p, double alpha_0, double nu, SwitchingStrategy switchingStrategy, const IndexStrategies& indexStrategy,
+                  double alpha_p, double alpha_0, double nu, SwitchingStrategy switchingStrategy, std::string indexStrategy,
                   double sigma, double chi);
 
 public:

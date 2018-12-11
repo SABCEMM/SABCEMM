@@ -43,15 +43,17 @@
 #include "PriceCalculatorGeneral.h"
 #include "PriceCalculatorHarras.h"
 #include "PriceCalculatorLLS.h"
+#include "PriceCalculatorLLSNoise.h"
+#include "PriceCalculatorLLS1.h"
 #include "PriceCalculatorHarrasNoise.h"
 #include "PriceCalculatorFW.h"
-#include "../Parameter/Parameter.h"
+#include "../Input/Input.h"
 
 #include "../VariableContainer/Price.h"
 #include "../VariableContainer/DeltaT.h"
 #include "../VariableContainer/ExcessDemand.h"
 #include "../RandomGenerator/RandomGenerator.h"
-#include "../Parameter/ParameterSetPriceCalculator.h"
+#include <string>
 
 
 
@@ -76,90 +78,129 @@ PriceCalculator::PriceCalculator(ExcessDemandCalculator* newExcessDemandCalculat
 	marketDepth = 0.25;
 }
 
-PriceCalculator* PriceCalculator::factory(Parameter* parameter, ExcessDemandCalculator* excessDemandCalculator,
+PriceCalculator* PriceCalculator::factory(Input& input, ExcessDemandCalculator* excessDemandCalculator,
 										  Price* price, ExcessDemand* excessDemand, DeltaT* deltaT,
                                           RandomGenerator* randomNumberPool, std::vector<Agent*>* agents){
 	//priceCalculator
-	ParameterSetPriceCalculator parameterSetPriceCalculator = parameter->parameterSetPriceCalculator;
-	string type = parameterSetPriceCalculator.type.get();
+	Input& PCinput = input["priceCalculatorSettings"];
+	std::string type = PCinput["priceCalculatorClass"].getString();
 
 	PriceCalculator* priceCalculator;
 
-	if (type == "PriceCalculatorHarras") {
+	if (type == "pricecalculatorharras") {
 		priceCalculator = new PriceCalculatorHarras(excessDemandCalculator,price, excessDemand);
-		priceCalculator->setMarketDepth(*(parameterSetPriceCalculator.marketDepth));
+		priceCalculator->setMarketDepth(PCinput["marketDepth"].getDouble());
 	}
-	else if (type == "PriceCalculatorHarrasAdd") {
+	else if (type == "pricecalculatorharrasadd") {
 		priceCalculator = new PriceCalculatorHarrasNoise(excessDemandCalculator,price, excessDemand,
 														 PriceCalculatorHarrasNoise::ADD,
-														 *(parameterSetPriceCalculator.noiseFactor),
+														 PCinput["noiseFactor"].getDouble(),
 														 0, randomNumberPool);
-		priceCalculator->setMarketDepth(*(parameterSetPriceCalculator.marketDepth));
+		priceCalculator->setMarketDepth(PCinput["marketDepth"].getDouble());
 	}
-	else if (type == "PriceCalculatorHarrasMult") { //TODO: 0 ist theta!!
+	else if (type == "pricecalculatorharrasmult") { //TODO: 0 ist theta!!
 		priceCalculator = new PriceCalculatorHarrasNoise(excessDemandCalculator,price, excessDemand,
 														 PriceCalculatorHarrasNoise::MULT,
-														 *(parameterSetPriceCalculator.noiseFactor),
-														 *(parameterSetPriceCalculator.theta), randomNumberPool);
-		priceCalculator->setMarketDepth(*(parameterSetPriceCalculator.marketDepth));
+														 PCinput["noiseFactor"].getDouble(),
+														 PCinput["theta"].getDouble(), randomNumberPool);
+		priceCalculator->setMarketDepth(PCinput["marketDepth"].getDouble());
 	}
 		//priceCalculator General
-	else if (type == "PriceCalculatorGeneral") {
+	else if (type == "pricecalculatorgeneral") {
 		auto * calculator = new PriceCalculatorGeneral(
 				excessDemandCalculator, randomNumberPool, price, excessDemand);
-		calculator->setFFunction(*parameterSetPriceCalculator.fFunction);
+		calculator->setFFunction(PCinput["ffunction"].getString());
 		/// @todo calculator should do this check
-		if (parameterSetPriceCalculator.fConstant){
-			calculator->setFConstant(*parameterSetPriceCalculator.fConstant);
+		if (PCinput("fconstant")){
+			calculator->setFConstant(PCinput["fconstant"].getDouble());
 		}
 
-		calculator->setGFunction(*parameterSetPriceCalculator.gFunction);
-		if (parameterSetPriceCalculator.gConstant){
-			calculator->setGConstant(*parameterSetPriceCalculator.gConstant);
+		calculator->setGFunction(PCinput["gfunction"].getString());
+		if (PCinput("gconstant")){
+			calculator->setFConstant(PCinput["gconstant"].getDouble());
 		}
 
 		priceCalculator = calculator;
-		priceCalculator->setMarketDepth(*(parameterSetPriceCalculator.marketDepth));
+		priceCalculator->setMarketDepth(PCinput["marketDepth"].getDouble());
 
 	}
 		//priceCalculator Bisection
-	else if (type== "PriceCalculatorBisection") {
-		priceCalculator = new PriceCalculatorBisection(excessDemandCalculator,price, excessDemand);
-		(dynamic_cast<PriceCalculatorBisection*>(priceCalculator))->setEpsilon(*parameterSetPriceCalculator.epsilon);
-		(dynamic_cast<PriceCalculatorBisection*>(priceCalculator))->setMaxIterations(
-				*parameterSetPriceCalculator.maxIterations);
-		(dynamic_cast<PriceCalculatorBisection*>(priceCalculator))->setBounds(*parameterSetPriceCalculator.lowerBound,
-																			  *parameterSetPriceCalculator.upperBound);
-		(dynamic_cast<PriceCalculatorBisection*>(priceCalculator))->setAgents(agents);
-	}
-		//priceCalculator LLS
-	else if (type== "PriceCalculatorLLS") {
-		priceCalculator = new PriceCalculatorLLS(excessDemandCalculator,price, excessDemand);
-		(dynamic_cast<PriceCalculatorBisection*>(priceCalculator))->setEpsilon(*parameterSetPriceCalculator.epsilon);
-		(dynamic_cast<PriceCalculatorBisection*>(priceCalculator))->setMaxIterations(
-				*parameterSetPriceCalculator.maxIterations);
-		(dynamic_cast<PriceCalculatorBisection*>(priceCalculator))->setBounds(*parameterSetPriceCalculator.lowerBound,
-																			  *parameterSetPriceCalculator.upperBound);
-		(dynamic_cast<PriceCalculatorBisection*>(priceCalculator))->setAgents(agents);
+    else if (type== "pricecalculatorbisection" || type == "pricecalculatorlls" || type == "pricecalculatorllsnoise") {
+        double low;
+        double high;
+
+		bool adaptive = false;
+        if (PCinput("adaptive")){
+        	adaptive = PCinput["adaptive"].getBool();
+        }
+
+        if(adaptive)
+        {
+            low = PCinput["deviationLow"].getDouble();
+            high = PCinput["deviationHigh"].getDouble();
+        }
+        else
+        {
+            low = PCinput["lowerBound"].getDouble();
+            high = PCinput["upperBound"].getDouble();
+        }
+
+        if(type == "pricecalculatorbisection")
+            priceCalculator = new PriceCalculatorBisection(excessDemandCalculator,price, excessDemand,
+                                                       adaptive,
+                                                       low,high,
+													   PCinput["epsilon"].getDouble(),
+														PCinput["maxIterations"].getSizeT());
+                                                       
+        else if(type == "pricecalculatorlls")
+            priceCalculator = new PriceCalculatorLLS(excessDemandCalculator,price, excessDemand,
+                                                       adaptive,
+                                                       low,high,
+													   PCinput["epsilon"].getDouble(),
+														PCinput["maxIterations"].getSizeT());
+        else if(type == "pricecalculatorllsnoise")
+            priceCalculator = new PriceCalculatorLLSNoise(excessDemandCalculator,price, excessDemand,
+                                                     adaptive,
+                                                     low,high,
+                                                     PCinput["epsilon"].getDouble(),
+														PCinput["maxIterations"].getSizeT(),
+                                                     PCinput["mean"].getDouble(),
+														PCinput["sigma"].getDouble(),
+                                                     *randomNumberPool);
+		else
+			throw("priceCalculatorClass unknown!");
+
+
+
+        (dynamic_cast<PriceCalculatorBisection*>(priceCalculator))->setAgents(agents);
 	}
 		//priceCalculator Cross
-	else if (type == "PriceCalculatorCross") {
+	else if (type == "pricecalculatorcross") {
 		priceCalculator = new PriceCalculatorCross(excessDemandCalculator,price, excessDemand, randomNumberPool,
 												   PriceCalculatorCross::ORIGINAL);
-		(dynamic_cast<PriceCalculatorCross*>(priceCalculator))->setTheta(*(parameterSetPriceCalculator.theta));
-		priceCalculator->setMarketDepth(*(parameterSetPriceCalculator.marketDepth));
+		(dynamic_cast<PriceCalculatorCross*>(priceCalculator))->setTheta(PCinput["theta"].getDouble());
+		priceCalculator->setMarketDepth(PCinput["marketDepth"].getDouble());
 	}
-	else if (type == "PriceCalculatorCrossMartingale" ){
+	else if (type == "pricecalculatorcrossmartingale" ){
 		priceCalculator = new PriceCalculatorCross(excessDemandCalculator,price, excessDemand, randomNumberPool,
 												   PriceCalculatorCross::MARTINGALE);
-		(dynamic_cast<PriceCalculatorCross*>(priceCalculator))->setTheta(*(parameterSetPriceCalculator.theta));
-		priceCalculator->setMarketDepth(*(parameterSetPriceCalculator.marketDepth));
+		(dynamic_cast<PriceCalculatorCross*>(priceCalculator))->setTheta(PCinput["theta"].getDouble());
+		priceCalculator->setMarketDepth(PCinput["marketDepth"].getDouble());
 	}
-	else if (type == "PriceCalculatorFW"){
+	else if (type == "pricecalculatorfw"){
 		priceCalculator = new PriceCalculatorFW(excessDemandCalculator, price,
-                                                excessDemand, *(parameterSetPriceCalculator.mu));
+                                                excessDemand, PCinput["mu"].getDouble(),
+												dynamic_cast<AgentFW*>(agents->at(0))->getSwitchingStrategy()
+                                                );
 	}
-
+    else if (type == "pricecalculatorlls1"){
+        priceCalculator = new PriceCalculatorLLS1(price, deltaT, PCinput["marketDepth"].getDouble(),
+                                                  excessDemand, excessDemandCalculator,
+                                                  randomNumberPool,
+												  PCinput["mean"].getDouble(),
+												  PCinput["sigma"].getDouble(),
+                                                  agents);
+    }
 	else {
 		throw("priceCalculatorClass unknown!");
 	}

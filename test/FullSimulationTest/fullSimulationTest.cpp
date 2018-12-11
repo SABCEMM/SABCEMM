@@ -43,7 +43,9 @@
 #include "../../src/Agent/AgentCross.h"
 #include "../../src/Agent/AgentFW.h"
 #include "../../src/Agent/AgentHarras.h"
+#include "../../src/Agent/AgentLLS.h"
 #include "../../src/PriceCalculator/PriceCalculatorCross.h"
+#include "../../src/Input/Input.h"
 #include "../../src/Simulation.h"
 #include "../../src/StockExchange/StockExchange.h"
 
@@ -78,22 +80,20 @@ TEST(fullSimulationTest, fullSimulation_Harras){
     const double eps = 1e-14;
 
     // Erstelle agents.
-    vector<Parameter*> params = Parameter::readFromFile("FullSimulationTest/fullSimulation_Harras.xml");
-    ASSERT_EQ(params.size(), 1);
+    Input::fromFile inputs = Input::readFromFile("FullSimulationTest/fullSimulation_Harras.xml");
+    ASSERT_EQ(inputs.inputs.size(), 1);
 
-    Parameter param = *(params.at(0));
+    Input input = inputs.inputs.at(0);
 
-    ASSERT_TRUE(param.validate());
 
-    const std::size_t numSteps = *param.numSteps;
-    boost::ignore_unused(numSteps);
-    const double marketDepth = *(param.parameterSetPriceCalculator.marketDepth);
+//    const std::size_t numSteps = input["numSteps"].getSizeT();
+    const double marketDepth = input["priceCalculatorSettings"]["marketDepth"].getDouble();
 
-    EXPECT_EQ(*(param.parameterSetAgent.at(0).type), "AgentHarras");
-    const std::size_t numAgents = *(param.parameterSetAgent.at(0).count);
+    EXPECT_TRUE(input["agents"].hasChild("AgentHarras"));
+    const std::size_t numAgents = input["agents"]["AgentHarras"]["count"].getSizeT();
 
     Simulation simulation;
-    simulation.parse(&param);
+    simulation.parse(input);
 
     const double Tc1[] = { 0.1, 1, 16, 3 };
     const double Tc2[] = { 12, 2, 1, 3 };
@@ -143,11 +143,11 @@ TEST(fullSimulationTest, fullSimulation_Harras){
             asHarras->k.at(j) = Tk[i][j];
     }
 
-    // -- simulation.runSimulation() (adapted)
-    // Calculate one timestep by hand
-    std::size_t i = 0;
+        // -- simulation.runSimulation() (adapted)
+        // Calculate one timestep by hand
+        std::size_t i = 0;
         // -- stockExchange->preStep() (adapted)
-    StockExchange* exchange = dynamic_cast<StockExchange*>(simulation.stockExchange);
+        StockExchange* exchange = dynamic_cast<StockExchange*>(simulation.stockExchange);
         GlobalNews* news = exchange->globalNews;
 
         EXPECT_TRUE(news != nullptr);
@@ -254,22 +254,20 @@ TEST(fullSimulationTest, fullSimulation_Cross){
     const double eps = 1e-14;
 
     // Erstelle agents.
-    vector<Parameter*> params = Parameter::readFromFile("FullSimulationTest/fullSimulation_Cross.xml");
-    ASSERT_EQ(params.size(), 1);
+    Input::fromFile inputs = Input::readFromFile("FullSimulationTest/fullSimulation_Cross.xml");
+    ASSERT_EQ(inputs.inputs.size(), 1);
 
-    Parameter param = *(params.at(0));
-
-    ASSERT_TRUE(param.validate());
+    Input input = inputs.inputs.at(0);
 
 
     // @TODO: Zeile unnötig?
     //const double marketDepth = *(param.parameterSetPriceCalculator.marketDepth);
 
-    EXPECT_EQ(param.parameterSetAgent.at(0).type.get(), "AgentCross");
-    const std::size_t numAgents = *(param.parameterSetAgent.at(0).count);
+    EXPECT_EQ(input["agents"].getChildren().at(0).getName(), "agentcross");
+    const std::size_t numAgents = input["agents"]["agentCross"]["count"].getSizeT();
 
     Simulation simulation;
-    simulation.parse(&param);
+    simulation.parse(input);
 
     const double cowardiceThreshold[] = { 0.1, 0.3, 0.5, 0.7 };
     const double herdingThreshold[] = { 0.001, 0.002, 0.003, 0.004 };
@@ -358,6 +356,217 @@ TEST(fullSimulationTest, fullSimulation_Cross){
 
     simulation.postSimulation();
 }
+
+TEST(fullSimulationTest, fullSimulation_RII){
+    const double tol = 0.05; // due to numerical difficulties we are extremely generous in this test.
+
+    // Erstelle agents.
+    Input::fromFile inputs = Input::readFromFile("FullSimulationTest/fullSimulation_RII.xml");
+    ASSERT_EQ(inputs.inputs.size(), 1);
+
+    Input input = inputs.inputs.at(0);
+
+
+
+    const size_t numSteps = input["numsteps"].getSizeT();
+
+    EXPECT_EQ(input["agents"].getChildren().at(0).getName(), "agentlls");
+    EXPECT_TRUE(input["agents"]["agentlls"].hasChild("agentRII"));
+    const std::size_t numAgents = input["agents"]["agentlls"]["agentRII"]["count"].getSizeT();
+
+    Simulation simulation;
+    simulation.parse(input);
+    simulation.randomNumberPool = new RandomGeneratorFunctional(ListReturn({0.015}));
+
+    const double epsilon[] = { 0.0341, -0.0209 };
+
+    for(size_t i = 0; i < numAgents; i++)
+    {
+        AgentLLS* asLLS = dynamic_cast<AgentLLS*>(simulation.agents->at(i));
+        // P(0) - initialization should be fine however.
+        //asEMB->oldPrice = 50;
+        ASSERT_EQ(asLLS->strategy, AgentLLS::LLSStrategy::RII);
+        asLLS->setRandomGenerator(new RandomGeneratorFunctional(ListReturn({epsilon[i]})));
+    }
+
+    simulation.preSimulation();
+
+    StockExchange* exchange = dynamic_cast<StockExchange*>(simulation.stockExchange);
+    Dividend* dividend = simulation.stockExchange->dividend;
+
+
+    dividend->randomGenerator = new RandomGeneratorFunctional(ConstantReturn(0.015));
+
+    // -- simulation.runSimulation() (adapted)
+    for(size_t i = 0; i < numSteps; i++)
+    {
+        // -- stockExchange->preStep() (adapted)
+        dividend->calculateDividend();
+        exchange->excessDemandCalculator->preStepCalculate();
+        exchange->priceCalculator->preStepCalculate();
+
+        EXPECT_NEAR(dividend->getDividend(), 0.5075, tol);
+
+        ///@todo Verwendung von globalNews einbauen? Bisher wird sqrt(h)*eta im priceCalculator
+        ///      zufällig bestimmt, dabei beschreibt dieser Term globale Info im Modell.
+
+        // -- stockExchange->step() (adapted)
+
+        exchange->priceCalculator->stepCalculate();
+
+        EXPECT_NEAR(simulation.variableContainer->price->getPrice(), 21.1945, tol);
+
+        AgentLLS* a1 = dynamic_cast<AgentLLS*>(exchange->agents->at(0));
+        AgentLLS* a2 = dynamic_cast<AgentLLS*>(exchange->agents->at(1));
+
+        // X(1) (gamma without noise and in bounds [0, 0.99]) for the current timestep.
+        EXPECT_NEAR(a1->iterGamma, 0.2959, tol);
+        EXPECT_NEAR(a1->hypoCash, 722.02, tol);
+        EXPECT_NEAR(a2->iterGamma, 0.2959, tol);
+        EXPECT_NEAR(a2->hypoCash, 722.02, tol);
+        // or check against whatever upper bound is given in the input file.
+        EXPECT_TRUE(simulation.variableContainer->excessDemand->getExcessDemand() < 0.1);
+
+        // noise is applied.
+        // no shuffling(!)
+        for(size_t j = 0;j < exchange->agents->size(); j++)
+            exchange->agents->at(j)->stepUpdate();
+
+        // X*(1) (gamma with noise and in bounds [0, 0.99]) for the current timestep.
+        EXPECT_NEAR(a1->gamma, 0.2959+epsilon[0], tol);
+        EXPECT_NEAR(a2->gamma, 0.2959+epsilon[1], tol);
+
+
+        // -- stockExchage->postStep() (adapted)
+        /// @todo maybe do not adapt the function but just call it?
+        exchange->excessDemandCalculator->postStepCalculate();
+
+        exchange->priceCalculator->postStepCalculate();
+
+        // gamma optimization is very sensitive .. we allow for a huge error margin.
+        // the price after noise must be greater than the price before!
+        EXPECT_NEAR(simulation.variableContainer->price->getPrice(), 22.1215, 0.3);
+
+        for (auto &agent : *exchange->agents) {
+            agent->postStepUpdate();
+        }
+
+        /// @todo check trading volume
+
+        EXPECT_NEAR(a1->cash, 731.29, 0.01*731.29);
+        EXPECT_NEAR(a2->cash, 731.29, 0.01*731.29);
+
+        simulation.stockExchange->postStep();
+    }
+
+    simulation.postSimulation();
+}
+
+TEST(fullSimulationTest, fullSimulation_EMB){
+    const double tol = 0.05; // due to numerical difficulties we are extremely generous in this test.
+
+    // Erstelle agents.
+    Input::fromFile inputs = Input::readFromFile("FullSimulationTest/fullSimulation_EMB.xml");
+    ASSERT_EQ(inputs.inputs.size(), 1);
+
+    Input input = inputs.inputs.at(0);
+
+
+    const size_t numSteps = input["numsteps"].getSizeT();
+
+    EXPECT_EQ(input["agents"].getChildren().at(0).getName(), "agentlls");
+    const std::size_t numAgents = input["agents"]["agentlls"]["AgentEMB"]["count"].getSizeT();
+
+
+
+    Simulation simulation;
+    simulation.parse(input);
+    simulation.randomNumberPool = new RandomGeneratorFunctional(ListReturn({0.015}));
+
+    const double epsilon[] = { -0.095, 0.0029 };
+    const vector<double> history[] = { {0.039, 0.043}, {0.034, 0.045} };
+
+    for(size_t i = 0; i < numAgents; i++)
+    {
+        AgentLLS* asLLS = dynamic_cast<AgentLLS*>(simulation.agents->at(i));
+
+        ASSERT_EQ(asLLS->strategy, AgentLLS::LLSStrategy::EMB);
+        asLLS->setRandomGenerator(new RandomGeneratorFunctional(ListReturn({epsilon[i]})));
+        asLLS->relPriceHistory = history[i];
+    }
+
+    simulation.preSimulation();
+
+    StockExchange* exchange = dynamic_cast<StockExchange*>(simulation.stockExchange);
+    Dividend* dividend = simulation.stockExchange->dividend;
+
+    // the dividend's actual RNG should work.
+
+    // -- simulation.runSimulation() (adapted)
+    for(size_t i = 0; i < numSteps; i++)
+    {
+        // -- stockExchange->preStep() (adapted)
+        dividend->calculateDividend();
+        exchange->excessDemandCalculator->preStepCalculate();
+        exchange->priceCalculator->preStepCalculate();
+
+        EXPECT_NEAR(dividend->getDividend(), 0.21, tol);
+
+        ///@todo Verwendung von globalNews einbauen? Bisher wird sqrt(h)*eta im priceCalculator
+        ///      zufällig bestimmt, dabei beschreibt dieser Term globale Info im Modell.
+
+        // -- stockExchange->step() (adapted)
+
+        exchange->priceCalculator->stepCalculate();
+
+        EXPECT_NEAR(simulation.variableContainer->price->getPrice(), 6.45, tol);
+
+        AgentLLS* a1 = dynamic_cast<AgentLLS*>(exchange->agents->at(0));
+        AgentLLS* a2 = dynamic_cast<AgentLLS*>(exchange->agents->at(1));
+
+        // X(1) (gamma without noise and in bounds [0, 0.99]) for the current timestep.
+        // hypoCash is not important?
+        EXPECT_NEAR(a1->iterGamma, 0.99, tol);
+        EXPECT_NEAR(a2->iterGamma, 0.01, tol);
+        // or check against whatever upper bound is given in the input file.
+        EXPECT_TRUE(simulation.variableContainer->excessDemand->getExcessDemand() < 0.1);
+
+        // noise is applied.
+        // no shuffling(!)
+        for(size_t j = 0;j < exchange->agents->size(); j++)
+            exchange->agents->at(j)->stepUpdate();
+
+        // X*(1) (gamma with noise and in bounds [0, 0.99]) for the current timestep.
+        EXPECT_NEAR(a1->gamma, 0.99+epsilon[0], tol);
+        EXPECT_NEAR(a2->gamma, 0.01+epsilon[1], tol);
+
+
+        // -- stockExchage->postStep() (adapted)
+        /// @todo maybe do not adapt the function but just call it?
+        exchange->excessDemandCalculator->postStepCalculate();
+
+        exchange->priceCalculator->postStepCalculate();
+
+        // gamma optimization is very sensitive .. we allow for a huge error margin.
+        // the price after noise must be greater than the price before!
+        ASSERT_NEAR(simulation.variableContainer->price->getPrice(), 5.65, 0.3);
+
+        for (auto &agent : *exchange->agents) {
+            agent->postStepUpdate();
+        }
+
+        /// @todo check trading volume
+
+        EXPECT_NEAR(a1->cash, 1210, 0.02*1786);
+        EXPECT_NEAR(a2->cash, 1210, 0.02*1786);
+
+        simulation.stockExchange->postStep();
+    }
+
+    simulation.postSimulation();
+}
+
+
 /**
 TEST(fullSimulationTest, fullSimulation_EMB){
     const double tol = 0.000001;
@@ -470,51 +679,44 @@ TEST(fullSimulationTest, fullSimulation_EMB){
 }
 */
 
-TEST(fullSimulationTest, fullSimulation_FW){
-    const double tol = 0.000001;
+TEST(fullSimulationTest, fullSimulation_DCA_HPM){
+    const double tol = 1e-6;
     const double eps = 1e-14;
 
     // taken from one run with the jupyter notebook
     const vector<double> prices =
             {
                 1.0,
-                1.00776599769,
-                0.997413568006,
-                1.00205437192,
-                1.00132215723,
-                1.00713797689,
-                1.01647448419,
-                1.00832990642,
-                1.01096520905,
-                1.01720662084,
-                1.02444933311,
-                1.03156184976,
-                1.03524459679,
-                1.03352761378,
-                1.03282863712,
-                1.02419555473,
-                1.01707501887,
-                1.01532321341,
-                1.01782000815,
-                1.01322207317
+                1.0076821,
+                0.99873766244077222,
+                1.0038712901973033,
+                1.0023845549373125,
+                1.0084223734716686,
+                1.0178367487490301,
+                1.0097274104261111,
+                1.012356809228816,
+                1.0185164796299515,
+                1.0257380384558286,
+                1.0328499162209757,
+                1.0365188463195745,
+                1.0348176014973671,
+                1.0341193348398188
             };
 
     // Erstelle agents.
-    vector<Parameter*> params = Parameter::readFromFile("FullSimulationTest/fullSimulation_FW.xml");
-    ASSERT_EQ(params.size(), 1);
+    Input::fromFile inputs = Input::readFromFile("FullSimulationTest/fullSimulation_FW_DCA-HPM.xml");
+    ASSERT_EQ(inputs.inputs.size(), 1);
 
-    Parameter param = *(params.at(0));
+    Input input = inputs.inputs.at(0);
 
-    ASSERT_TRUE(param.validate());
 
-    EXPECT_EQ(param.parameterSetAgent.at(0).type.get(), "AgentFW");
+    EXPECT_EQ(input["agents"].getChildren().at(0).getName(), "agentfw");
+
 
     Simulation simulation;
-    simulation.parse(&param);
+    simulation.parse(input);
 
     // parameter validation
-
-    // there is only one agent
     AgentFWFundamentalist* fundamentalist = dynamic_cast<AgentFWFundamentalist*>(simulation.agents->at(0));
     AgentFWChartist* chartist = dynamic_cast<AgentFWChartist*>(simulation.agents->at(1));
     for(size_t i = 0 ; i <= 1; ++i) {
@@ -526,10 +728,11 @@ TEST(fullSimulationTest, fullSimulation_FW){
         EXPECT_NEAR(agent->alpha_n, 1.79, eps);
         EXPECT_NEAR(agent->alpha_p, 18.43, eps);
 
-        EXPECT_EQ(agent->switchingStrategy, SwitchingStrategy::DCA);
-        EXPECT_TRUE(agent->indexStrategy[IndexStrategy::H]);
-        EXPECT_TRUE(agent->indexStrategy[IndexStrategy::P]);
-        EXPECT_TRUE(agent->indexStrategy[IndexStrategy::M]);
+        EXPECT_EQ(agent->switchingStrategy, AgentFW::SwitchingStrategy::DCA);
+        EXPECT_FALSE(agent->indexStrategy[AgentFW::IndexStrategy::W]);
+        EXPECT_TRUE(agent->indexStrategy[AgentFW::IndexStrategy::H]);
+        EXPECT_TRUE(agent->indexStrategy[AgentFW::IndexStrategy::P]);
+        EXPECT_TRUE(agent->indexStrategy[AgentFW::IndexStrategy::M]);
     }
 
     EXPECT_NEAR(fundamentalist->phi, 0.12, eps);
@@ -582,4 +785,212 @@ TEST(fullSimulationTest, fullSimulation_FW){
     simulation.postSimulation();
 }
 
+TEST(fullSimulationTest, fullSimulation_TPA_W){
+    const double tol = 1e-6;
+    const double eps = 1e-14;
 
+    // taken from one run with the jupyter notebook
+    const vector<double> prices=
+             {
+                1.0,
+                1.0076821,
+                1.00034359043,
+                1.006843593821269,
+                1.0012729942228613,
+                1.0097336703404738,
+                1.0205623741223004,
+                1.0135115016939176,
+                1.0157769483897359,
+                1.0141075169531291,
+                1.0169522089579874,
+                1.0236861302157265,
+                1.0316144876081736,
+                1.0254744811916638,
+                1.0299064106673297
+             };
+
+    // Erstelle agents.
+    Input::fromFile inputs = Input::readFromFile("FullSimulationTest/fullSimulation_FW_TPA-W.xml");
+    ASSERT_EQ(inputs.inputs.size(), 1);
+
+    Input input = inputs.inputs.at(0);
+
+
+
+    EXPECT_EQ(input["agents"].getChildren().at(0).getName(), "agentfw");
+
+
+    Simulation simulation;
+    simulation.parse(input);
+
+    // parameter validation
+    AgentFWFundamentalist* fundamentalist = dynamic_cast<AgentFWFundamentalist*>(simulation.agents->at(0));
+    AgentFWChartist* chartist = dynamic_cast<AgentFWChartist*>(simulation.agents->at(1));
+    for(size_t i = 0 ; i <= 1; ++i) {
+        AgentFW *agent = dynamic_cast<AgentFW*>(simulation.agents->at(i));
+        EXPECT_NEAR(agent->eta, 0.987, eps);
+        EXPECT_NEAR(agent->nu, 0.05, eps);
+        EXPECT_NEAR(agent->alpha_w, 1041, eps);
+
+        EXPECT_EQ(agent->switchingStrategy, AgentFW::SwitchingStrategy::TPA);
+        EXPECT_TRUE(agent->indexStrategy[AgentFW::IndexStrategy::W]);
+        EXPECT_FALSE(agent->indexStrategy[AgentFW::IndexStrategy::H]);
+        EXPECT_FALSE(agent->indexStrategy[AgentFW::IndexStrategy::P]);
+        EXPECT_FALSE(agent->indexStrategy[AgentFW::IndexStrategy::M]);
+    }
+
+    EXPECT_NEAR(fundamentalist->phi, 1.15, eps);
+    EXPECT_NEAR(fundamentalist->fundamentalPrice, 1, eps);
+    EXPECT_NEAR(fundamentalist->sigma, 0.715, tol);
+    EXPECT_NEAR(chartist->chi, 0.81, eps);
+    EXPECT_NEAR(chartist->sigma, 1.528, eps);
+
+
+
+
+    // initialize variables which cannot be set in input file.
+
+    /// @todo make this initializible in the input file
+    RandomGeneratorFromFile rng("FullSimulationTest/FW_numbers.csv");
+    chartist->setRandomGenerator(&rng);
+    fundamentalist->setRandomGenerator(&rng);
+
+    const size_t numSteps = simulation.numSteps;
+
+    simulation.preSimulation();
+
+    StockExchange* exchange = simulation.stockExchange;
+
+    // -- simulation.runSimulation() (adapted)
+    // Run one timestep per hand
+    for(size_t i = 0; i < numSteps; ++i) {
+        // -- stockExchange->preStep() (adapted)
+        simulation.excessDemandCalculator->preStepCalculate();
+        simulation.priceCalculator->preStepCalculate();
+        for (std::size_t j = 0; j < exchange->agents->size(); j++)
+            exchange->agents->at(j)->preStepUpdate();
+
+        // -- stockExchange->step() (adapted)
+
+        exchange->priceCalculator->stepCalculate();
+
+        // no shuffling(!)
+        for (std::size_t j = 0; j < exchange->agents->size(); j++)
+            exchange->agents->at(j)->stepUpdate();
+
+        // validate agents
+
+        simulation.stockExchange->postStep();
+
+        EXPECT_NEAR(prices[i], simulation.variableContainer->price->getPrice(), tol);
+    }
+
+    // timestep end
+
+    simulation.postSimulation();
+}
+
+/**TEST(fullSimulationTest, fullSimulation_TPAC_W){
+    const double tol = 1e-6;
+    const double eps = 1e-14;
+
+    // taken from one run with the jupyter notebook
+    const vector<double> prices=
+            {
+                    1.0,
+                    1.0076821,
+                    1.00034359043,
+                    1.006843593821269,
+                    1.0012729942228613,
+                    1.0097336703404738,
+                    1.0205623741223004,
+                    1.0135115016939176,
+                    1.0157769483897359,
+                    1.0141075169531291,
+                    1.0169522089579874,
+                    1.0236861302157265,
+                    1.0316144876081736,
+                    1.0254744811916638,
+                    1.0299064106673297
+            };
+
+    // Erstelle agents.
+    Input::fromFile inputs = Input::readFromFile("FullSimulationTest/fullSimulation_FW_TPAC-W.xml");
+    ASSERT_EQ(inputs.inputs.size(), 1);
+
+    Input input = inputs.inputs.at(0);
+
+
+
+    EXPECT_EQ(input["agents"].getChildren().at(0).getName(), "agentfw");
+
+
+    Simulation simulation;
+    simulation.parse(input);
+
+    // parameter validation
+    AgentFWFundamentalist* fundamentalist = dynamic_cast<AgentFWFundamentalist*>(simulation.agents->at(0));
+    AgentFWChartist* chartist = dynamic_cast<AgentFWChartist*>(simulation.agents->at(1));
+    for(size_t i = 0 ; i <= 1; ++i) {
+        AgentFW *agent = dynamic_cast<AgentFW*>(simulation.agents->at(i));
+        EXPECT_NEAR(agent->eta, 0.987, eps);
+        EXPECT_NEAR(agent->nu, 0.05, eps);
+        EXPECT_NEAR(agent->alpha_w, 1041, eps);
+
+        EXPECT_EQ(agent->switchingStrategy, AgentFW::SwitchingStrategy::TPAC);
+        EXPECT_TRUE(agent->indexStrategy[AgentFW::IndexStrategy::W]);
+        EXPECT_FALSE(agent->indexStrategy[AgentFW::IndexStrategy::H]);
+        EXPECT_FALSE(agent->indexStrategy[AgentFW::IndexStrategy::P]);
+        EXPECT_FALSE(agent->indexStrategy[AgentFW::IndexStrategy::M]);
+    }
+
+    EXPECT_NEAR(fundamentalist->phi, 1.15, eps);
+    EXPECT_NEAR(fundamentalist->fundamentalPrice, 1, eps);
+    EXPECT_NEAR(fundamentalist->sigma, 0.715, tol);
+    EXPECT_NEAR(chartist->chi, 0.81, eps);
+    EXPECT_NEAR(chartist->sigma, 1.528, eps);
+
+
+
+
+    // initialize variables which cannot be set in input file.
+
+    /// @todo make this initializible in the input file
+    RandomGeneratorFromFile rng("FullSimulationTest/FW_numbers.csv");
+    chartist->setRandomGenerator(&rng);
+    fundamentalist->setRandomGenerator(&rng);
+
+    const size_t numSteps = simulation.numSteps;
+
+    simulation.preSimulation();
+
+    StockExchange* exchange = simulation.stockExchange;
+
+    // -- simulation.runSimulation() (adapted)
+    // Run one timestep per hand
+    for(size_t i = 0; i < numSteps; ++i) {
+        // -- stockExchange->preStep() (adapted)
+        simulation.excessDemandCalculator->preStepCalculate();
+        simulation.priceCalculator->preStepCalculate();
+        for (std::size_t j = 0; j < exchange->agents->size(); j++)
+            exchange->agents->at(j)->preStepUpdate();
+
+        // -- stockExchange->step() (adapted)
+
+        exchange->priceCalculator->stepCalculate();
+
+        // no shuffling(!)
+        for (std::size_t j = 0; j < exchange->agents->size(); j++)
+            exchange->agents->at(j)->stepUpdate();
+
+        // validate agents
+
+        simulation.stockExchange->postStep();
+
+        EXPECT_NEAR(prices[i], simulation.variableContainer->price->getPrice(), tol);
+    }
+
+    // timestep end
+
+    simulation.postSimulation();
+}**/

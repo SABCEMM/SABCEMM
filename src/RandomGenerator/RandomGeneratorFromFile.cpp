@@ -42,6 +42,7 @@
 #include <boost/core/ignore_unused.hpp>
 #include <string>
 #include <exception>
+#include <stdexcept>
 
 using namespace std;
 

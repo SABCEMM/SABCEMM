@@ -7,4 +7,5 @@ add_custom_target(MockClasses
 	MockDataItemCollector.h
 	MockPriceCalculator.h
     MockWriter.h
+		MockQoiCalculator.h
 )

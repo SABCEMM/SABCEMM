@@ -47,7 +47,7 @@
 
 /** Constructor of the LinearNeighbourhoodGenerator
  */
-LinearNeigbourhoodGenerator::LinearNeigbourhoodGenerator(vector<Agent*>* newAgents): NeighbourhoodGenerator(newAgents) {
+LinearNeigbourhoodGenerator::LinearNeigbourhoodGenerator(std::vector<Agent*>* newAgents): NeighbourhoodGenerator(newAgents) {
     throw "not implemented";
 }
 

@@ -43,7 +43,7 @@
 #include <vector>
 #include <string>
 
-#include "../../src/Parameter/Parameter.h"
+
 #include "../../src/Writer/Writer.h"
 #include <cstddef> //for std::size_t
 
@@ -52,29 +52,17 @@
  */
 class WriterNone : public Writer{
 public:
-    /// noop.
-     virtual void  vectorToFile(std::vector<double>* newVector, std::string name) ;
-
-     virtual void  vectorToFile(std::vector<double>* newVector, std::string name, int groupID) ;
-
-     virtual void  vectorToFile(std::vector<double>* newVector, std::string name, int groupID, Util::DataItemCollectorMethod method) ;
-
-     virtual void  matrixToFile(std::vector<std::vector<double>>* newVector, std::string name) ;
-
-     virtual void  matrixToFile(std::vector<std::vector<double>>* newVector, std::string name, int groupID) ;
-
-     virtual void  matrixToFile(std::vector<std::vector<double>>* newVector, std::string name, int groupID, Util::DataItemCollectorMethod method) ;
-    /// noop.
-     virtual void  arrayToFile(double* newArray, int arraySize, std::string name, int groupID) ;
-    /// noop.
-     virtual void  saveInput(Parameter* newParameter) ;
+     virtual   void saveInput(Input& input) ;
     /// noop.
      virtual void  saveBuildInfo() ;
 
-    virtual void rngInformation(std::size_t uniformPoolInitialSize, std::size_t uniformPoolSize, int uniformPoolFills,
-                        std::size_t normalPoolInitialSize, std::size_t normalPoolSize, int normalPoolFills, int seed);
+    virtual void rngInformation(std::size_t &uniformGenerated, std::size_t &uniformUnused, std::size_t &normalGenerated,
+                                    std::size_t &normalUnused, int &seed);
 
      virtual void  saveTime(double time) ;
+    virtual void addSimulation(std::string simulationIdentifier);
+    virtual void addQoI(std::string method, QuantityOfInterest::Quantity quantity, int groupID,
+                        std::vector<std::vector<double>> *newVector, std::string &name_);
 };
 
 #endif /* WRITERNONE_H_ */

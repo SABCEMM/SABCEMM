@@ -45,6 +45,9 @@
 #include "gtest/gtest_prod.h"
 #endif
 
+#include <map>
+#include <boost/assign.hpp>
+
 #include "ExcessDemandCalculator.h"
 #include "../VariableContainer/ExcessDemand.h"
 #include "../VariableContainer/Price.h"
@@ -52,33 +55,64 @@
 #include "../Agent/Agent.h"
 
 
+enum class LLSEDMode
+{
+    original,
+    substractInterest,
+    relaxExp,
+    substractLastED,
+    substractExpectedVolume
+};
+
+const std::map<std::string, LLSEDMode> stringToLLSEDMode =
+        boost::assign::map_list_of("original", LLSEDMode::original)
+        ("substractinterest", LLSEDMode::substractInterest)
+        ("relaxexp", LLSEDMode::relaxExp)
+        ("substractlasted", LLSEDMode::substractLastED)
+        ("substractexpectedvolume", LLSEDMode::substractExpectedVolume);
+
 /** Calculates the excess demand with the formula from "How to grow a bubble: A model of myopic adapting agents" by
  * Georges LLS and Didier Sornette. Maybe Torsten can give a general name for this method.
  * Implements ExcessDemandCalculator.
  */
 class ExcessDemandCalculatorLLS: public ExcessDemandCalculator {
+public:
+	enum class LLSEDMode
+	{
+		original,
+		substractInterest,
+		relaxExp,
+		substractLastED,
+		substractExpectedVolume,
+		normalize
+	};
+	ExcessDemandCalculatorLLS(std::vector<Agent*>* newAgents, ExcessDemand* newExcessDemand,
+							  Price* price, Dividend* dividend, std::string mode, double stocksPerAgent);
 
+	virtual ~ExcessDemandCalculatorLLS();
+
+	virtual void  preStepCalculate() ;
+
+	virtual void  stepCalculate() ;
+
+	virtual void  postStepCalculate() ;
+
+	void setTotalAmountOfStock(double newTotalAmountOfStock);
+
+
+
+	static const std::map<std::string, LLSEDMode> stringToLLSEDMode;
 private:
 	double tempExcessDemand; /** Temporary variable used in computation. */
+    double stockPerAgent;
 	double totalAmountOfStock;
 	double oldPrice;
     Price* price;
     Dividend* dividend;
+    LLSEDMode mode;
 
-public:
-	ExcessDemandCalculatorLLS();
-	ExcessDemandCalculatorLLS(std::vector<Agent*>* newAgents, ExcessDemand* newExcessDemand,
-                              Price* price, Dividend* dividend);
 
-	virtual ~ExcessDemandCalculatorLLS();
 
-	 virtual void  preStepCalculate() ;
-
-	 virtual void  stepCalculate() ;
-
-	 virtual void  postStepCalculate() ;
-
-	void setTotalAmountOfStock(double newTotalAmountOfStock);
 
 };
 

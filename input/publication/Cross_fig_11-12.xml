@@ -40,6 +40,10 @@
 -->
 
 <settings>
+    <writer>writertxt</writer>
+    <filename>Cross_fig_11-12</filename>
+    <simulationsperfile>1</simulationsperfile><!-- optional -->
+    <numthreads>1</numthreads><!-- optional -->
     <!-- Cross Base Model as in Figure 12 -->
     <case>
         <RNGSettings>
@@ -72,7 +76,6 @@
         <numsteps>13000</numsteps>
         <outputname>Cross_SDE_base</outputname>
         <deltaT>0.00004</deltaT>
-        <writerClass>WriterHDF5</writerClass>
         <excessDemandCalculatorSettings>
             <!-- see the term for sigma(n) on p.5 for the calculation of market sentiment / excess demand.-->
             <excessDemandCalculatorClass>ExcessDemandCalculatorHarras</excessDemandCalculatorClass>
@@ -130,7 +133,6 @@
         <numsteps>13000</numsteps>
         <outputname>Cross_SDE_hetero</outputname>
         <deltaT>0.00004</deltaT>
-        <writerClass>WriterHDF5</writerClass>
         <excessDemandCalculatorSettings>
             <!-- see the term for sigma(n) on p.5 for the calculation of market sentiment / excess demand.-->
             <excessDemandCalculatorClass>ExcessDemandCalculatorHarras</excessDemandCalculatorClass>

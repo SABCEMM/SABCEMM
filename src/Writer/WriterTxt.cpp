@@ -51,413 +51,194 @@
 #include "../Version/Version.h"
 #include <cstddef> //for std::size_t
 
+#include <tinyxml2/tinyxml2.h>
+
+using namespace tinyxml2;
+using namespace std;
+
 /** Creates a subdirectory with the name of newOutputLocation where all the various txt-files will be written.
  * \param newOutputLocation The path to the folder
  */
 WriterTxt::WriterTxt(const string &outputLocation):
-    Writer(),
-    fileExtension(".txt")
+    Writer()
 {
 
     auto now = std::chrono::high_resolution_clock::now();
     auto time = std::chrono::duration_cast<chrono::milliseconds>(now.time_since_epoch()).count();
-    pid_t processID = getpid();
 
-    this->outputLocation = "output/" + outputLocation + "_"+std::to_string(processID)+"_"+std::to_string(time);
-    Util::createDirectory(this->outputLocation);
+    this->outputLocation = std::string("./output/")+outputLocation+"_"+std::to_string(time)+std::string(".xml");
 
+    doc = new XMLDocument();
+    root = doc->NewElement("results");
+    doc->InsertFirstChild(root);
+
+    simulationNumber = 0;
 
 }
 
 /** Standardconstructor
  */
 WriterTxt::WriterTxt():WriterTxt("defaultOutputLocation") {
-
-
 }
 
 
 /** Destructor
  */
-WriterTxt::~WriterTxt() = default;
-
-void WriterTxt::vectorToFile(std::vector<double>* newVector, std::string name, int groupID) {
-    name += "_Group";
-    if(groupID==-1){
-        name += "All";
-    }
-    else{
-        name += to_string(groupID);
-    }
-    vectorToFile(newVector, name);
+WriterTxt::~WriterTxt(){
+    XMLError eResult = doc->SaveFile(outputLocation.c_str(), false);
+    XMLCheckResult(eResult);
+    delete doc;
+    doc = nullptr;
 }
 
-void WriterTxt::vectorToFile(std::vector<double>* newVector, std::string name, int groupID, Util::DataItemCollectorMethod method) {
-    name += "_Group";
-    if(groupID==-1){
-        name += "All";
-    }
-    else{
-        name += to_string(groupID);
-    }
-    name += "_";
-    name += Util::dataItemCollectorMethodToString(method);
-    vectorToFile(newVector, name);
-}
-
-void WriterTxt::vectorToFile(std::vector<double>* newVector, std::string name) {
-
-
-	std::ofstream file((outputLocation+std::string("/")+name+fileExtension).c_str(), ios_base::app);
-	file << std::scientific << std::setprecision(15);
-
-    for (double i : *newVector) {
-        file << i << "\n";
-    }
-
-	file.close();
-}
-
-void WriterTxt::matrixToFile(std::vector<std::vector<double>>* newVector, std::string name, int groupID) {
-    name += "_Group";
-    if(groupID==-1){
-        name += "All";
-    }
-    else{
-        name += to_string(groupID);
-    }
-    matrixToFile(newVector, name);
-}
-
-void WriterTxt::matrixToFile(std::vector<std::vector<double>>* newVector, std::string name, int groupID, Util::DataItemCollectorMethod method) {
-    name += "_Group";
-    if(groupID==-1){
-        name += "All";
-    }
-    else{
-        name += to_string(groupID);
-    }
-    name += "_";
-    name += Util::dataItemCollectorMethodToString(method);
-    matrixToFile(newVector, name);
-}
-
-void WriterTxt::matrixToFile(std::vector<std::vector<double>>* newVector, std::string name){
-
-    std::ofstream file((outputLocation+std::string("/")+name+fileExtension).c_str(), ios_base::app);
-    file << std::scientific << std::setprecision(15);
-
-    for (auto &i : *newVector) {
-        for(std::size_t j=0; j < i.size(); j++)
+void WriterTxt::XMLCheckResult(XMLError xmlError){
+        if (xmlError != XML_SUCCESS)
         {
-            file << i.at(j) << ",";
+            std::cerr << "Simulations in " << outputLocation << " did not save to disk! Error: " << xmlError << std::endl;
         }
-        file << "\n";
-    }
-
-
-    file.close();
 }
 
-void WriterTxt::arrayToFile(double* newArray, int arraySize, std::string name, int groupID) {
-	// TODO: Implement if necessary
-    boost::ignore_unused(newArray, arraySize, name, groupID);
-	throw("Not yet implemented!");
+
+void WriterTxt::saveInput(Input& input){
+    XMLElement* inputRootElem = simulationElem->FirstChildElement("input");
+
+    for (auto& inputElem : input.getChildren()){
+        parse(inputElem, inputRootElem);
+    }
+
 }
 
-void WriterTxt::saveInput(Parameter* newParameter){
-	std::ofstream file((outputLocation+std::string("/input.csv")).c_str());
-	file << std::scientific << std::setprecision(15);
-
-    // General Parameters
-    if(newParameter->outputname){
-        file << "simulationName;" << *(newParameter->outputname) << ";" <<  "\n";
+void WriterTxt::parse(Input &input, XMLElement *elem) {
+    if(!input.hasChildren()){
+        XMLElement* XMLchild = doc->NewElement(input.getName().c_str());
+        if (input.hasValue()){
+            XMLchild->SetText(input.getString().c_str());
+        }
+        elem->InsertEndChild(XMLchild);
+    } else{
+        XMLElement* XMLchild = doc->NewElement(input.getName().c_str());
+        elem->InsertEndChild(XMLchild);
+        for(auto& inputChild : input.getChildren()){
+            parse(inputChild, XMLchild);
+        }
     }
-    if(newParameter->writerClass){
-        file << "writerClass;" << *(newParameter->writerClass) << ";" <<  "\n";
-    }
-    if(newParameter->numSteps){
-        file << "numSteps;" << *(newParameter->numSteps) << ";" <<  "\n";
-    }
-    if(newParameter->deltaT){
-        file << "deltaT;" << *(newParameter->deltaT) << ";" <<  "\n";
-    }
-    if(newParameter->startPrice){
-        file << "startPrice;" << *(newParameter->startPrice) << ";" <<  "\n";
-    }
-
-    // ParametersetDividend
-    if(newParameter->parameterSetDividend.Z1){
-        file << "Z1;" << *(newParameter->parameterSetDividend.Z1) << ";" <<  "\n";
-    }
-    if(newParameter->parameterSetDividend.Z2){
-        file << "Z2;" << *(newParameter->parameterSetDividend.Z2) << ";" <<  "\n";
-    }
-    if(newParameter->parameterSetDividend.interestRate){
-        file << "interestRate;" << *(newParameter->parameterSetDividend.interestRate) << ";" <<  "\n";
-    }
-    if(newParameter->parameterSetDividend.initialDividend){
-        file << "initialDividend;" << *(newParameter->parameterSetDividend.initialDividend) << ";" <<  "\n";
-    }
-
-    // ParameterSetRNG
-    if(newParameter->parameterSetRNG.type){
-        file << "randomGeneratorClass;" << *(newParameter->parameterSetRNG.type) << ";";
-    }
-    if(newParameter->parameterSetRNG.seed){
-        file << "seed;" << *(newParameter->parameterSetRNG.seed) << ";";
-    }
-    if(newParameter->parameterSetRNG.poolSizeNormal){
-        file << "poolSizeNormal;" << *(newParameter->parameterSetRNG.poolSizeNormal) << ";";
-    }
-    if(newParameter->parameterSetRNG.poolSizeUniform){
-        file << "poolSizeUniform;" << *(newParameter->parameterSetRNG.poolSizeUniform) << ";";
-    }
-    if(newParameter->parameterSetRNG.enablePool){
-        file << "enablePool;" << *(newParameter->parameterSetRNG.enablePool) << ";";
-    }
-    if(newParameter->parameterSetRNG.fileName){
-        file << "fileName;" << *(newParameter->parameterSetRNG.fileName) << ";";
-    }
-    file <<  "\n";
-
-    // ParameterSetPriceCalculator
-    if(newParameter->parameterSetPriceCalculator.type){
-        file << "priceCalculatorClass;" << *(newParameter->parameterSetPriceCalculator.type) << ";";
-    }
-    if(newParameter->parameterSetPriceCalculator.epsilon){
-        file << "epsilon;" << *(newParameter->parameterSetPriceCalculator.epsilon) << ";";
-    }
-    if(newParameter->parameterSetPriceCalculator.maxIterations){
-        file << "maxIterations;" << *(newParameter->parameterSetPriceCalculator.maxIterations) << ";";
-    }
-    if(newParameter->parameterSetPriceCalculator.lowerBound){
-        file << "lowerBound;" << *(newParameter->parameterSetPriceCalculator.lowerBound) << ";";
-    }
-    if(newParameter->parameterSetPriceCalculator.upperBound){
-        file << "upperBound;" << *(newParameter->parameterSetPriceCalculator.upperBound) << ";";
-    }
-    if(newParameter->parameterSetPriceCalculator.theta){
-        file << "theta;" << *(newParameter->parameterSetPriceCalculator.theta) << ";";
-    }
-    if(newParameter->parameterSetPriceCalculator.fFunction){
-        file << "fFunction;" << *(newParameter->parameterSetPriceCalculator.fFunction) << ";";
-    }
-    if(newParameter->parameterSetPriceCalculator.fConstant){
-        file << "fConstant;" << *(newParameter->parameterSetPriceCalculator.fConstant) << ";";
-    }
-    if(newParameter->parameterSetPriceCalculator.gFunction){
-        file << "gFunction;" << *(newParameter->parameterSetPriceCalculator.gFunction) << ";";
-    }
-    if(newParameter->parameterSetPriceCalculator.gConstant){
-        file << "gConstant;" << *(newParameter->parameterSetPriceCalculator.gConstant) << ";";
-    }
-    if(newParameter->parameterSetPriceCalculator.marketDepth){
-        file << "marketDepth;" << *(newParameter->parameterSetPriceCalculator.marketDepth) << ";";
-    }
-    if(newParameter->parameterSetPriceCalculator.noiseFactor){
-        file << "noiseFactor;" << *(newParameter->parameterSetPriceCalculator.noiseFactor) << ";";
-    }
-    if(newParameter->parameterSetPriceCalculator.mu){
-        file << "mu;" << *(newParameter->parameterSetPriceCalculator.mu) << ";";
-    }
-    file <<  "\n";
-
-    // ParameterSetAgent
-    for (auto &i : newParameter->parameterSetAgent) {
-
-        if(i.type){
-            file << "agentClass;" << *(i.type) << ";";
-        }
-        if(i.count){
-            file << "count;" << *(i.count) << ";";
-        }
-        if(i.cash){
-            file << "cash;" << *(i.cash) << ";";
-        }
-        if(i.stock){
-            file << "stock;" << *(i.stock) << ";";
-        }
-        if(i.C1){
-            file << "C1;" << *(i.C1) << ";";
-        }
-        if(i.C2){
-            file << "C2;" << *(i.C2) << ";";
-        }
-        if(i.C3){
-            file << "C3;" << *(i.C3) << ";";
-        }
-        if(i.threshold){
-            file << "threshold;" << *(i.threshold) << ";";
-        }
-        if(i.g){
-            file << "g;" << *(i.g) << ";";
-        }
-        if(i.alpha){
-            file << "alpha;" << *(i.alpha) << ";";
-        }
-        if(i.neighbourhoodGeneratorClass){
-            file << "neighbourhoodGeneratorClass;" << *(i.neighbourhoodGeneratorClass) << ";";
-        }
-        if(i.A1){
-            file << "A1;" << *(i.A1) << ";";
-        }
-        if(i.A2){
-            file << "A2;" << *(i.A2) << ";";
-        }
-        if(i.b1){
-            file << "b1;" << *(i.b1) << ";";
-        }
-        if(i.b2){
-            file << "b2;" << *(i.b2) << ";";
-        }
-        if(i.gamma){
-            file << "gamma;" << *(i.gamma) << ";";
-        }
-        if(i.stdNoiseSigma){
-            file << "stdNoiseSigma;" << *(i.stdNoiseSigma) << ";";
-        }
-        if(i.riskTolerance){
-            file << "riskTolerance;" << *(i.riskTolerance) << ";";
-        }
-        if(i.historyMean){
-            file << "historyMean;" << *(i.historyMean) << ";";
-        }
-        if(i.historySigma){
-            file << "historySigma;" << *(i.historySigma) << ";";
-        }
-        if(i.initialGamma){
-            file << "initialGamma;" << *(i.initialGamma) << ";";
-        }
-        if(i.memorySpan){
-            file << "memorySpan;" << *(i.memorySpan) << ";";
-        }
-        if(i.k){
-            file << "k;" << *(i.k) << ";";
-        }
-
-        //FW
-        if(i.eta){
-            file << "eta;" << *(i.eta) << ";";
-        }
-        if(i.switchingStrategy){
-            file << "switchingStrategy;" << *(i.switchingStrategy) << ";";
-        }
-        if(i.beta){
-            file << "beta;" << *(i.beta) << ";";
-        }
-        if(i.indexStrategy){
-            file << "indexStrategy;" << *(i.indexStrategy) << ";";
-        }
-        if(i.alpha_w){
-            file << "alpha_w;" << *(i.alpha_w) << ";";
-        }
-        if(i.alpha_n){
-            file << "alpha_n;" << *(i.alpha_n) << ";";
-        }
-        if(i.alpha_p){
-            file << "alpha_p;" << *(i.alpha_p) << ";";
-        }
-        if(i.alpha_0){
-            file << "alpha_0;" << *(i.alpha_0) << ";";
-        }
-        if(i.nu){
-            file << "nu;" << *(i.nu) << ";";
-        }
-        if(i.sigma_c){
-            file << "sigma_c;" << *(i.sigma_c) << ";";
-        }
-        if(i.chi){
-            file << "chi;" << *(i.chi) << ";";
-        }
-        if(i.sigma_f){
-            file << "sigma_f;" << *(i.sigma_f) << ";";
-        }
-        if(i.phi){
-            file << "phi;" << *(i.phi) << ";";
-        }
-        if(i.fundamentalPrice){
-            file << "fundamentalPrice;" << *(i.fundamentalPrice) << ";";
-        }
-        if(i.groups){
-            file << "Groups;";
-            for(auto &k : *(i.groups)){
-                file << k << ";";
-            }
-
-        }
-
-        file <<  "\n";
-    }
-
-    // ParameterSetDataItemCollector
-    for (auto &i : newParameter->parameterSetDataItemCollector) {
-
-        if(i.type){
-            file << "dataItemCollectorClass;" << *(i.type) << ";";
-        }
-        if(i.writeInterval){
-            file << "writeInterval;" << *(i.writeInterval) << ";";
-        }
-        if(i.collectInterval){
-            file << "collectInterval;" << *(i.collectInterval) << ";";
-        }
-        if(i.method){
-            file << "method;" << Util::dataItemCollectorMethodToString(*(i.method)) << ";";
-        }
-        if(i.groupToTrack){
-            file << "groupToTrack;" << *(i.groupToTrack) << ";";
-        }
-
-        file <<  "\n";
-    }
-
-    // parameter set excess demamd calculator
-    if(auto v = newParameter->parameterSetExcessDemandCalculator.excessDemandCalculatorClass){
-        file << "excessDemandCalculatorClass" << *(v) << ";" <<  "\n";
-    }
-
-
-	file.close();
 }
+
 
 void WriterTxt::saveBuildInfo(){
-    std::ofstream file((outputLocation+std::string("/buildInfo.csv")).c_str());
+    XMLElement* infoElem = nullptr;
+    XMLNode* buildInfoElem = simulationElem->FirstChildElement("buildInfo");
 
-    file << "GIT_VERSION;" << buildinfo::GIT_VERSION << ";" <<  "\n";
-    file << "GIT_SHA1" << buildinfo::GIT_SHA1 << ";" <<  "\n";
-    file << "OS" << buildinfo::OS << ";" <<  "\n";
-    file << "OS_NAME" << buildinfo::OS_NAME << ";" <<  "\n";
-    file << "FQDN" << buildinfo::FQDN << ";" <<  "\n";
-    file << "BUILD_TYPE" << buildinfo::BUILD_TYPE << ";" <<  "\n";
-    file << "CXX" << buildinfo::CXX << ";" <<  "\n";
 
-    file.close();
+    infoElem = doc->NewElement("GIT_VERSION");
+    infoElem->SetText(buildinfo::GIT_VERSION.c_str());
+    buildInfoElem->InsertEndChild(infoElem);
+
+    infoElem = doc->NewElement("GIT_SHA1");
+    infoElem->SetText(buildinfo::GIT_SHA1.c_str());
+    buildInfoElem->InsertEndChild(infoElem);
+
+    infoElem = doc->NewElement("OS");
+    infoElem->SetText(buildinfo::OS.c_str());
+    buildInfoElem->InsertEndChild(infoElem);
+
+    infoElem = doc->NewElement("OS_NAME");
+    infoElem->SetText(buildinfo::OS_NAME.c_str());
+    buildInfoElem->InsertEndChild(infoElem);
+
+    infoElem = doc->NewElement("FQDN");
+    infoElem->SetText(buildinfo::FQDN.c_str());
+    buildInfoElem->InsertEndChild(infoElem);
+
+    infoElem = doc->NewElement("BUILD_TYPE");
+    infoElem->SetText(buildinfo::BUILD_TYPE.c_str());
+    buildInfoElem->InsertEndChild(infoElem);
+
+    infoElem = doc->NewElement("CXX");
+    infoElem->SetText(buildinfo::CXX.c_str());
+    buildInfoElem->InsertEndChild(infoElem);
+
 }
 
-void WriterTxt::rngInformation(std::size_t uniformPoolInitialSize, std::size_t uniformPoolSize, int uniformPoolFills,
-                               std::size_t normalPoolInitialSize, std::size_t normalPoolSize, int normalPoolFills, int seed){
-    std::ofstream file((outputLocation+std::string("/usage.csv")).c_str(), ios_base::app);
+void WriterTxt::rngInformation(std::size_t &uniformGenerated, std::size_t &uniformUnused, std::size_t &normalGenerated,
+                               std::size_t &normalUnused, int &seed) {
+    XMLNode* usageElem = simulationElem->FirstChildElement("usage");
+    XMLNode* rngInformationElem = doc->NewElement("rngInformation");
+    usageElem->InsertEndChild(rngInformationElem);
 
+    XMLElement* uniformGeneratedElem = doc->NewElement("uniformGenerated");
+    uniformGeneratedElem->SetText((int)uniformGenerated);
+    rngInformationElem->InsertEndChild(uniformGeneratedElem);
 
-    file << "rngInformation;" << 0 <<  ";" <<  "\n";
-    file << "uniformPoolInitialSize;" << uniformPoolInitialSize << ";" <<  "\n";
-    file << "uniformPoolUnused" << uniformPoolSize << ";" <<  "\n";
-    file << "uniformPoolRefills" << uniformPoolFills << ";" <<  "\n";
-    file << "normalPoolInitialSize" << normalPoolInitialSize << ";" <<  "\n";
-    file << "normalPoolUnused" << normalPoolSize << ";" <<  "\n";
-    file << "normalPoolRefills" << normalPoolFills << ";" <<  "\n";
-    file << "seed" << seed << ";" <<  "\n";
+    XMLElement* uniformUnusedElem = doc->NewElement("uniformUnused");
+    uniformUnusedElem->SetText((int)uniformUnused);
+    rngInformationElem->InsertEndChild(uniformUnusedElem);
 
-    file.close();
+    XMLElement* normalGeneratedElem = doc->NewElement("normalGenerated");
+    normalGeneratedElem->SetText((int)normalGenerated);
+    rngInformationElem->InsertEndChild(normalGeneratedElem);
+
+    XMLElement* normalUnusedElem = doc->NewElement("normalUnused");
+    normalUnusedElem->SetText((int)normalUnused);
+    rngInformationElem->InsertEndChild(normalUnusedElem);
+
+    XMLElement* seedElem = doc->NewElement("seed");
+    seedElem->SetText((int)seed);
+    rngInformationElem->InsertEndChild(seedElem);
 
 }
 
 void WriterTxt::saveTime(double time){
-    std::ofstream file((outputLocation+std::string("/usage.csv")).c_str(), ios_base::app);
+    XMLNode* usageElem = simulationElem->FirstChildElement("usage");
 
-    file << "Time;" << 0 <<  ";" <<  "\n";
-    file << "Simulation Time;" << time << ";" <<  "\n";
+    XMLElement* timeElem = doc->NewElement("SimulationTime");
+    timeElem->SetText(time);
+    usageElem->InsertEndChild(timeElem);
+}
 
-    file.close();
+
+void WriterTxt::addSimulation(std::string simulationIdentifier) {
+    simulationIdentifier = simulationIdentifier + "_" + std::to_string(simulationNumber);
+    simulationNumber++;
+    simulationElem = doc->NewElement(simulationIdentifier.c_str());
+    root->InsertEndChild(simulationElem);
+
+    XMLNode* output = doc->NewElement("output");
+    simulationElem->InsertEndChild(output);
+    XMLNode* usage = doc->NewElement("usage");
+    simulationElem->InsertEndChild(usage);
+    XMLNode* buildInfo = doc->NewElement("buildInfo");
+    simulationElem->InsertEndChild(buildInfo);
+    XMLNode* input = doc->NewElement("input");
+    simulationElem->InsertEndChild(input);
+}
+
+
+void WriterTxt::addQoI(string method, QuantityOfInterest::Quantity quantity, int groupID,
+                       std::vector<std::vector<double>> *newVector, string &name_) {
+    XMLNode* outputElem = simulationElem->FirstChildElement("output");
+
+    XMLElement* qoiElem = nullptr;
+    qoiElem = outputElem->FirstChildElement(name_.c_str());
+    if(qoiElem == nullptr){
+        qoiElem = doc->NewElement(name_.c_str());
+        qoiElem->SetAttribute("GroupToTrack", groupID);
+        qoiElem->SetAttribute("Quantity", QuantityOfInterest::quantityToString.at(quantity).c_str());
+        outputElem->InsertEndChild(qoiElem);
+    }
+
+    XMLElement* methodElem = doc->NewElement(method.c_str());
+    qoiElem->InsertEndChild(methodElem);
+
+    for(std::size_t i = 0; i<newVector->size(); i++){
+        std::string row_name = std::string("r_")+std::to_string(i);
+        XMLNode* rowElem = doc->NewElement(row_name.c_str());
+        methodElem->InsertEndChild(rowElem);
+        for(std::size_t j = 0; j < newVector->at(i).size(); j++){
+            std::string column_name = std::string("c_")+std::to_string(i);
+            XMLElement* dataElem = doc->NewElement(column_name.c_str());
+            dataElem->SetText(newVector->at(i).at(j));
+            rowElem->InsertEndChild(dataElem);
+        }
+    }
 }

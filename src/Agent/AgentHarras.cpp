@@ -40,6 +40,7 @@
 
 #include <vector>
 #include <cmath>
+#include <cassert>
 #include <cstddef> //for std::size_t
 #include "Agent.h"
 #include "AgentHarras.h"

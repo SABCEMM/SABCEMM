@@ -38,8 +38,45 @@
  */
 #include "gtest/gtest.h"
 
+#include "../../src/RandomGenerator/RandomGeneratorStdLib.h"
+#include "../../src/Agent/AgentLLS.h"
 #include "../../src/Group/Group.h"
+#include "../../src/Simulation.h"
 
+
+TEST(GroupTest, dynamicGroups) {
+    AgentLLS a1( new RandomGeneratorStdLib, new Price, 0, 0, NULL, 0, 0, 0, 0, 0, "logarithmic", {1}, "original", {2}, 0, 0, 0.99, 0.01, AgentLLS::MemorySpanMode::fixed, 0, 0, 0);
+    a1.setStrategy(AgentLLS::LLSStrategy::RII);
+    AgentLLS a2 = a1;
+    a2.setStrategy(AgentLLS::LLSStrategy::RII);
+    AgentLLS a3 = a1;
+    a3.setStrategy(AgentLLS::LLSStrategy::EMB);
+    AgentLLS a4 = a1;
+    a4.setStrategy(AgentLLS::LLSStrategy::EMB);
+
+    EXPECT_TRUE(a1.hasGroup(1));
+    EXPECT_TRUE(a2.hasGroup(1));
+    EXPECT_TRUE(a3.hasGroup(2));
+    EXPECT_TRUE(a4.hasGroup(2));
+
+    a3.toggleStrategy();
+    a4.toggleStrategy();
+
+    EXPECT_TRUE(a1.hasGroup(1));
+    EXPECT_TRUE(a2.hasGroup(1));
+    EXPECT_TRUE(a3.hasGroup(1));
+    EXPECT_TRUE(a4.hasGroup(1));
+
+    a1.toggleStrategy();
+    a2.toggleStrategy();
+    a3.toggleStrategy();
+    a4.toggleStrategy();
+
+    EXPECT_TRUE(a1.hasGroup(2));
+    EXPECT_TRUE(a2.hasGroup(2));
+    EXPECT_TRUE(a3.hasGroup(2));
+    EXPECT_TRUE(a4.hasGroup(2));
+}
 
 TEST(GroupTest, hasGroup) {
 

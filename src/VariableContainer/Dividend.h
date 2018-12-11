@@ -56,6 +56,10 @@ class StockExchange;
 class Dividend{
 friend Simulation;
 friend StockExchange;
+#if BUILD_TESTS
+    FRIEND_TEST(fullSimulationTest, fullSimulation_RII);
+    FRIEND_TEST(fullSimulationTest, fullSimulation_EMB);
+#endif
 private:
 	RandomGenerator* randomGenerator;
 	DeltaT* deltaT;
@@ -63,7 +67,7 @@ private:
 
 	double z1;
 	double z2;
-	double expectedValue;
+    double expectedIncrease;
 
 	void calculateDividend();
 	void setZ(double newZ1, double newZ2);
@@ -76,7 +80,7 @@ public:
 	virtual ~Dividend();
 
     const double& getDividend() const;
-    const double& getExpectedValue() const;
+    const double& getExpectedIncrease() const;
     const double& getZ1() const;
     const double& getZ2() const;
 };

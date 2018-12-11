@@ -50,27 +50,33 @@ private:
 	std::size_t uniformPoolInitialSize;
 	std::size_t normalPoolInitialSize;
 
-	int normalPoolFills;
-    int uniformPoolFills;
+	std::size_t normalPoolFills;
+	std::size_t uniformPoolFills;
+
+	std::size_t uniformPoolUnused;
+	std::size_t normalPoolUnused;
 
 	RandomGenerator* randomGenerator;
 	std::vector<double> uniformPool;
 	std::vector<double> normalPool;
 
-    Writer* writer;
+    void fillUniformPool();
+    void fillNormalPool();
+
 
 public:
 	RandomNumberPool();
 	RandomNumberPool(std::size_t newUniformPoolInitialSize, std::size_t newNormalPoolInitialSize);
 
 	virtual ~RandomNumberPool();
+	void clearPools();
+	void getUsageInformation(std::size_t& uniformGenerated, std::size_t& uniformUnused,
+			std::size_t& normalGenerated, std::size_t& normalUnused, int& seed);
 
 	void setRandomGenerator(RandomGenerator* newRandomGenerator);
-	void fillUniformPool();
-	void fillNormalPool();
+
 	void setUniformPoolSize(std::size_t newUniformPoolSize);
 	void setNormalPoolSize(std::size_t newNormalPoolSize);
-    void setWriter(Writer* newWriter);
 
 	 virtual void  getUniformRandomInt(int lowerBound, int upperBound, int* randNumber) ;
 

@@ -38,7 +38,10 @@
  */
 
 #include "PriceCalculatorGeneral.h"
-
+#include <string>
+#include <cassert>
+#include <cmath>
+using namespace std;
 
 /** Standarddestructor
  */

@@ -78,12 +78,8 @@ void ExcessDemandCalculatorHarras::stepCalculate() {
     for (auto &agent : *agents) //iterate over all agents
         tempExcessDemand += agent->getDecision() * agent->getTradingVolume();
 
-	tempExcessDemand = tempExcessDemand / static_cast<double>(agents->size());
-	excessDemand->setExcessDemand(tempExcessDemand);
-
-
-
-
+    tempExcessDemand = tempExcessDemand / static_cast<double>(agents->size());
+    excessDemand->setExcessDemand(tempExcessDemand);
 }
 
 void ExcessDemandCalculatorHarras::preStepCalculate(){

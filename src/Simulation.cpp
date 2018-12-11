@@ -39,24 +39,21 @@
 
 #include <cassert>
 #include <iostream>
+#include <chrono>
 #include <boost/optional.hpp>
-#include <cstddef> //for std::size_t
 
 #include "Simulation.h"
 
 #include "Exceptions/MathError.h"
+#include "RandomGenerator/RandomNumberPool.h"
 
-#include "RandomGenerator/RandomGenerator.h"
-
-#include "StockExchange/StockExchange.h"
-
-
-#if WITH_PROGBAR
-#include "progressbar/progressbar.h"
+#if WITH_OPENMP
+#include <omp.h>
 #endif
 
-
-
+#if WITH_PROGBAR
+#include "progressbar.h"
+#endif
 
 
 using namespace boost;
@@ -67,75 +64,93 @@ using namespace std;
  */
 Simulation::Simulation() {
 
-	parameter = nullptr;
-
-	stockExchange = nullptr;
-	excessDemandCalculator = nullptr;
-	dataCollector = nullptr;
-	priceCalculator = nullptr;
-	writer = nullptr;
-	numSteps = 0;
-	variableContainer= nullptr;
-	randomNumberPool = nullptr;
-
+    stockExchange = nullptr;
+    excessDemandCalculator = nullptr;
+    dataCollector = nullptr;
+    priceCalculator = nullptr;
+    simulationTime = 0;
+    numSteps = 0;
+    variableContainer = nullptr;
+    randomNumberPool = nullptr;
+    shareCalculator = nullptr;
+    quantitiesOfInterest = nullptr;
 
 }
-
 
 
 /** Parse the parameter object, create all objects and connect them.
  *	Requires a lot of computation time due to all the if clauses.
  */
-void Simulation::parse(Parameter* parameter) {
+void Simulation::parse(Input &input) {
 
 
-    this->parameter = parameter;
+    this->input = input;
 
-    assert(parameter->numSteps);
+    assert(input("numSteps"));
 
-    //Writer
-    writer = Writer::factory(parameter);
-
-	//RandomGenerator
-	randomNumberPool = RandomGenerator::factory(parameter, writer);
+    //RandomGenerator
+    randomNumberPool = RandomGenerator::factory(input);
 
 
-	//Variable Containers
-	variableContainer = VariableContainer::factory(parameter, randomNumberPool);
+    //Variable Containers
+    variableContainer = VariableContainer::factory(input, randomNumberPool);
 
-	//Agents
-	agents = Agent::factory(parameter, randomNumberPool, variableContainer->price,
-							variableContainer->excessDemand, variableContainer->globalNews,
-							variableContainer->dividend, variableContainer->deltaT);
+    //Agents
+    agents = Agent::factory(input, randomNumberPool, variableContainer->price,
+                            variableContainer->excessDemand, variableContainer->globalNews,
+                            variableContainer->dividend, variableContainer->deltaT, switchables);
 
-	//excessDemandCalculator
-	excessDemandCalculator = ExcessDemandCalculator::factory(parameter, agents,
-															 variableContainer->excessDemand,
-															 variableContainer->price, variableContainer->dividend);
+    /// @todo: only works for one parameter set yet
+    /// agents might be switchable ( in order to have a getChartistShare-function ), but have switchable set
+    /// to false, such that we dont recalculate shares.
 
-	//priceCalculator
-	priceCalculator = PriceCalculator::factory(parameter, excessDemandCalculator,
-											   variableContainer->price, variableContainer->excessDemand,
-											   variableContainer->deltaT, randomNumberPool,
+    if (!switchables.empty() && input["agents"].getChildren().at(0)("switchable") ? input["agents"].getChildren().at(
+            0)["switchable"].getBool() : false) {
+        if (!input("sharecalculatorsettings")) {
+            input.addChild("sharecalculatorsettings");
+        }
+        shareCalculator = new ShareCalculator(switchables, *variableContainer->price,
+                                              input["sharecalculatorsettings"]("strategy")
+                                              ? input["sharecalculatorsettings"]["strategy"].getString() : "pdivpf",
+                                              input["sharecalculatorsettings"]("alpha_n")
+                                              ? input["sharecalculatorsettings"]["alpha_n"].getDouble() : 1.79,
+                                              input["sharecalculatorsettings"]("alpha_0")
+                                              ? input["sharecalculatorsettings"]["alpha_0"].getDouble() : 0.8);
+    } else
+        shareCalculator = nullptr;
+
+    //excessDemandCalculator
+    excessDemandCalculator = ExcessDemandCalculator::factory(input, agents,
+                                                             variableContainer->excessDemand,
+                                                             variableContainer->price, variableContainer->dividend);
+
+    //priceCalculator
+    priceCalculator = PriceCalculator::factory(input, excessDemandCalculator,
+                                               variableContainer->price, variableContainer->excessDemand,
+                                               variableContainer->deltaT, randomNumberPool,
                                                agents);
 
-	//DataCollector
-	dataCollector = DataCollector::factory(parameter, variableContainer->price, variableContainer->excessDemand,
-                                           agents, writer);
+    //DataCollector
+    dataCollector = DataCollector::factory(input, variableContainer->price, variableContainer->excessDemand,
+                                           agents, switchables);
+
+    //Quantities of Interest
+    quantitiesOfInterest = QuantitiesOfInterest::factory(input, variableContainer->price,
+                                                         variableContainer->excessDemand,
+                                                         agents, switchables, dataCollector);
 
 
-	//Configure Stock Exchange
+    //Configure Stock Exchange
     stockExchange = StockExchange::factory(dataCollector, agents,
                                            randomNumberPool, priceCalculator,
-                                           excessDemandCalculator, variableContainer->dividend,
-										   variableContainer->globalNews);
+                                           excessDemandCalculator,
+                                           shareCalculator,
+                                           variableContainer->dividend,
+                                           variableContainer->globalNews);
 
-	stockExchange->checkInitilisation();
+    stockExchange->checkInitilisation();
 
-	numSteps = *(parameter->numSteps);
-
-	writer->saveInput(parameter);
-	writer->saveBuildInfo();
+    numSteps = input["numSteps"].getSizeT();
 
 }
 
@@ -153,59 +168,89 @@ void Simulation::preSimulation() {
 
 /** Run the Simulation for numSteps steps.
  */
-void Simulation::runSimulation() {
+bool Simulation::runSimulation(bool &aborted, size_t id) {
+    if (aborted)
+        return false;
 
     // 200 segments should be a good upper bound for the progress bar.
     // Assume 400 units to be safe.
     // therefore: numSteps/divisor == 400
     auto startTime = Clock::now();
 
+    bool result = true;
 
-    #if WITH_PROGBAR
+
+#if WITH_PROGBAR
     std::size_t divisor = numSteps/400;
     if(divisor == 0)
         // divisor = 1 might put too much load on the output buffer, 5 is fine, too.
-        divisor = 5;
+        divisor = 10;
 
-    progressbar *prog = progressbar_new("Simulating", numSteps/divisor);
-    #endif
+    std::string progbar_name = "Simulation: " + std::to_string(id);
+    progressbar *prog = progressbar_new(progbar_name.c_str() , numSteps/divisor);
+#else
+    int process = 0;
+#if WITH_OPENMP
+    process = omp_get_thread_num();
+#pragma omp critical (PROGBAR_UPDATE)
+#endif
+    {
+        std::cout << "This is process " << process << " running Simulation " << id << std::endl;
+    }
+#endif
 
-	for(std::size_t i = 0; i < numSteps; i++)
-	{
-		stockExchange->preStep();
-        try
-        {
+    for (std::size_t i = 0; i < numSteps; i++) {
+        stockExchange->preStep();
+        try {
             stockExchange->step();
         }
-        catch (MathError& ex)
-        {
+        catch (MathError &ex) {
             stockExchange->postStep();
-            #if WITH_PROGBAR
-            progressbar_finish(prog);
-            #endif
-
 
             std::cerr << "error in simulation" << endl;
+            std::cerr << ex.what() << endl;
 
-            return;
+            //throw ex;
+
+            result = false;
+            aborted = true;
+        }
+        catch (...) {
+            result = false;
+            aborted = true;
         }
 
-		stockExchange->postStep();
-        #if WITH_PROGBAR
-        if((i % divisor) == 0)
-            progressbar_inc(prog);
-        #endif
-	}
-    #if WITH_PROGBAR
-    progressbar_finish(prog);
+        stockExchange->postStep();
+
+#if WITH_PROGBAR
+#if WITH_OPENMP
+#pragma omp critical (PROGBAR_UPDATE)
+#endif
+        {
+            if((i % divisor) == 0)
+                progressbar_inc(prog);
+        }
+#endif
+
+        if (aborted)
+            break;
+    }
+
+#if WITH_PROGBAR
+    #if WITH_OPENMP
+        #pragma omp critical (PROGBAR_UPDATE)
     #endif
+
+    progressbar_finish(prog);
+#endif
 
     auto endTime = Clock::now();
 
-    double simulationTime = static_cast<double>(std::chrono::duration_cast<std::chrono::nanoseconds>(endTime - startTime).count()) * 1e-9;
+    simulationTime =
+            static_cast<double>(std::chrono::duration_cast<std::chrono::nanoseconds>(endTime - startTime).count()) *
+            1e-9;
 
-    writer->saveTime(simulationTime);
-
+    return result;
 }
 
 
@@ -214,7 +259,46 @@ void Simulation::runSimulation() {
  */
 void Simulation::postSimulation() {
 
-	dataCollector->write();
+    quantitiesOfInterest->calculateQoi();
+
+    //Delete everything that is not needed for writing to disk
+    for (auto& agent : *agents) {
+        delete agent;
+        agent = nullptr;
+    }
+    agents->clear();
+    delete agents;
+    agents = nullptr;
+
+    delete stockExchange;
+    stockExchange = nullptr;
+
+
+    //saveguard casting
+    RandomNumberPool *pool = dynamic_cast<RandomNumberPool *>(randomNumberPool);
+    if (pool) {
+        pool->clearPools();
+    }
+
+    delete priceCalculator;
+    priceCalculator = nullptr;
+    delete excessDemandCalculator;
+    excessDemandCalculator = nullptr;
+
+    delete variableContainer;
+    variableContainer = nullptr;
+
+    if (shareCalculator != nullptr) {
+        delete shareCalculator;
+        shareCalculator  = nullptr;
+    }
+
+    for (auto& switchable : switchables) {
+        delete switchable;
+        switchable  = nullptr;
+    }
+    switchables.clear();
+
 
 }
 
@@ -223,64 +307,129 @@ void Simulation::postSimulation() {
  */
 Simulation::~Simulation() {
 
-	for (auto &agent : *agents) {
-		delete agent;
-	}
-
-    delete agents;
-
-
-	delete stockExchange;
-
-
-        //if(parameter->parameterSetRNG.enablePool && *(parameter->parameterSetRNG.enablePool)){
-        delete randomNumberPool;
-
-
+    delete quantitiesOfInterest;
+    quantitiesOfInterest = nullptr;
     if (dataCollector != nullptr) {
         dataCollector->deleteDataItemCollectors();
-       delete dataCollector;
+        delete dataCollector;
+        dataCollector=nullptr;
     }
-
-
-	delete priceCalculator;
-
-
-	delete variableContainer;
-
-    delete writer;
-
-
-
-
+    delete randomNumberPool;
+    randomNumberPool = nullptr;
 }
 
 
-bool Simulation::executeSimulations(vector<Parameter*> parameterSets){
+bool Simulation::executeSimulations(Input::fromFile inputs, bool &aborted) {
     bool ret = true;
+    int reps = 0; //Counter for Filenames. Used in writer class
+    std::vector<Simulation *> *simulationsToWrite = new std::vector<Simulation *>;
 
-	for (auto &parameterSet : parameterSets) {
+#if WITH_OPENMP
+    if (inputs.numThreads > omp_get_max_threads()){
+        std::cerr << "Maximum of " << omp_get_max_threads() << " used insted of requested " << inputs.numThreads << std::endl;
+    }
+    int threads = std::min(inputs.numThreads, omp_get_max_threads());
+    omp_set_num_threads(threads);
 
-		if(!parameterSet->validate()){
+#pragma omp parallel shared(simulationsToWrite, reps, inputs)
+#endif
+    {
+#if WITH_OPENMP
+#pragma omp for schedule(dynamic, 1)
+#endif
+        for (size_t i = 0; i < inputs.inputs.size(); i++) {
+            if (aborted)
+                i=inputs.inputs.size()+10;// Hier müsste ein break stehen, aber das geht nicht wegen openmp, daher brechen wir über den Schleifenindex ab ...
 
-            ret = false;
-			break;
-		}
-		Simulation simulation;
-		simulation.parse(parameterSet);
-		simulation.preSimulation();
-		simulation.runSimulation();
-		simulation.postSimulation();
+            Simulation *simulation = new Simulation();
+            simulation->parse(inputs.inputs.at(i));
+            simulation->preSimulation();
+            simulation->runSimulation(aborted, i);
+            simulation->postSimulation();
 
-		delete parameterSet;
-	}
+#if WITH_OPENMP
+#pragma omp critical (ADD_SIMULATION)
+#endif
+            {
+                simulationsToWrite->push_back(simulation);
+            }
+            if (simulationsToWrite->size() > inputs.simulationsPerFile-1) {
+                std::vector<Simulation *> *simulationsToWrite2 = simulationsToWrite;
+                Writer *writer = nullptr;
+#if WITH_OPENMP
+#pragma omp critical (ADD_SIMULATION)
+#endif
+                {
 
+                    simulationsToWrite = new std::vector<Simulation *>;
+                    writer = Writer::factory(inputs, reps);
+                    int process = 0;
+#if WITH_OPENMP
+                    process = omp_get_thread_num();
+#pragma omp critical (PROGBAR_UPDATE)
+#endif
+                    {
+                        std::cout << "This is process " << process << " writing file " << reps << std::endl;
+                    }
+                    reps++;
+                }
+
+                Simulation::write(simulationsToWrite2, writer);
+                for(auto& simulation: *simulationsToWrite2){
+                    delete simulation;
+                    simulation = nullptr;
+                }
+                simulationsToWrite2->clear();
+                delete simulationsToWrite2;
+                simulationsToWrite2 = nullptr;
+                delete writer;
+                writer = nullptr;
+            }
+
+
+        }
+    }
+    if (!simulationsToWrite->empty()) {
+        Writer *writer = Writer::factory(inputs, reps);
+        reps++;
+        Simulation::write(simulationsToWrite, writer);
+        delete writer;
+    }
+    for(std::size_t i=0; i<simulationsToWrite->size(); i++){
+        delete simulationsToWrite->at(i);
+    }
+    simulationsToWrite->clear();
+    delete simulationsToWrite;
     return ret;
 }
 
-bool Simulation::executeSimulations(Parameter* parameterSet){
-    vector<Parameter*> parameterSets;
-    parameterSets.push_back(parameterSet);
+void Simulation::write(Writer *writer) {
+    writer->addSimulation(input("outputname") ? input["outputname"].getString() : std::string("simulation"));
+    writer->saveTime(simulationTime);
+    writer->saveBuildInfo();
 
-    return Simulation::executeSimulations(parameterSets);
+    std::size_t uniformGenerated = 0;
+    std::size_t uniformUnused = 0;
+    std::size_t normalGenerated = 0;
+    std::size_t normalUnused = 0;
+    int seed = 0;
+
+    //saveguard casting
+    RandomNumberPool *pool = dynamic_cast<RandomNumberPool *>(randomNumberPool);
+    if (pool) {
+        pool->getUsageInformation(uniformGenerated, uniformUnused, normalGenerated, normalUnused, seed);
+    }
+
+    writer->rngInformation(uniformGenerated, uniformUnused, normalGenerated, normalUnused, seed);
+
+    quantitiesOfInterest->write(writer);
+
+    writer->saveInput(input);
+
+}
+
+void Simulation::write(std::vector<Simulation *> *simulations, Writer *writer) {
+    for (auto simulation: *simulations) {
+        simulation->write(writer);
+    }
 }

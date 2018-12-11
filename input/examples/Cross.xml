@@ -40,6 +40,10 @@
 -->
 
 <settings>
+    <writer>writertxt</writer>
+    <filename>Cross_Example</filename>
+    <simulationsperfile>2</simulationsperfile><!-- optional -->
+    <numthreads>1</numthreads><!-- optional -->
     <!-- referenced paper: Rod Cross, Michael Grinfeld, Harbir Lamba, Tim Seaman. A Threshold Model of Investor Psychology, 2005 -->
     <case>
         <RNGSettings>
@@ -60,14 +64,18 @@
                 <stock>1</stock>
             </AgentCross>
         </agents>
-        <dataItemCollectorClasses>
-            <DataCollectorPrice />
-            <DataCollectorExcessDemand />
-        </dataItemCollectorClasses>
+        <qoi>
+            <price>
+                <full></full>
+            </price>
+            <logreturn>
+                <skew></skew>
+                <excessKurtosis></excessKurtosis>
+            </logreturn>
+        </qoi>
         <numsteps>10000</numsteps>
-        <outputname>example_Cross</outputname>
+        <outputname>Cross_Simulation</outputname>
         <deltaT>0.00004</deltaT>
-        <writerClass>WriterTXT</writerClass>
         <excessDemandCalculatorSettings>
             <!-- see the term for sigma(n) on p.5 for the calculation of market sentiment / excess demand.-->
             <excessDemandCalculatorClass>ExcessDemandCalculatorHarras</excessDemandCalculatorClass>

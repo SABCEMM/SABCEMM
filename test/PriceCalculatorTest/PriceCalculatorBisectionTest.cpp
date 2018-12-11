@@ -78,7 +78,8 @@ TEST(PriceCalculatorBisection, getExcessDemandAtPrice){
 	excessDemandCalculator = new ExcessDemandCalculatorHarras(&newAgents, &excessDemand);
 	
 
-	PriceCalculatorBisection priceCalculator(excessDemandCalculator, &price, &excessDemand);
+    /// bisections bounds etc. do not matter in this test
+    PriceCalculatorBisection priceCalculator(excessDemandCalculator, &price, &excessDemand, true, 0, 1, 0, 0);
 	priceCalculator.setAgents(&newAgents);
 	priceCalculator.setDeltaT(&deltaT);
 	priceCalculator.setMarketDepth(marketDepth);
@@ -131,7 +132,8 @@ TEST(PriceCalculatorBisection, stepCalculate){
 	ExcessDemandCalculator* excessDemandCalculator;
 	excessDemandCalculator = new ExcessDemandCalculatorHarras(&newAgents, &excessDemand);
 
-	PriceCalculatorBisection priceCalculator(excessDemandCalculator, &price, &excessDemand);
+
+    PriceCalculatorBisection priceCalculator(excessDemandCalculator, &price, &excessDemand, false, 0, 10, 1e-3, 100000);
 	priceCalculator.setAgents(&newAgents);
 	priceCalculator.setDeltaT(&deltaT);
 	priceCalculator.setMarketDepth(marketDepth);

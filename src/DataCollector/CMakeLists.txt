@@ -4,18 +4,23 @@ add_library(DataCollector
         DataItemCollectorAmountOfStock.cpp
         DataItemCollector.cpp
         DataItemCollectorExcessDemand.cpp
-        DataItemCollectorFWShares.cpp
+        DataItemCollectorFWSharesChartist.cpp
+        DataItemCollectorFWSharesFundamentalist.cpp
         DataItemCollectorHarrasK.cpp
+        DataItemCollectorLLSMemorySpans.cpp
         DataItemCollectorEMBGamma.cpp
         DataItemCollectorPrice.cpp
+        DataItemCollectorSwitchableShares.cpp
         DataItemCollectorWealth.cpp
 )
 
 add_coverage(DataCollector)
 
 add_dependencies(DataCollector
-        Group)
+        Group
+        )
 
 target_link_libraries(DataCollector
         Group
+
 )

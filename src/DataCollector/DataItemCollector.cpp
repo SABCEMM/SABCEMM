@@ -5,16 +5,16 @@
  *      Author: Cramer
  */
 
+
 #include "DataItemCollector.h"
+#include <limits>
+#include <iostream>
 
 
 /** Constructor of the DataItemCollector
  */
 DataItemCollector::DataItemCollector():
-      writer(nullptr)
-    , name("")
-    , writeInterval(INT_MAX)
-    , writeCount(1)
+     name("")
     , collectInterval(1)
     , collectCount(1)
     , groupToTrack_(-1)
@@ -22,14 +22,13 @@ DataItemCollector::DataItemCollector():
 
 /** Destructor of the DataItemCollector
  */
-DataItemCollector::~DataItemCollector() = default;
-
-
-/** Setter method for the writer.
- */
-void DataItemCollector::setWriter(Writer* newWriter){
-	writer = newWriter;
+DataItemCollector::~DataItemCollector(){
+	for(auto& row: dataMatrix){
+	    row.clear();
+	}
+	dataMatrix.clear();
 }
+
 
 
 /** Is called by the simulation every time step and collects data if the counter is full.
@@ -43,20 +42,13 @@ void DataItemCollector::collect(){
 		collectCount += 1;
 	}
 
-	if(writeCount == writeInterval){
-		write();
-		clearData();
-		writeCount = 1;
-	} else {
-		writeCount += 1;
-	}
 
 }
 
 
 /** Setter method for the name.
  */
-void DataItemCollector::setName(const string &newName){
+void DataItemCollector::setName(const std::string &newName){
     name = newName;
 }
 
@@ -66,13 +58,6 @@ std::string DataItemCollector::getName() const{
     return name;
 }
 
-/** Set the interval in which is written.
- */
-void DataItemCollector::setWriteInterval(int newWriteInterval){
-	assert(newWriteInterval > 0);
-	writeInterval = newWriteInterval;
-	writeCount = 1;
-}
 
 
 /** Set the interval in which data is collected.
@@ -89,5 +74,54 @@ void DataItemCollector::setGroupToTrack(int groupToTrack){
 	groupToTrack_ = groupToTrack;
 }
 
+std::string DataItemCollector::methodToString(Method method){
+	std::string methodString;
+	if(method == DataItemCollector::Method::STD){
+		methodString = "std";
+	}
+	else if(method == DataItemCollector::Method::DETAIL){
+		methodString = "detail";
+	}
+	else if(method == DataItemCollector::Method::EXTREME_PROPORTIONS){
+		methodString = "extreme_proportions";
+	}
+	else if(method == DataItemCollector::Method::MEAN_NOISE_IMPACT){
+		methodString = "mean_noise_impact";
+	}
+	else { // Default method is mean
+		methodString = "mean";
+	}
+	return methodString;
 
+}
+
+DataItemCollector::Method DataItemCollector::stringToDataItemCollectorMethod(const std::string &methodString){
+	DataItemCollector::Method method;
+	if(methodString == std::string("std")){
+		method = DataItemCollector::Method::STD;
+	}
+	else if(methodString == std::string("detail")){
+		method = DataItemCollector::Method::DETAIL;
+	}
+	else if (methodString == std::string("extreme_proportions")){
+		method = DataItemCollector::Method::EXTREME_PROPORTIONS;
+	}
+	else if (methodString == std::string("mean_noise_impact")){
+		method = DataItemCollector::Method::MEAN_NOISE_IMPACT;
+	}
+	else { // Default method is mean
+		method = DataItemCollector::Method::MEAN;
+	}
+
+	return method;
+}
+
+
+void DataItemCollector::clearData(){
+	dataMatrix.clear();
+}
+
+std::vector<std::vector<double>> * DataItemCollector::getData(){
+	return &dataMatrix;
+}
 

@@ -45,6 +45,13 @@
 #include "RandomGenerator.h"
 
 
+/// RNG that reads its numbers from a file.
+///
+/// For generating random numbers, see prototypes/generate_random_numbers.py.
+///
+/// This generator cannot be refilled. It will make the program crash if it runs out of numbers.
+///
+/// seed and bounds/mu, sigma are ignored by this class.
 class RandomGeneratorFromFile: public RandomGenerator {
 private:
     std::deque<double> numbers;

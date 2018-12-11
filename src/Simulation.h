@@ -42,17 +42,21 @@
 
 #include <vector>
 #include <cstddef> //for std::size_t
+#include "Switching/ShareCalculator.h"
 #include "StockExchange/StockExchange.h"
 #include "RandomGenerator/RandomGenerator.h"
 #include "ExcessDemandCalculator/ExcessDemandCalculator.h"
 #include "PriceCalculator/PriceCalculator.h"
 #include "DataCollector/DataCollector.h"
 #include "Writer/Writer.h"
-#include "Parameter/Parameter.h"
+#include "Input/Input.h"
 #include "VariableContainer/VariableContainer.h"
+#include "QuantitiesOfInterest/QuantitiesOfInterest.h"
 
 #if BUILD_TESTS
 #include "gtest/gtest_prod.h"
+#include "QuantitiesOfInterest/QuantitiesOfInterest.h"
+
 #endif
 
 #include <chrono>
@@ -66,36 +70,52 @@ class Simulation {
 #if BUILD_TESTS
 FRIEND_TEST(fullSimulationTest, fullSimulation_Harras);
 FRIEND_TEST(fullSimulationTest, fullSimulation_Cross);
-FRIEND_TEST(fullSimulationTest, fullSimulation_FW);
+FRIEND_TEST(fullSimulationTest, fullSimulation_DCA_HPM);
+FRIEND_TEST(fullSimulationTest, fullSimulation_TPA_W);
+FRIEND_TEST(fullSimulationTest, fullSimulation_TPAC_W);
+FRIEND_TEST(fullSimulationTest, fullSimulation_RII);
+FRIEND_TEST(fullSimulationTest, fullSimulation_EMB);
+FRIEND_TEST(GroupTest, dynamicGroups);
 #endif
 
 private:
-	Parameter* parameter;
+	Input input;
 	StockExchange* stockExchange; /**< Pointer to a StockExchange */
 	RandomGenerator* randomNumberPool;
 	DataCollector* dataCollector; /**< Pointer to a DataCollector composite */
 	ExcessDemandCalculator* excessDemandCalculator; /**< Pointer to an ExcessDemandCalculator */
 	PriceCalculator* priceCalculator; /**< Pointer to a PriceCalculator */
-	Writer* writer; /**< Pointer to a Writer */
 	std::vector<Agent*>* agents; /**< Vector of pointers to Agent */
 	std::size_t numSteps; /**< Number of steps the simulation will run*/
+    ShareCalculator* shareCalculator;
+    std::vector<Switchable*> switchables;
 	VariableContainer* variableContainer;
+	QuantitiesOfInterest* quantitiesOfInterest;
+	double simulationTime;
 
 
-    void parse(Parameter* parameter);
+    void parse(Input& input);
     void preSimulation();
+    /// automatically called in destructor.
     void postSimulation();
-    void runSimulation();
+    ///
+    /// \brief runSimulation
+    /// \param[in, out] aborted Returns immediately after the completion of current timestep if aborted is true.
+    /// \return true on success, false on errors
+    ///
+	bool runSimulation(bool &aborted, size_t id);
 
 public:
 	Simulation();
 
-	~Simulation();
+    ~Simulation();
 
-	static bool executeSimulations(vector<Parameter*> newSimulations);
-    static bool executeSimulations(Parameter* newSimulations);
+    static bool executeSimulations(Input::fromFile inputs, bool &aborted);
+	static void write(std::vector<Simulation*>* simulations, Writer* writer);
 
 	typedef std::chrono::high_resolution_clock Clock;
+
+	void write(Writer* writer);
 };
 
 #endif

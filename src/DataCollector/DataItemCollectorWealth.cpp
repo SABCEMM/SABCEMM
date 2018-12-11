@@ -44,19 +44,22 @@
 #include "DataItemCollectorWealth.h"
 
 
-DataItemCollectorWealth::DataItemCollectorWealth() : DataItemCollectorWealth(Util::DataItemCollectorMethod::MEAN) {
+DataItemCollectorWealth::DataItemCollectorWealth() : DataItemCollectorWealth("mean") {
 
 }
 
-DataItemCollectorWealth::DataItemCollectorWealth(Util::DataItemCollectorMethod method):
+DataItemCollectorWealth::DataItemCollectorWealth(std::string method):
 		DataItemCollector(){
 	agents = nullptr;
-	wealthHistory.clear();
-	wealthHistoryDetail.clear();
 
-	this->method = method;
+	this->method = DataItemCollector::stringToDataItemCollectorMethod(method);
 
 	price = nullptr;
+
+	if(this->method!=Method::DETAIL){
+		std::vector<double> temp;
+		dataMatrix.push_back(temp);
+	}
 }
 
 DataItemCollectorWealth::~DataItemCollectorWealth() = default;
@@ -72,37 +75,26 @@ void DataItemCollectorWealth::collectData(){
 
 	for (auto &agent : *agents) {
 		if(agent->hasGroup(groupToTrack_)) {
-			tempWealth.push_back(agent->getCash() + agent->getStock() * price->getPrice() );
+			tempWealth.push_back(agent->getCash() + agent->getStock() * price->getPrice_tracking() );
 		}
 	}
 
 	switch(method){
-		case Util::DataItemCollectorMethod::MEAN:
-			wealthHistory.push_back(Util::mean(tempWealth));
+		case DataItemCollector::Method::MEAN:
+			dataMatrix.at(0).push_back(Util::mean(tempWealth));
 			break;
-		case Util::DataItemCollectorMethod::STD:
-			wealthHistory.push_back(Util::std(tempWealth));
+		case DataItemCollector::Method::STD:
+            dataMatrix.at(0).push_back(Util::std(tempWealth));
 			break;
-		case Util::DataItemCollectorMethod::DETAIL:
-			wealthHistoryDetail.push_back(tempWealth);
+		case DataItemCollector::Method::DETAIL:
+            dataMatrix.push_back(tempWealth);
+            break;
+        default:
+            throw "invalid collector method " + DataItemCollector::methodToString(method);
 	}
 
 }
-void DataItemCollectorWealth::write(){
-	assert(writer != nullptr);
 
-	switch(method){
-		case Util::DataItemCollectorMethod::DETAIL:
-			writer->matrixToFile(&wealthHistoryDetail, name, groupToTrack_, method);
-			break;
-		default:
-			writer->vectorToFile(&wealthHistory, name, groupToTrack_, method);
-	}
-}
-void DataItemCollectorWealth::clearData(){
-	wealthHistory.clear();
-    wealthHistoryDetail.clear();
-}
 void DataItemCollectorWealth::checkInitilisation(){
 
 	assert(agents!=nullptr);
@@ -119,4 +111,8 @@ void DataItemCollectorWealth::setPrice(Price* newPrice){
 
 	price = newPrice;
 
+}
+
+std::vector<std::vector<double>> * DataItemCollectorWealth::getData(){
+	return &dataMatrix;
 }

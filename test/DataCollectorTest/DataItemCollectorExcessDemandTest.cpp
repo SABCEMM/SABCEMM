@@ -54,36 +54,12 @@ TEST(DataItemCollectorExcessDemand, collectData){
 	DataItemCollectorExcessDemand collector(newExcessDemand);
 	collector.collectData();
 
-	EXPECT_EQ(collector.excessDemandHistory.back(), 5);	
+	EXPECT_EQ(collector.dataMatrix.at(0).back(), 5);
 
 	delete newExcessDemand;
 }
 
-TEST(DataItemCollectorExcessDemand, write){
-    MockWriter mockWriter;
-    DataItemCollectorExcessDemand dataItemCollectorExcessDemand;
-    dataItemCollectorExcessDemand.setWriter(&mockWriter);
 
-    EXPECT_CALL(mockWriter, vectorToFile(testing::_,testing::_,testing::_)).Times(1);
-
-    dataItemCollectorExcessDemand.write();
-}
-TEST(DataItemCollectorExcessDemand, clearData){
-    DataItemCollectorExcessDemand dataItemCollectorExcessDemand;
-    vector<double> testED;
-    testED.push_back(2);
-    testED.push_back(3);
-    testED.push_back(4);
-
-    dataItemCollectorExcessDemand.excessDemandHistory = testED;
-
-    EXPECT_EQ(testED.size(), dataItemCollectorExcessDemand.excessDemandHistory.size());
-    EXPECT_EQ(testED, dataItemCollectorExcessDemand.excessDemandHistory);
-
-    dataItemCollectorExcessDemand.clearData();
-
-    EXPECT_EQ( 0, dataItemCollectorExcessDemand.excessDemandHistory.size());
-}
 TEST(DataItemCollectorExcessDemand, checkInitilisation){
 
     DataItemCollectorExcessDemand dataItemCollectorExcessDemand;

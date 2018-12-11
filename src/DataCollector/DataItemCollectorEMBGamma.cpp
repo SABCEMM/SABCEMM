@@ -40,30 +40,33 @@
 
 #include <cstddef> //for std::size_t
 #include "DataItemCollectorEMBGamma.h"
+#include <cmath>
 
 using namespace std;
 
-DataItemCollectorEMBGamma::DataItemCollectorEMBGamma(vector<Agent*>* newAgents) {
-    agents = (vector<AgentEMB*>*)newAgents;
-    perAgent = false;
+DataItemCollectorEMBGamma::DataItemCollectorEMBGamma() :
+        DataItemCollectorEMBGamma("mean") {
+
+}
+
+DataItemCollectorEMBGamma::DataItemCollectorEMBGamma(DataItemCollector::Method method): method(method){
+    agents = nullptr;
+    dataMatrix.clear();
+
+    if (!(method == DataItemCollector::Method::MEAN || method == DataItemCollector::Method::EXTREME_PROPORTIONS ||
+          method == DataItemCollector::Method::MEAN_NOISE_IMPACT ))
+        throw "unsupported data item collector method.";
+
+    std::vector<double> temp;
+    dataMatrix.push_back(temp);
 }
 
 
-DataItemCollectorEMBGamma::DataItemCollectorEMBGamma(): DataItemCollectorEMBGamma(nullptr) { }
+DataItemCollectorEMBGamma::DataItemCollectorEMBGamma(std::string method): DataItemCollectorEMBGamma(DataItemCollector::stringToDataItemCollectorMethod(method)){
 
-
-/** Clears all data in the history.
- */
-void DataItemCollectorEMBGamma::clearData(){
-    gammaHistory.clear();
 }
 
 
-/** Writes the kHistory.
- */
-void DataItemCollectorEMBGamma::write(){
-    writer->vectorToFile(&gammaHistory, name, groupToTrack_);
-}
 
 
 /** Check if everything is initialized and ready to run.
@@ -78,26 +81,63 @@ void DataItemCollectorEMBGamma::checkInitilisation(){
 void DataItemCollectorEMBGamma::collectData(){
     assert(agents != nullptr);
 
-    const double tol = 0.01;
-
     std::size_t count = 0;
     std::size_t groupSize = 0;
+    double result = 0;
 
-    for (auto &agent : *agents) {
-        if(agent->hasGroup(groupToTrack_)) {
-            groupSize++;
-            double agentGamma = agent->getIterGamma();
-
-            if( fabs(agentGamma-0.01) < tol || fabs(agentGamma-0.99) < tol )
-                ++count;
+    switch(method)
+    {
+        case DataItemCollector::Method::MEAN_NOISE_IMPACT:
+    {
+        double totalGamma = 0;
+        for (auto &agent : *agents) {
+            if(agent->hasGroup(groupToTrack_)) {
+                groupSize++;
+                double agentGamma = agent->getIterGamma()-agent->getGamma();
+                totalGamma += agentGamma;
+            }
+            result = static_cast<double>(totalGamma) / static_cast<double>(groupSize);
         }
+        break;
+    }
+    case DataItemCollector::Method::MEAN:
+    {
+        double totalGamma = 0;
+        for (auto &agent : *agents) {
+            if(agent->hasGroup(groupToTrack_)) {
+                groupSize++;
+                double agentGamma = agent->getIterGamma();
+                totalGamma += agentGamma;
+            }
+            result = static_cast<double>(totalGamma) / static_cast<double>(groupSize);
+        }
+        break;
+    }
+    case DataItemCollector::Method::EXTREME_PROPORTIONS:
+    {
+        const double tol = 0.01;
+        for (auto &agent : *agents) {
+            if(agent->hasGroup(groupToTrack_)) {
+                groupSize++;
+                double agentGamma = agent->getIterGamma();
+                if( fabs(agentGamma-0.01) < tol || fabs(agentGamma-0.99) < tol )
+                    ++count;
+            }
+            result = static_cast<double>(count) / static_cast<double>(groupSize);
+        }
+        break;
+    }
+    default:
+        throw "invalid collector method " + DataItemCollector::methodToString(method);
     }
 
-    double result = static_cast<double>(count) / static_cast<double>(groupSize);
-
-    gammaHistory.push_back(result);
+    dataMatrix.at(0).push_back(result);
 }
 
 void DataItemCollectorEMBGamma::setAgents(std::vector<Agent*>* newAgents){
-    agents = (vector<AgentEMB*>*)newAgents;
+    agents = (std::vector<AgentLLS*>*)newAgents;
+}
+
+vector<vector<double>> * DataItemCollectorEMBGamma::getData(){
+    return &dataMatrix;
 }

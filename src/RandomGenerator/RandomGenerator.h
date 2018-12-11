@@ -46,8 +46,8 @@
 #include "gtest/gtest_prod.h"
 #endif
 
-#include "../Parameter/Parameter.h"
-#include "../Writer/Writer.h"
+#include "../Input/Input.h"
+
 
 /** Pure-Virutal Class to generate random numbers. Defines a common interface for all random generators.
  * @todo make the functions that take vectors templates, such that any container can be used
@@ -59,16 +59,17 @@ class RandomGenerator {
 #endif
 protected:
     int seed;
-
+    static int createSeed();
 public:
-	static int createSeed();
     virtual ~RandomGenerator() = default;
 	RandomGenerator();
     RandomGenerator(int seed);
 
-    int getSeed(){return seed;}
+    int getSeed(){
+    	return seed;
+    }
 
-	static RandomGenerator* factory(Parameter* parameter, Writer* writer);
+	static RandomGenerator* factory(Input& input);
 
 	/** Returns one random integer from the uniform distribution.
      * \param lowerBound drawn numbers are larger than lowerBound

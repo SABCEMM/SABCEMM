@@ -47,7 +47,7 @@
  */
 class LinearNeigbourhoodGenerator: public NeighbourhoodGenerator {
 public:
-    explicit LinearNeigbourhoodGenerator(vector<Agent*>* newAgents);
+    explicit LinearNeigbourhoodGenerator(std::vector<Agent*>* newAgents);
 
      virtual void  generateNeighbourhood() ;
 };

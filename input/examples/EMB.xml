@@ -40,22 +40,28 @@
 -->
 
 <settings>
+    <writer>writertxt</writer>
+    <filename>EMB_Example</filename>
+    <simulationsperfile>2</simulationsperfile><!-- optional -->
+    <numthreads>1</numthreads><!-- optional -->
     <case>
         <RNGSettings>
             <RNG>RandomGeneratorStdLib</RNG>
         </RNGSettings>
         <agents>
-            <AgentEMB>
-                <count>100</count>
-                <riskTolerance>1</riskTolerance>
-                <memorySpan>10</memorySpan>
-                <stdNoiseSigma>0</stdNoiseSigma>
-                <historyMean>0.0415</historyMean>
-                <historySigma>0.003</historySigma>
-                <initialGamma>0.4</initialGamma>
+            <AgentLLS>
                 <cash>1000</cash>
                 <stock>100</stock>
-            </AgentEMB>
+                <riskTolerance>1</riskTolerance>
+                <stdNoiseSigma>0.2</stdNoiseSigma>
+                <initialGamma>0.4</initialGamma>
+                <AgentEMB>
+                    <count>2</count>
+                    <memorySpan>15</memorySpan>
+                    <historyMean>0.0415</historyMean>
+                    <historySigma>0.003</historySigma>
+                </AgentEMB>
+            </AgentLLS>
         </agents>
         <dividendSettings>
             <Z1>0.0149</Z1>
@@ -63,15 +69,18 @@
             <interestRate>0.01</interestRate>
             <initialDividend>0.004</initialDividend>
         </dividendSettings>
-        <dataItemCollectorClasses>
-            <DataCollectorPrice />
-            <DataCollectorExcessDemand />
-            <DataCollectorAmountOfCash />
-        </dataItemCollectorClasses>
+        <qoi>
+            <price>
+                <full></full>
+            </price>
+            <logreturn>
+                <skew></skew>
+                <excessKurtosis></excessKurtosis>
+            </logreturn>
+        </qoi>
         <numsteps>100</numsteps>
-        <outputname>example_EMB</outputname>
+        <outputname>EMB_Simulation</outputname>
         <deltaT>1</deltaT>
-        <writerClass>WriterTXT</writerClass>
         <excessDemandCalculatorSettings>
             <excessDemandCalculatorClass>ExcessDemandCalculatorLLS</excessDemandCalculatorClass>
         </excessDemandCalculatorSettings>

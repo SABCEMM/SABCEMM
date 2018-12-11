@@ -72,19 +72,13 @@ public:
 
 
 
-TEST_F(DataCollectorTest, checkInitilisation){
+/**TEST_F(DataCollectorTest, checkInitialisation){
 	for(std::size_t i=0; i<numDataItemCollectors; i++){
 		EXPECT_CALL(*(mockDataItemCollectorVector.at(i)), checkInitilisation()).Times(1);
 	}
 	dataCollector->checkInitilisation();
 }
 
-TEST_F(DataCollectorTest, write){
-	for(std::size_t i=0; i<numDataItemCollectors; i++){
-		EXPECT_CALL(*(mockDataItemCollectorVector.at(i)), write()).Times(1);
-	}
-	dataCollector->write();
-}
 
 TEST_F(DataCollectorTest, collect){
 	for(std::size_t i=0; i<numDataItemCollectors; i++){
@@ -118,4 +112,4 @@ TEST_F(DataCollectorTest, deleteDataItemCollectors){
 
 	// Avoid deleting twice in the destructor of the testfixture
 	alreadyDeleted = true;
-}
+}**/

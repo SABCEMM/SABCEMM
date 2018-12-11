@@ -40,6 +40,10 @@
 -->
 
 <settings>
+    <writer>writertxt</writer>
+    <filename>Cross_tab_1</filename>
+    <simulationsperfile>1</simulationsperfile><!-- optional -->
+    <numthreads>1</numthreads><!-- optional -->
     <!-- Table 1. column 1 -->
     <case>
         <RNGSettings>
@@ -62,17 +66,21 @@
                 <stock>1</stock>
             </AgentCross>
         </agents>
-        <dataItemCollectorClasses>
-            <DataCollectorPrice />
-            <DataCollectorExcessDemand />
-        </dataItemCollectorClasses>
+        <qoi>
+            <price>
+                <full></full>
+            </price>
+            <excessdemand>
+                <full></full>
+            </excessdemand>
+        </qoi>
         <dividendSettings>
             <interestRate>0.01</interestRate>
         </dividendSettings>
         <numsteps>13000</numsteps>
         <outputname>Cross_base_SDE_1000</outputname>
         <deltaT>0.00004</deltaT>
-        <writerClass>WriterHDF5</writerClass>
+
         <excessDemandCalculatorSettings>
             <!-- see the term for sigma(n) on p.5 for the calculation of market sentiment / excess demand.-->
             <excessDemandCalculatorClass>ExcessDemandCalculatorHarras</excessDemandCalculatorClass>
@@ -120,17 +128,21 @@
                 <stock>1</stock>
             </AgentCross>
         </agents>
-        <dataItemCollectorClasses>
-            <DataCollectorPrice />
-            <DataCollectorExcessDemand />
-        </dataItemCollectorClasses>
+        <qoi>
+            <price>
+                <full></full>
+            </price>
+            <excessdemand>
+                <full></full>
+            </excessdemand>
+        </qoi>
         <dividendSettings>
             <interestRate>0.01</interestRate>
         </dividendSettings>
         <numsteps>13000</numsteps>
         <outputname>Cross_hetero_SDE_1000</outputname>
         <deltaT>0.00004</deltaT>
-        <writerClass>WriterHDF5</writerClass>
+
         <excessDemandCalculatorSettings>
             <!-- see the term for sigma(n) on p.5 for the calculation of market sentiment / excess demand.-->
             <excessDemandCalculatorClass>ExcessDemandCalculatorHarras</excessDemandCalculatorClass>
@@ -178,17 +190,21 @@
                 <stock>1</stock>
             </AgentCross>
         </agents>
-        <dataItemCollectorClasses>
-            <DataCollectorPrice />
-            <DataCollectorExcessDemand />
-        </dataItemCollectorClasses>
+        <qoi>
+            <price>
+                <full></full>
+            </price>
+            <excessdemand>
+                <full></full>
+            </excessdemand>
+        </qoi>
         <dividendSettings>
             <interestRate>0.01</interestRate>
         </dividendSettings>
         <numsteps>13000</numsteps>
         <outputname>Cross_base_ED_1000</outputname>
         <deltaT>0.00004</deltaT>
-        <writerClass>WriterHDF5</writerClass>
+
         <excessDemandCalculatorSettings>
             <!-- see the term for sigma(n) on p.5 for the calculation of market sentiment / excess demand.-->
             <excessDemandCalculatorClass>ExcessDemandCalculatorHarras</excessDemandCalculatorClass>
@@ -236,17 +252,21 @@
                 <stock>1</stock>
             </AgentCross>
         </agents>
-        <dataItemCollectorClasses>
-            <DataCollectorPrice />
-            <DataCollectorExcessDemand />
-        </dataItemCollectorClasses>
+        <qoi>
+            <price>
+                <full></full>
+            </price>
+            <excessdemand>
+                <full></full>
+            </excessdemand>
+        </qoi>
         <dividendSettings>
             <interestRate>0.01</interestRate>
         </dividendSettings>
         <numsteps>13000</numsteps>
         <outputname>Cross_hetero_ED_1000</outputname>
         <deltaT>0.00004</deltaT>
-        <writerClass>WriterHDF5</writerClass>
+
         <excessDemandCalculatorSettings>
             <!-- see the term for sigma(n) on p.5 for the calculation of market sentiment / excess demand.-->
             <excessDemandCalculatorClass>ExcessDemandCalculatorHarras</excessDemandCalculatorClass>

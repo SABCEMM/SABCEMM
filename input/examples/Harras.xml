@@ -41,6 +41,10 @@
 
 <!-- referenced paper: Georges Harras, Didier Sornette. How to grow a bubble: A model of myopic adapting agents, 2011 -->
 <settings>
+    <writer>writertxt</writer>
+    <filename>Harras_Example</filename>
+    <simulationsperfile>2</simulationsperfile><!-- optional -->
+    <numthreads>1</numthreads><!-- optional -->
     <case>
         <RNGSettings>
             <RNG>RandomGeneratorStdLib</RNG>
@@ -68,21 +72,33 @@
                 <stock>1</stock>
             </AgentHarras>
         </agents>
-        <dataItemCollectorClasses>
-            <DataCollectorPrice />
-            <DataCollectorExcessDemand />
-            <DataCollectorHarrasK />
-            <DataCollectorAmountOfCash />
-            <DataCollectorAmountOfStock />
-            <DataCollectorWealth />
-        </dataItemCollectorClasses>
+        <qoi>
+            <price>
+                <full></full>
+            </price>
+            <cash>
+                <full></full>
+            </cash>
+            <stock>
+                <full></full>
+            </stock>
+            <harrasK>
+                <minimum></minimum>
+                <maximum></maximum>
+                <mean></mean>
+                <variance></variance>
+            </harrasK>
+            <logreturn>
+                <skew></skew>
+                <excessKurtosis></excessKurtosis>
+            </logreturn>
+        </qoi>
         <!-- number of time steps -->
         <numsteps>10000</numsteps>
-        <outputname>example_Harras</outputname>
+        <outputname>Harras_Simulation</outputname>
         <!-- TODO: was beschreibt dieser Parameter im Harras-Modell? -->
         <!-- To get the original Harras model, specify 1 here. -->
         <deltaT>1</deltaT>
-        <writerClass>WriterTXT</writerClass>
         <excessDemandCalculatorSettings>
             <!-- Calculates the excess demand as in eq.2, p.9 -->
             <excessDemandCalculatorClass>ExcessDemandCalculatorHarras</excessDemandCalculatorClass>
@@ -95,7 +111,7 @@
             <marketDepth>0.25</marketDepth>
         </priceCalculatorSettings>
         <!-- Specifies how often the simulation is to be run. -->
-        <repetitions>1</repetitions>
+        <repetitions>10</repetitions>
         <!-- initial price -->
         <startPrice>1</startPrice>
     </case>

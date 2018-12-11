@@ -51,7 +51,9 @@ DataItemCollectorPrice::DataItemCollectorPrice(): DataItemCollectorPrice(nullptr
  */
 DataItemCollectorPrice::DataItemCollectorPrice(Price* newPrice){
 	price = newPrice;
-	priceHistory.clear();
+	dataMatrix.clear();
+	std::vector<double> temp;
+	dataMatrix.push_back(temp);
 }
 
 
@@ -65,26 +67,10 @@ DataItemCollectorPrice::~DataItemCollectorPrice() = default;
 void DataItemCollectorPrice::collectData() {
 	assert(price != nullptr);
 
-	priceHistory.push_back(price->getPrice());
+	dataMatrix.at(0).push_back(price->getPrice_tracking());
 
 }
 
-
-/** Writes the priceHistory.
- */
-void DataItemCollectorPrice::write(){
-	assert(writer != nullptr);
-
-	writer->vectorToFile(&priceHistory, name, groupToTrack_);
-
-}
-
-
-/** Clear the priceHistory.
- */
-void DataItemCollectorPrice::clearData() {
-	priceHistory.clear();
-}
 
 
 /** Check if everything is initialized and ready to run.
@@ -93,3 +79,7 @@ void DataItemCollectorPrice::checkInitilisation(){
 	assert(price != nullptr);
 }
 
+
+std::vector<std::vector<double>> * DataItemCollectorPrice::getData(){
+	return &dataMatrix;
+}

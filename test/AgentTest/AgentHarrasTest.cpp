@@ -61,7 +61,7 @@ TEST(AgentHarrasTest, updateOpinion) {
     for(std::size_t i = 0; i < 4; ++i)
         testAgent.addNeighbour(NULL);
 
-	testAgent.c1 = 1;
+    testAgent.c1 = 1;
     testAgent.c2 = 2;
     testAgent.c3 = 3;
     testAgent.countNeighbours = 4;

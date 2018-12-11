@@ -42,9 +42,10 @@
 #define _Agent_hpp_
 
 #include "../RandomGenerator/RandomGenerator.h"
+#include "../Switching/Switchable.h"
 #include "../VariableContainer/Price.h"
 #include "../VariableContainer/DeltaT.h"
-#include "../Parameter/Parameter.h"
+#include "../Input/Input.h"
 #include "../Group/Group.h"
 #include "../VariableContainer/ExcessDemand.h"
 #include "../VariableContainer/GlobalNews.h"
@@ -72,19 +73,31 @@ public:
 	Agent();
 	Agent(RandomGenerator* newRandomGenerator, Price* newPrice);
 	Agent(RandomGenerator* newRandomGenerator, Price* newPrice, double newCash, double newStock);
-	static std::vector<Agent*>* factory(Parameter* parameter, RandomGenerator* randomNumberPool, Price* price,
-										ExcessDemand* excessDemand, GlobalNews* globalNews, Dividend* dividend,
-										DeltaT* deltaT);
+    ///
+    /// \brief factory
+    /// \param input
+    /// \param randomNumberPool
+    /// \param price
+    /// \param excessDemand
+    /// \param globalNews
+    /// \param dividend
+    /// \param deltaT
+    /// \param switchableGroups[out] groups of agents that may switch between strategies, if any.
+    /// \return
+    ///
+    static std::vector<Agent*>* factory(Input& input, RandomGenerator* randomNumberPool, Price* price,
+                                        ExcessDemand* excessDemand, GlobalNews* globalNews, Dividend* dividend,
+                                        DeltaT* deltaT, std::vector<Switchable *> &switchableGroups);
 	virtual ~Agent();
 
     double getCash() const;
-	void setCash(double& newCash);
-    const int& getDecision() const;
+    void setCash(double newCash);
+    int getDecision() const;
 	void setRandomGenerator(RandomGenerator* newRandomGenerator);
 	void setPrice(Price* newPrice);
     double getStock() const;
-	void setStock(double& newStock);
-    const double& getTradingVolume() const;
+    void setStock(double newStock);
+    double getTradingVolume() const;
 	void setDeltaT(DeltaT* newDeltaT);
 
 	virtual void preStepUpdate() = 0;

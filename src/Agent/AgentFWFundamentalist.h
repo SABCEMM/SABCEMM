@@ -47,20 +47,31 @@
 #endif
 
 #include "AgentFW.h"
+#include <string>
 
+/// @ingroup Franke-Westerhoff
+/// Fundamentalist Franke-Westerhoff agent.
+///
+/// This agent assumes that the market follows a mean reversion.
+/// It compares the current stock price to an arbitrary value (fundamentalPrice)
+///  to make its decision. Fundamentalists penalize large deviations from the
+///  fundamental price by lowering their demand
 class AgentFWFundamentalist : public AgentFW {
 #if BUILD_TESTS
-    FRIEND_TEST(fullSimulationTest, fullSimulation_FW);
+    FRIEND_TEST(fullSimulationTest, fullSimulation_DCA_HPM);
+    FRIEND_TEST(fullSimulationTest, fullSimulation_TPA_W);
+    FRIEND_TEST(fullSimulationTest, fullSimulation_TPAC_W);
 #endif
-private:
+protected:
+    /// inflation factor for fundamentalist demand
     const double phi;
+    /// assumed value of the stock.
     const double fundamentalPrice;
 public:
     void stepUpdate() override;
-
     double calculateContributedAttractiveness() override;
     AgentFWFundamentalist(RandomGenerator* randomGenerator, Price* price, double eta, double beta, double alpha_w, double alpha_n,
-                        double alpha_p, double alpha_0, double nu, SwitchingStrategy switchingStrategy, const IndexStrategies& indexStrategy,
+                        double alpha_p, double alpha_0, double nu, SwitchingStrategy switchingStrategy, std::string indexStrategy,
                         double sigma, double phi, double fundamentalPrice);
 
 public:

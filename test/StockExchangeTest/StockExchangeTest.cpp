@@ -66,7 +66,7 @@ TEST(stockExchange, preStep){
     globalNews.prevGlobalNews = 10;
     MockPriceCalculator priceCalculator;
     std::vector<Agent*> agents;
-    StockExchange stockExchange(nullptr, &agents, nullptr, &priceCalculator, nullptr, nullptr, nullptr);
+    StockExchange stockExchange(nullptr, &agents, nullptr, &priceCalculator, nullptr, nullptr, nullptr, nullptr);
 
     EXPECT_CALL(priceCalculator, preStepCalculate()).Times(1);
 
@@ -99,7 +99,7 @@ TEST(stockExchange, step){
     std::vector<Agent*> agents;
     RandomGenerator* randomGenerator;
     randomGenerator = new RandomGeneratorFunctional(ConstantReturn(1));
-    StockExchange stockExchange(nullptr, &agents, randomGenerator, &priceCalculator, nullptr, nullptr, nullptr);
+    StockExchange stockExchange(nullptr, &agents, randomGenerator, &priceCalculator, nullptr, nullptr, nullptr, nullptr);
 
     EXPECT_CALL(priceCalculator, stepCalculate()).Times(2);
 

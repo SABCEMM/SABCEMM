@@ -56,10 +56,44 @@
 #include <limits>
 #include <algorithm>
 
+/// Helper class for variables that should be constant after initialization.
+template<typename T> class ConstAfterInit
+{
+private:
+    bool set;
+    T data;
+
+    operator T() {return data;}
+    operator T*() {return *data;}
+
+    ConstAfterInit() : set(false){}
+    ConstAfterInit<T>& operator =(const T& other){
+        if(!set)
+        {
+            data = other;
+            set = true;
+        }
+        else
+            throw "Refusing to reinitialize ConstAfterInit!";
+
+        return *this;
+    }
+};
 
 class Util
 {
 public:
+
+    /// Removes the filename from a string, leaving only the file path.
+    /// taken from https://stackoverflow.com/questions/3071665/getting-a-directory-name-from-a-filename
+    static std::string removeFilename (const std::string& str)
+    {
+      size_t found;
+      found=str.find_last_of("/\\");
+      if(found == std::string::npos)
+          return "";
+      return str.substr(0,found);
+    }
 
     /**
      * @brief platform-independent routine that creates a folder.
@@ -77,12 +111,12 @@ public:
         #endif
     }
 
-    static double mean(std::vector<double>& v){
+    static double mean(const std::vector<double>& v){
         double sum = std::accumulate(v.begin(), v.end(), 0.0);
         double mean = sum / static_cast<double>(v.size());
         return mean;
     }
-    static double std(std::vector<double>& v){
+    static double std(const std::vector<double>& v){
         double mean_ = mean(v);
         std::vector<double> diff(v.size());
         std::transform(v.begin(), v.end(), diff.begin(), [mean_](double x) { return x - mean_; });
@@ -91,7 +125,7 @@ public:
         return var;
     }
 
-    static std::size_t getMaxDimensions(std::vector<std::vector<double>> *v){
+    static std::size_t getMaxDimensions(const std::vector<std::vector<double>> *v){
         std::vector<double>::size_type maxDim = 0;
         for (auto &i : *v) {
             if(i.size()>maxDim){
@@ -101,47 +135,14 @@ public:
         return maxDim;
     }
 
-    enum DataItemCollectorMethod
-    {
-        MEAN,
-        STD,
-        DETAIL
-    };
 
-    static std::string dataItemCollectorMethodToString(DataItemCollectorMethod method){
-        std::string methodString;
-        if(method == Util::DataItemCollectorMethod::STD){
-            methodString = "std";
-        }
-        else if(method == Util::DataItemCollectorMethod::DETAIL){
-            methodString = "detail";
-        }
-        else { // Default method is mean
-            methodString = "mean";
-        }
-        return methodString;
-    }
-
-    static DataItemCollectorMethod stringToDataItemCollectorMethod(const std::string &methodString){
-        Util::DataItemCollectorMethod method;
-        if(methodString == std::string("std")){
-             method = Util::DataItemCollectorMethod::STD;
-        }
-        else if(methodString == std::string("detail")){
-            method = Util::DataItemCollectorMethod::DETAIL;
-        }
-        else { // Default method is mean
-            method = Util::DataItemCollectorMethod::MEAN;
-        }
-        return method;
-    }
 
     static bool doubleEqual(const double& d1, const double& d2){
-        return std::abs(d1-d2)<std::numeric_limits<double>::epsilon();
+        return std::abs(d1-d2) < std::numeric_limits<double>::epsilon();
     }
 
     static bool doubleNotEqual(const double& d1, const double& d2){
-        return std::abs(d1-d2)>std::numeric_limits<double>::epsilon();
+        return std::abs(d1-d2) > std::numeric_limits<double>::epsilon();
     }
 
 };

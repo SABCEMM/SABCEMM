@@ -38,6 +38,7 @@
  * @brief This file belongs to the SABCEMM projekt. See github.com/SABCEMM/SABCEMM
  */
 
+#include <cassert>
 
 #include "AgentCross.h"
 #include "AgentCrossWealth.h"

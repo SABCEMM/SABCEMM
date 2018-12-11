@@ -41,6 +41,8 @@
 #include "LatticeNeighbourhoodGenerator.h"
 #include "../Agent/AgentHarras.h"
 #include <cstddef> //for std::size_t
+#include <cassert>
+#include <cmath>
 
 /** Constructor of the LatticeNeighbourhoodGenerator. Requires a pointer to an vector of AgentHarras.
  */

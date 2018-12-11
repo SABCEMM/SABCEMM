@@ -63,7 +63,7 @@
  */
 class LatticeNeighbourhoodGeneratorMatlab: public NeighbourhoodGenerator {
 public:
-    explicit LatticeNeighbourhoodGeneratorMatlab(vector<Agent*>* newAgents);
+    explicit LatticeNeighbourhoodGeneratorMatlab(std::vector<Agent*>* newAgents);
 
 	virtual ~LatticeNeighbourhoodGeneratorMatlab();
 	 virtual void  generateNeighbourhood() ;

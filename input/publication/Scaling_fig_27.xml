@@ -40,6 +40,10 @@
 -->
 
 <settings>
+    <writer>writertxt</writer>
+    <filename>Scaling_fig_27</filename>
+    <simulationsperfile>1</simulationsperfile><!-- optional -->
+    <numthreads>1</numthreads><!-- optional -->
     <!-- referenced paper: Rod Cross, Michael Grinfeld, Harbir Lamba, Tim Seaman. A Threshold Model of Investor Psychology, 2005 -->
     <case>
     <RNGSettings>
@@ -60,13 +64,16 @@
             <stock>1</stock>
         </AgentCross>
     </agents>
-    <dataItemCollectorClasses>
-        <DataCollectorPrice />
-    </dataItemCollectorClasses>
+    <qoi>
+        <logReturn>
+            <excessKurtosis />
+            <skew />
+        </ logReturn>
+    </ qoi>
     <numsteps>10000</numsteps>
     <outputname>Cross_agents_100</outputname>
     <deltaT>0.00004</deltaT>
-    <writerClass>WriterHDF5</writerClass>
+
     <excessDemandCalculatorSettings>
         <!-- see the term for sigma(n) on p.5 for the calculation of market sentiment / excess demand.-->
         <excessDemandCalculatorClass>ExcessDemandCalculatorHarras</excessDemandCalculatorClass>
@@ -103,13 +110,16 @@
                 <stock>1</stock>
             </AgentCross>
         </agents>
-        <dataItemCollectorClasses>
-            <DataCollectorPrice />
-        </dataItemCollectorClasses>
+        <qoi>
+            <logReturn>
+                <excessKurtosis />
+                <skew />
+            </ logReturn>
+        </ qoi>
         <numsteps>10000</numsteps>
         <outputname>Cross_agents_200</outputname>
         <deltaT>0.00004</deltaT>
-        <writerClass>WriterHDF5</writerClass>
+
         <excessDemandCalculatorSettings>
             <!-- see the term for sigma(n) on p.5 for the calculation of market sentiment / excess demand.-->
             <excessDemandCalculatorClass>ExcessDemandCalculatorHarras</excessDemandCalculatorClass>
@@ -152,7 +162,7 @@
         <numsteps>10000</numsteps>
         <outputname>Cross_agents_400</outputname>
         <deltaT>0.00004</deltaT>
-        <writerClass>WriterHDF5</writerClass>
+
         <excessDemandCalculatorSettings>
             <!-- see the term for sigma(n) on p.5 for the calculation of market sentiment / excess demand.-->
             <excessDemandCalculatorClass>ExcessDemandCalculatorHarras</excessDemandCalculatorClass>
@@ -189,13 +199,16 @@
                 <stock>1</stock>
             </AgentCross>
         </agents>
-        <dataItemCollectorClasses>
-            <DataCollectorPrice />
-        </dataItemCollectorClasses>
+        <qoi>
+            <logReturn>
+                <excessKurtosis />
+                <skew />
+            </ logReturn>
+        </ qoi>
         <numsteps>10000</numsteps>
         <outputname>Cross_agents_800</outputname>
         <deltaT>0.00004</deltaT>
-        <writerClass>WriterHDF5</writerClass>
+
         <excessDemandCalculatorSettings>
             <!-- see the term for sigma(n) on p.5 for the calculation of market sentiment / excess demand.-->
             <excessDemandCalculatorClass>ExcessDemandCalculatorHarras</excessDemandCalculatorClass>
@@ -232,13 +245,16 @@
                 <stock>1</stock>
             </AgentCross>
         </agents>
-        <dataItemCollectorClasses>
-            <DataCollectorPrice />
-        </dataItemCollectorClasses>
+        <qoi>
+            <logReturn>
+                <excessKurtosis />
+                <skew />
+            </ logReturn>
+        </ qoi>
         <numsteps>10000</numsteps>
         <outputname>Cross_agents_1600</outputname>
         <deltaT>0.00004</deltaT>
-        <writerClass>WriterHDF5</writerClass>
+
         <excessDemandCalculatorSettings>
             <!-- see the term for sigma(n) on p.5 for the calculation of market sentiment / excess demand.-->
             <excessDemandCalculatorClass>ExcessDemandCalculatorHarras</excessDemandCalculatorClass>
@@ -275,13 +291,16 @@
                 <stock>1</stock>
             </AgentCross>
         </agents>
-        <dataItemCollectorClasses>
-            <DataCollectorPrice />
-        </dataItemCollectorClasses>
+        <qoi>
+            <logReturn>
+                <excessKurtosis />
+                <skew />
+            </ logReturn>
+        </ qoi>
         <numsteps>10000</numsteps>
         <outputname>Cross_agents_3200</outputname>
         <deltaT>0.00004</deltaT>
-        <writerClass>WriterHDF5</writerClass>
+
         <excessDemandCalculatorSettings>
             <!-- see the term for sigma(n) on p.5 for the calculation of market sentiment / excess demand.-->
             <excessDemandCalculatorClass>ExcessDemandCalculatorHarras</excessDemandCalculatorClass>
@@ -318,13 +337,16 @@
                 <stock>1</stock>
             </AgentCross>
         </agents>
-        <dataItemCollectorClasses>
-            <DataCollectorPrice />
-        </dataItemCollectorClasses>
+        <qoi>
+            <logReturn>
+                <excessKurtosis />
+                <skew />
+            </ logReturn>
+        </ qoi>
         <numsteps>10000</numsteps>
         <outputname>Cross_agents_6400</outputname>
         <deltaT>0.00004</deltaT>
-        <writerClass>WriterHDF5</writerClass>
+
         <excessDemandCalculatorSettings>
             <!-- see the term for sigma(n) on p.5 for the calculation of market sentiment / excess demand.-->
             <excessDemandCalculatorClass>ExcessDemandCalculatorHarras</excessDemandCalculatorClass>
@@ -360,13 +382,16 @@
                 <stock>1</stock>
             </AgentCross>
         </agents>
-        <dataItemCollectorClasses>
-            <DataCollectorPrice />
-        </dataItemCollectorClasses>
+        <qoi>
+            <logReturn>
+                <excessKurtosis />
+                <skew />
+            </ logReturn>
+        </ qoi>
         <numsteps>10000</numsteps>
         <outputname>Cross_agents_12800</outputname>
         <deltaT>0.00004</deltaT>
-        <writerClass>WriterHDF5</writerClass>
+
         <excessDemandCalculatorSettings>
             <!-- see the term for sigma(n) on p.5 for the calculation of market sentiment / excess demand.-->
             <excessDemandCalculatorClass>ExcessDemandCalculatorHarras</excessDemandCalculatorClass>
@@ -408,7 +433,7 @@
         <numsteps>10000</numsteps>
         <outputname>Cross_agents_25600</outputname>
         <deltaT>0.00004</deltaT>
-        <writerClass>WriterHDF5</writerClass>
+
         <excessDemandCalculatorSettings>
             <!-- see the term for sigma(n) on p.5 for the calculation of market sentiment / excess demand.-->
             <excessDemandCalculatorClass>ExcessDemandCalculatorHarras</excessDemandCalculatorClass>
@@ -444,13 +469,16 @@
                 <stock>1</stock>
             </AgentCross>
         </agents>
-        <dataItemCollectorClasses>
-            <DataCollectorPrice />
-        </dataItemCollectorClasses>
+        <qoi>
+        <logReturn>
+            <excessKurtosis />
+            <skew />
+        </ logReturn>
+    </ qoi>
         <numsteps>10000</numsteps>
         <outputname>Cross_agents_51200</outputname>
         <deltaT>0.00004</deltaT>
-        <writerClass>WriterHDF5</writerClass>
+
         <excessDemandCalculatorSettings>
             <!-- see the term for sigma(n) on p.5 for the calculation of market sentiment / excess demand.-->
             <excessDemandCalculatorClass>ExcessDemandCalculatorHarras</excessDemandCalculatorClass>
@@ -486,13 +514,16 @@
                 <stock>1</stock>
             </AgentCross>
         </agents>
-        <dataItemCollectorClasses>
-            <DataCollectorPrice />
-        </dataItemCollectorClasses>
+        <qoi>
+        <logReturn>
+            <excessKurtosis />
+            <skew />
+        </ logReturn>
+    </ qoi>
         <numsteps>10000</numsteps>
         <outputname>Cross_agents_102400</outputname>
         <deltaT>0.00004</deltaT>
-        <writerClass>WriterHDF5</writerClass>
+
         <excessDemandCalculatorSettings>
             <!-- see the term for sigma(n) on p.5 for the calculation of market sentiment / excess demand.-->
             <excessDemandCalculatorClass>ExcessDemandCalculatorHarras</excessDemandCalculatorClass>
@@ -529,13 +560,16 @@
                 <stock>1</stock>
             </AgentCross>
         </agents>
-        <dataItemCollectorClasses>
-            <DataCollectorPrice />
-        </dataItemCollectorClasses>
+        <qoi>
+        <logReturn>
+            <excessKurtosis />
+            <skew />
+        </ logReturn>
+    </ qoi>
         <numsteps>10000</numsteps>
         <outputname>Cross_agents_204800</outputname>
         <deltaT>0.00004</deltaT>
-        <writerClass>WriterHDF5</writerClass>
+
         <excessDemandCalculatorSettings>
             <!-- see the term for sigma(n) on p.5 for the calculation of market sentiment / excess demand.-->
             <excessDemandCalculatorClass>ExcessDemandCalculatorHarras</excessDemandCalculatorClass>
@@ -572,13 +606,16 @@
                 <stock>1</stock>
             </AgentCross>
         </agents>
-        <dataItemCollectorClasses>
-            <DataCollectorPrice />
-        </dataItemCollectorClasses>
+        <qoi>
+        <logReturn>
+            <excessKurtosis />
+            <skew />
+        </ logReturn>
+    </ qoi>
         <numsteps>10000</numsteps>
         <outputname>Cross_agents_409600</outputname>
         <deltaT>0.00004</deltaT>
-        <writerClass>WriterHDF5</writerClass>
+
         <excessDemandCalculatorSettings>
             <!-- see the term for sigma(n) on p.5 for the calculation of market sentiment / excess demand.-->
             <excessDemandCalculatorClass>ExcessDemandCalculatorHarras</excessDemandCalculatorClass>
@@ -615,13 +652,16 @@
                 <stock>1</stock>
             </AgentCross>
         </agents>
-        <dataItemCollectorClasses>
-            <DataCollectorPrice />
-        </dataItemCollectorClasses>
+        <qoi>
+        <logReturn>
+            <excessKurtosis />
+            <skew />
+        </ logReturn>
+    </ qoi>
         <numsteps>10000</numsteps>
         <outputname>Cross_agents_819200</outputname>
         <deltaT>0.00004</deltaT>
-        <writerClass>WriterHDF5</writerClass>
+
         <excessDemandCalculatorSettings>
             <!-- see the term for sigma(n) on p.5 for the calculation of market sentiment / excess demand.-->
             <excessDemandCalculatorClass>ExcessDemandCalculatorHarras</excessDemandCalculatorClass>
@@ -658,13 +698,16 @@
                 <stock>1</stock>
             </AgentCross>
         </agents>
-        <dataItemCollectorClasses>
-            <DataCollectorPrice />
-        </dataItemCollectorClasses>
+        <qoi>
+        <logReturn>
+            <excessKurtosis />
+            <skew />
+        </ logReturn>
+    </ qoi>
         <numsteps>10000</numsteps>
         <outputname>Cross_agents_1638400</outputname>
         <deltaT>0.00004</deltaT>
-        <writerClass>WriterHDF5</writerClass>
+
         <excessDemandCalculatorSettings>
             <!-- see the term for sigma(n) on p.5 for the calculation of market sentiment / excess demand.-->
             <excessDemandCalculatorClass>ExcessDemandCalculatorHarras</excessDemandCalculatorClass>
@@ -701,13 +744,16 @@
                 <stock>1</stock>
             </AgentCross>
         </agents>
-        <dataItemCollectorClasses>
-            <DataCollectorPrice />
-        </dataItemCollectorClasses>
+        <qoi>
+        <logReturn>
+            <excessKurtosis />
+            <skew />
+        </ logReturn>
+    </ qoi>
         <numsteps>10000</numsteps>
         <outputname>Cross_agents_3276800</outputname>
         <deltaT>0.00004</deltaT>
-        <writerClass>WriterHDF5</writerClass>
+
         <excessDemandCalculatorSettings>
             <!-- see the term for sigma(n) on p.5 for the calculation of market sentiment / excess demand.-->
             <excessDemandCalculatorClass>ExcessDemandCalculatorHarras</excessDemandCalculatorClass>
@@ -743,13 +789,16 @@
                 <stock>1</stock>
             </AgentCross>
         </agents>
-        <dataItemCollectorClasses>
-            <DataCollectorPrice />
-        </dataItemCollectorClasses>
+        <qoi>
+        <logReturn>
+            <excessKurtosis />
+            <skew />
+        </ logReturn>
+    </ qoi>
         <numsteps>10000</numsteps>
         <outputname>Cross_agents_6553600</outputname>
         <deltaT>0.00004</deltaT>
-        <writerClass>WriterHDF5</writerClass>
+
         <excessDemandCalculatorSettings>
             <!-- see the term for sigma(n) on p.5 for the calculation of market sentiment / excess demand.-->
             <excessDemandCalculatorClass>ExcessDemandCalculatorHarras</excessDemandCalculatorClass>

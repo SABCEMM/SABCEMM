@@ -61,7 +61,7 @@ TEST(DataItemCollectorAmountOfStock, collectData){
 
 	collector.collectData();
 
-	EXPECT_EQ(collector.amountOfStock.back(), 2);
+	EXPECT_EQ(collector.dataMatrix.at(0).back(), 2);
 
 	for (std::size_t i=0; i<16; i++)
 	{
@@ -72,7 +72,7 @@ TEST(DataItemCollectorAmountOfStock, collectData){
 TEST(DataItemCollectorAmountOfStock, collectData_with1Group){
 	std::vector<Agent*> agents;
 	double newStock=2;
-	vector<int> groups(1,2);
+	std::vector<int> groups(1,2);
 
 	for (int i=0; i<16; i++)
 	{
@@ -87,7 +87,7 @@ TEST(DataItemCollectorAmountOfStock, collectData_with1Group){
 
 	collector.collectData();
 
-	EXPECT_EQ(collector.amountOfStock.back(), 2);
+	EXPECT_EQ(collector.dataMatrix.at(0).back(), 2);
 
 	for (std::size_t i=0; i<16; i++)
 	{
@@ -98,8 +98,8 @@ TEST(DataItemCollectorAmountOfStock, collectData_with1Group){
 TEST(DataItemCollectorAmountOfStock, collectData_with2Group){
 	std::vector<Agent*> agents;
 	double newStock=2;
-	vector<int> groups1(1,2);
-	vector<int> groups2(1,3);
+	std::vector<int> groups1(1,2);
+	std::vector<int> groups2(1,3);
 
 	for (int i=0; i<8; i++)
 	{
@@ -123,7 +123,7 @@ TEST(DataItemCollectorAmountOfStock, collectData_with2Group){
 
 	collector.collectData();
 
-	EXPECT_EQ(collector.amountOfStock.back(), 2);
+	EXPECT_EQ(collector.dataMatrix.at(0).back(), 2);
 
 	for (std::size_t i=0; i<16; i++)
 	{
@@ -132,31 +132,6 @@ TEST(DataItemCollectorAmountOfStock, collectData_with2Group){
 }
 
 
-TEST(DataItemCollectorAmountOfStock, write){
-	MockWriter mockWriter;
-	DataItemCollectorAmountOfStock dataItemCollectorAmountOfStock;
-	dataItemCollectorAmountOfStock.setWriter(&mockWriter);
-
-	EXPECT_CALL(mockWriter, vectorToFile(testing::_,testing::_,testing::_,testing::_)).Times(1);
-
-	dataItemCollectorAmountOfStock.write();
-}
-
-TEST(DataItemCollectorAmountOfStock, clearData){
-	DataItemCollectorAmountOfStock dataItemCollectorAmountOfStock;
-	vector<double> testStock;
-	testStock.push_back(2);
-	testStock.push_back(3);
-	testStock.push_back(4);
-
-	dataItemCollectorAmountOfStock.amountOfStock = testStock;
-
-	EXPECT_EQ(testStock.size(), dataItemCollectorAmountOfStock.amountOfStock.size());
-
-	dataItemCollectorAmountOfStock.clearData();
-
-	EXPECT_EQ( 0, dataItemCollectorAmountOfStock.amountOfStock.size());
-}
 TEST(DataItemCollectorAmountOfStock, checkInitilisation){
 	std::vector<Agent*> newAgents;
 

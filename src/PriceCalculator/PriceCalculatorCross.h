@@ -40,7 +40,6 @@
 #ifndef _PriceCalculatorCross_hpp_
 #define _PriceCalculatorCross_hpp_
 
-#include "../Parameter/Parameter.h"
 #include "../ExcessDemandCalculator/ExcessDemandCalculator.h"
 #include "../VariableContainer/Price.h"
 #include "../VariableContainer/ExcessDemand.h"

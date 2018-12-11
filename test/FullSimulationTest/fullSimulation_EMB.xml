@@ -1,0 +1,57 @@
+<settings>
+    <writer>writernone</writer>
+    <case>
+        <RNGSettings>
+            <RNG>RandomGeneratorStdLib</RNG>
+            <numThreads>8</numThreads>
+            <poolSize>5000000</poolSize>
+            <seed>100</seed>
+        </RNGSettings>
+        <agents>
+            <AgentLLS>
+                <cash>1000</cash>
+                <stock>100</stock>
+                <riskTolerance>1.5</riskTolerance>
+                <stdNoiseSigma>0.2</stdNoiseSigma>
+                <initialGamma>0.4</initialGamma>
+                <AgentEMB>
+                    <count>2</count>
+                    <!-- we will specify our own history -->
+                    <historyMean>0</historyMean>
+                    <historySigma>0</historySigma>
+
+                    <memorySpan>2</memorySpan>
+                    <k>0.04</k>
+                </AgentEMB>
+            </AgentLLS>
+        </agents>
+        <dividendSettings>
+            <Z1>0.05</Z1>
+            <Z2>0.05</Z2>
+            <interestRate>0.04</interestRate>
+            <initialDividend>0.2</initialDividend>
+        </dividendSettings>
+        <dataItemCollectorClasses>
+            <DataCollectorPrice />
+            <DataCollectorExcessDemand />
+            <DataCollectorAmountOfCash />
+        </dataItemCollectorClasses>
+        <numsteps>1</numsteps>
+        <outputname>2</outputname>
+        <deltaT>1</deltaT>
+        <writerClass>WriterNone</writerClass>
+        <excessDemandCalculatorSettings>
+            <excessDemandCalculatorClass>ExcessDemandCalculatorLLS</excessDemandCalculatorClass>
+        </excessDemandCalculatorSettings>
+        <priceCalculatorSettings>
+            <priceCalculatorClass>PriceCalculatorLLS</priceCalculatorClass>
+            <epsilon>0.000001</epsilon>
+            <maxIterations>10000</maxIterations>
+            <lowerBound>0.000001</lowerBound>
+            <upperBound>1000000</upperBound>
+        </priceCalculatorSettings>
+        <stockExchangeClass>StockExchangeHarras</stockExchangeClass>
+        <repetitions>1</repetitions>
+        <startPrice>4</startPrice>
+    </case>
+</settings>
