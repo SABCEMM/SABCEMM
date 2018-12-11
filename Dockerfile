@@ -4,7 +4,7 @@
 ############################################################
 
 # Set the base image to sabcemm_base
-FROM sabcemm/sabcemm_base
+FROM sabcemm/sabcemm_base:1.0
 
 # File Author / Maintainer
 MAINTAINER Simon Cramer
