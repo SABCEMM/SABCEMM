@@ -1,3 +1,11 @@
+# Corresponding Publications
+There are two publications using SABCEMM:
+
+* **[SABCEMM-A Simulator for Agent-Based Computational Economic Market Models](https://arxiv.org/abs/1801.01811)**
+* **[Simulation of Stylized Facts in Agent-Based Computational Economic Market Models](https://arxiv.org/abs/1812.02726)**
+
+If you would like to have your publication/report listed as well, please drop us an email.
+
 # Simulator for Agent Based Computational Economic Market Models (SABCEMM)
 Before getting started, have a look at our full [Doxygen Code Documentation](https://sabcemm.github.io/SABCEMM/) and at our [User Guide](https://github.com/SABCEMM/SABCEMM/wiki/User-Guide). In case of any problems or if you have suggestions/propositions/comments for futur releases we encourage everyone to open an [issue](https://github.com/SABCEMM/SABCEMM/issues).
 
