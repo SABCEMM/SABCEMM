@@ -13,7 +13,19 @@ We are using [Git](https://git-scm.com) ([Tutorial](https://git-scm.com/book/en/
 
 We put great effort into making this software accesible to everyone, however all computer/operating system are different. Our tutorials might not cover every step necessary for your machine. We encourage everyone to open an [issue](https://github.com/SABCEMM/SABCEMM/issues) in case of any problems, so that our team may assist you.
 
-# First steps 
+# Quickstart with Docker
+
+The easiest way to get use SABCEMM is with our prebuildt [Docker](https://www.docker.com/) image. Our [Docker](https://www.docker.com/) image is a portable Linux machine with a precompiled version of SABCEMM and all necessary dependencies.
+On your machine you use a Docker container to run our image.
+
+1. Follow the [Get Started](https://www.docker.com/get-started) guide on docker.com to install Docker on your computer
+1. Open a terminal and download our docker image `docker pull sabcemm/sabcemm`. This can take a couple of minutes.
+1. Now create a docker container called _sabcemm_container_ by typing `docker run --name sabcemm_container -it sabcemm/sabcemm` in the command prompt. You are now connected (similiar to a SSH) to your container. By prompting `cd /home/SABCEMM/build/src` you navigate to the current SABCEMM build.
+1. To execute a simulation call `./financeSimulation ../../input/examples/Cross.xml`. The simulation results can be found in the `/home/SABCEMM/build/src/output` folder.
+1. To stop your docker container prompt `exit`. Your container is now stopped, but all your data is still availiable. To run the container again and reconnect prompt `docker start sabcemm_container`. To remove the container call `docker rm sabcemm_container`. Attention: This deletes all the data inside the container!
+
+
+# Manual Installation: First steps 
 
 This tutorial guides you through the first steps to use the SABCEMM framework on a **Linux** ([Ubuntu](https://www.ubuntu.com),[CentOS](https://www.centos.org), ...) operating system..
 If you are trying to use the simulator on a Windows or Mac, please have a look at 
